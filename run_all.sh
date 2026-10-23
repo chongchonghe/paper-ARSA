@@ -2,26 +2,62 @@
 # Rebuild the data, the figures and Table 1 of He, Krumholz & Wibking, "An Adaptive Reduced Speed of Light
 # Approximation". See README.md.
 #
-#   ./run_all.sh            the simulations and checks (in parallel, about 14 threads), then the figures
-#   ./run_all.sh figures    only the figures, Table 1 and the printed numbers, from the data in git
+#   ./run_all.sh               everything: the simulations and calculations (in parallel, about 14 threads,
+#                              25 min), then the figures and Table 1
+#   ./run_all.sh figures       only the figures and Table 1, from the data in git (about 20 s)
+#   ./run_all.sh <step> ...    only the steps named, e.g. ./run_all.sh mf_shocks (the steps are in step_cmd)
 #
 # Set up once: julia --project=. -e 'using Pkg; Pkg.instantiate()' and pip install -r requirements.txt.
 # PY=<python> picks the Python (default python3). The figures need LaTeX (matplotlib's text.usetex).
-# Printouts of the simulations go to logs/; their data and metadata go to data/ and the fig_*/ folders.
+# Each step writes its data to data/ and its printout to data/<step>.txt, after a header: the date, the
+# commit of this repository ("-dirty": uncommitted changes in src/ or Manifest.toml) and the Honghu.jl
+# version. A full run also keeps the printout of each step in logs/.
 set -euo pipefail
 cd "$(dirname "$0")"
-source common.sh
+PY=${PY:-python3}
 mkdir -p data figures tables logs
 
-job() {   # job <name> <command ...>: start in the background, printout in logs/<name>.log
-    "${@:2}" > "logs/$1.log" 2>&1 &
+ver() {   # commit of this repository, "-dirty" if src/ or Manifest.toml have uncommitted changes
+    local c
+    c=$(git rev-parse --short HEAD 2>/dev/null) || { echo no-git; return; }
+    git diff --quiet HEAD -- src Manifest.toml || c+=-dirty
+    echo "$c"
+}
+honghu() {   # the Honghu.jl release and tree hash pinned in Manifest.toml
+    awk '/^\[\[deps\.Honghu\]\]/ {f = 1} f && /^git-tree-sha1/ {t = $3} f && /^repo-rev/ {r = $3} f && /^$/ {exit}
+         END {gsub(/"/, "", t); gsub(/"/, "", r); print r " (tree " substr(t, 1, 7) ")"}' Manifest.toml
+}
+examples() {   # the examples folder of the installed Honghu.jl
+    julia --project=. -e 'using Honghu; print(pkgdir(Honghu, "examples"))'
+}
+
+step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in CMD
+    case $1 in
+        checkerboard)        NAME="Honghu.jl examples/irsla_paper.jl, section checkerboard"             # Fig. 3
+                             CMD=(julia --project=. -t 4 "$(examples)/irsla_paper.jl" --no-plot --outdir=data checkerboard) ;;
+        linear_waves_rhd)    NAME="Honghu.jl examples/linear_waves_rhd.jl"                              # Fig. 5
+                             CMD=(julia --project=. -t 4 "$(examples)/linear_waves_rhd.jl" --no-plot --outdir=data) ;;
+        mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
+                             NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
+        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity)
+                             NAME="src/calc_$1.py"; CMD=("$PY" "src/calc_$1.py") ;;
+        table_media | waves_rsla)                          # figure and table scripts whose numbers the paper quotes
+                             NAME="src/make_$1.py"; CMD=("$PY" "src/make_$1.py") ;;
+        *)                   echo "unknown step: $1 (the steps are in step_cmd in run_all.sh)" >&2; return 1 ;;
+    esac
+}
+step() {   # step <step>: run it; header and printout in data/<step>.txt
+    local NAME CMD
+    step_cmd "$1"
+    { echo "# $NAME, $(date '+%Y-%m-%d %H:%M'), paper-ARSA $(ver), Honghu.jl $(honghu)"; "${CMD[@]}"; } 2>&1 |
+        tee "data/$1.txt"
+}
+
+job() {   # job <step>: run a step in the background, its printout also in logs/<step>.log
+    step "$1" > "logs/$1.log" 2>&1 &
     pids+=($!); names+=("$1")
 }
-example() {   # example <driver> <name> [section ...]: a driver of Honghu.jl; header and printout in data/<name>.txt
-    { header "Honghu.jl examples/$1"; julia --project=. -t 4 "$EXAMPLES/$1" --no-plot --outdir=data "${@:3}"; } \
-        2>&1 | tee "data/$2.txt"
-}
-check() {   # wait for the jobs started so far; stop if one failed
+wait_jobs() {   # wait for the jobs started so far; stop if one failed
     local i bad=0
     for i in "${!pids[@]}"; do
         if wait "${pids[$i]}"; then echo "done: ${names[$i]}"
@@ -31,33 +67,29 @@ check() {   # wait for the jobs started so far; stop if one failed
     [ $bad = 0 ]
 }
 
-if [ "${1:-all}" != figures ]; then
-    EXAMPLES=$(julia --project=. -e 'using Honghu; print(pkgdir(Honghu, "examples"))')
-    pids=(); names=()
-    job checkerboard example irsla_paper.jl checkerboard checkerboard        # Fig. 3
-    job linear_waves example linear_waves_rhd.jl linear_waves_rhd            # Fig. 5
-    job mf_shocks ./run_mf_shocks.sh                                         # Figs. 7, 8; Sec. 5.4
-    job arsa_phi0 julia --project=. -t 1 arsa_phi0.jl                        # Sec. 5.4, the phi0 sweep
-    job diffusion_pulse fig_diffusion_pulse/run.sh                           # Fig. 6; Sec. 5.3
-    job marshak_vaytet fig_marshak_vaytet/run.sh                             # Fig. 9; Sec. 5.5
-    job rsla_accuracy fig_rsla_accuracy/run.sh                               # Fig. 1
-    job check_theta "$PY" check_theta.py                                     # Fig. B.10, Table B.3
-    job check_m1 "$PY" check_m1.py                                           # App. B.2
-    check
-    job floor_energy floor_energy/run.sh     # Sec. 4; uses the references of the shock, pulse and Marshak runs
-    check
-fi
-
-printout() {   # printout <script>: run a Python script; header and printout in data/<script>.txt
-    { header "$1" "$1"; "$PY" "$1"; } 2>&1 | tee "data/${1%.py}.txt"
+figures() {
+    step table_media > /dev/null                 # Table 1 (tables/tab_media.tex); numbers of Secs. 3.4 and 6.2
+    step waves_rsla > /dev/null                  # Fig. 2; numbers of Sec. 2.4
+    local f
+    for f in rsla_accuracy checkerboard waves_arsa linear_waves diffusion_pulse mf_shocks marshak_vaytet theta_scan; do
+        "$PY" "src/make_$f.py"                   # Figs. 1, 3-9, B.10
+    done
+    echo "figures in figures/, Table 1 in tables/"
 }
-printout table_media.py                  # Table 1 (tables/tab_media.tex); numbers of Secs. 3.4 and 6.2
-printout fig_waves_rsla.py               # Fig. 2; numbers of Sec. 2.4
-printout check_waves_heat_capacity.py    # numbers of Sec. 2.4
-"$PY" fig_waves.py                       # Fig. 4
-"$PY" fig_tests.py checkerboard linear_waves mf_shocks   # Figs. 3, 5, 7, 8
-"$PY" fig_rsla_accuracy/plot.py          # Fig. 1
-"$PY" fig_diffusion_pulse/plot.py        # Fig. 6
-"$PY" fig_marshak_vaytet/plot.py         # Fig. 9
-"$PY" fig_theta.py                       # Fig. B.10
-echo "figures in figures/, Table 1 in tables/"
+
+case ${1:-all} in
+    all)
+        pids=(); names=()
+        for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
+                 rsla_accuracy theta_scan m1_stability waves_heat_capacity; do
+            job "$s"
+        done
+        wait_jobs
+        job floor_energy                 # uses the references of the shocks, the pulse and the Marshak wave
+        wait_jobs
+        figures ;;
+    figures)
+        figures ;;
+    *)
+        for s in "$@"; do step "$s"; done ;;
+esac

@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use these scripts or data, please cite the paper below and Honghu.jl."
+title: "Scripts and data for \"An Adaptive Reduced Speed of Light Approximation\""
+type: software
+authors:
+  - given-names: Chong-Chong
+    family-names: He
+    email: chongchong.he@anu.edu.au
+    affiliation: Australian National University
+    orcid: "https://orcid.org/0000-0002-2332-8178"
+license: MIT
+repository-code: "https://github.com/chongchonghe/paper-ARSA"
+abstract: >-
+  The scripts and data that make every figure, table and quoted number of
+  He, Krumholz and Wibking, "An Adaptive Reduced Speed of Light Approximation":
+  the linear analysis of the reduced speed of light approximation (RSLA) and
+  of the adaptive RSLA (ARSA), the numerical tests run with Honghu.jl v0.1.0,
+  and the estimates of Table 1. One command, ./run_all.sh, rebuilds them.
+keywords:
+  - radiation hydrodynamics
+  - reduced speed of light approximation
+  - M1 closure
+  - reproducibility
+references:
+  - type: software
+    title: "Honghu.jl: three-dimensional radiation hydrodynamics in Julia"
+    authors:
+      - given-names: Chong-Chong
+        family-names: He
+    version: 0.1.0
+    doi: 10.5281/zenodo.23569082
+    repository-code: "https://github.com/chongchonghe/Honghu.jl"
+preferred-citation:
+  type: article
+  title: "An Adaptive Reduced Speed of Light Approximation"
+  authors:
+    - given-names: Chong-Chong
+      family-names: He
+    - given-names: Mark R.
+      family-names: Krumholz
+    - given-names: Benjamin D.
+      family-names: Wibking
+  journal: "Journal of Computational Physics"
+  status: submitted

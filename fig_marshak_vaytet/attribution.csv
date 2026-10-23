@@ -1,0 +1,4 @@
+reduced_in,phi_thin,phi_thick,L1,substeps
+group 4 only,0.01,1.0,0.09263215519448373,32618
+groups 1-3 only,1.0,0.01,0.05921486090225518,32618
+all groups,0.01,0.01,0.1332364144721421,32618

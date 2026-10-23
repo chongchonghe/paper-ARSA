@@ -1,0 +1,8 @@
+[deps]
+Honghu = "dadb9192-06c8-4952-8646-5842d530648b"
+
+[sources]
+Honghu = {url = "https://github.com/chongchonghe/Honghu.jl", rev = "v0.1.0"}
+
+[compat]
+julia = "1.12"

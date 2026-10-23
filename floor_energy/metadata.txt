@@ -1,0 +1,11 @@
+# floor_energy/run.jl, 2026-10-23 12:12, run.jl fd897b5, Honghu.jl 3dc9a8f
+pulse, advected, phi0 = 0.01                 conservative     1.95%   floor     1.95%   events with E <= floor: 8 (3673 sub-steps); floor adds 2.64e-05 of the reference energy
+pulse, advected, phi0 = v0/c                 conservative     83.6%   floor     86.3%   events with E <= floor: 5332 (438 sub-steps); floor adds 0.102 of the reference energy
+pulse, advected, phi0 = 2 v0/c               conservative       29%   floor     29.1%   events with E <= floor: 1416 (899 sub-steps); floor adds 0.0132 of the reference energy
+pulse, at rest, phi0 = 0.01                  conservative   0.0059%   floor   0.0108%   events with E <= floor: 16 (34618 sub-steps); floor adds 0.000113 of the reference energy
+Marshak, phi0 = 0.03                         conservative     3.34%   floor     3.34%   events with E <= floor: 0 (754 sub-steps); floor adds 0 of the reference energy
+Marshak, phi0 = 0.01                         conservative     9.53%   floor     9.53%   events with E <= floor: 0 (252 sub-steps); floor adds 0 of the reference energy
+Marshak, phi0 = 0.003                        conservative     24.6%   floor     24.6%   events with E <= floor: 4 (76 sub-steps); floor adds 6.18e-09 of the reference energy
+shock, supercritical, phi0 = 0.03            conservative     3.82%   floor     1.56%   events with E <= floor: 1338332 (11869 sub-steps); floor adds 0.0413 of the reference energy
+shock, supercritical, phi0 = 0.0114          conservative     14.1%   floor     2.97%   events with E <= floor: 322468 (4497 sub-steps); floor adds 0.147 of the reference energy
+wrote results.csv

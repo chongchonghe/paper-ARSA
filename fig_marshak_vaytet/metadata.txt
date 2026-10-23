@@ -1,0 +1,32 @@
+# fig_marshak_vaytet/run.jl, 2026-10-23 11:47, run.jl fd897b5, Honghu.jl 3dc9a8f
+== multigroup Marshak wave, 64 x 2 x 2 cells, 4 groups, C_r = 1.56; reference chat = c: 32618 sub-steps ==
+  phi0 = 0.003 RSLA   28.7%  ARSA   24.6%  (76, 76 sub-steps); the RSLA matches the ARSA at phi0 = 0.004124 (24.6%) in 104 sub-steps: speedup 1.37
+  phi0 = 0.01  RSLA   13.3%  ARSA   9.53%  (252, 252 sub-steps); the RSLA matches the ARSA at phi0 = 0.01521 (9.52%) in 382 sub-steps: speedup 1.52
+  phi0 = 0.03  RSLA   5.28%  ARSA   3.34%  (754, 754 sub-steps); the RSLA matches the ARSA at phi0 = 0.04875 (3.34%) in 1225 sub-steps: speedup 1.62
+
+== reference at t_end: T_gas in [365.6, 944] K, h = 4 a_r T^3/(rho c_v) in [0.00148, 0.0255], largest phi_* (nu0 sum sigma = 1) = 0.0248 ==
+  phi0 = 0.003 eq:tau_one threshold: finite in 29/64 cells, in [6.79, 184]
+  phi0 = 0.01  eq:tau_one threshold: finite in 55/64 cells, in [4.02, 105]
+  phi0 = 0.03  eq:tau_one threshold: finite in 64/64 cells, in [3.53, 19]
+
+== profiles at phi0 = 0.01 ==
+  group 1: nu = 6.0e+10-6.0e+11 Hz, kappa = 8.89e+07 cm^2/g, tau_c = 2.78e+04;  ARSA phi in [0.0181, 1], cells at phi = 1: 59/64
+  group 2: nu = 6.0e+11-6.0e+12 Hz, kappa = 8.89e+05 cm^2/g, tau_c = 278;  ARSA phi in [0.0181, 1], cells at phi = 1: 59/64
+  group 3: nu = 6.0e+12-6.0e+13 Hz, kappa = 8.89e+03 cm^2/g, tau_c = 2.78;  ARSA phi in [0.014, 0.0386], cells at phi = 1: 0/64
+  group 4: nu = 6.0e+13-6.0e+14 Hz, kappa = 88.9 cm^2/g, tau_c = 0.0278;  ARSA phi in [0.0102, 0.0119], cells at phi = 1: 0/64
+
+== which groups carry the energy, in the reference; front (T_gas = 650 K) at x = 3.59 cm ==
+  flux, first cell             x =  0.16  share of groups 1-4:   0.0%   0.0%   3.7%  96.3%
+  flux, x = 2 cm               x =  2.03  share of groups 1-4:   0.0%   0.0%   1.3%  98.7%
+  flux, front                  x =  3.59  share of groups 1-4:   0.0%   0.0%   0.7%  99.3%
+  flux, x = 10 cm              x =  9.84  share of groups 1-4:   0.0%   0.0%   0.4%  99.6%
+  heating, behind the front               share of groups 1-4:   0.0%   0.0%  31.2%  68.8%
+  heating, ahead of the front             share of groups 1-4:  -0.0%  -0.0%   0.2%  99.8%
+  heating, whole slab                     share of groups 1-4:   0.0%   0.0%  12.3%  87.6%
+
+== which groups cause the error of the RSLA: chat = 0.01 c at the step of the reference ==
+  reduced in group 4 only     L1 of T_gas   9.26%  (32618 sub-steps)
+  reduced in groups 1-3 only  L1 of T_gas   5.92%  (32618 sub-steps)
+  reduced in all groups       L1 of T_gas   13.3%  (32618 sub-steps)
+
+wrote scores.csv, profiles.csv, groups.csv, budget.csv, attribution.csv

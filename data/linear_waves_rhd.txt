@@ -1,0 +1,34 @@
+# Honghu.jl examples/linear_waves_rhd.jl, 2026-10-23 14:33, paper-ARSA 7657978, Honghu.jl v0.1.0 (tree e63aa35)
+Linear waves: calC = 1000.0, calP = 0.01, phi0 = 0.03, 64 cells per wavelength
+     tau scheme      mode      phi         Omega measured           Omega theory
+ 1.0e-01  exact  acoustic   1.0000    1.04312  -0.12030i    1.04301  -0.12027i
+ 1.0e-01   rsla  acoustic   0.0300    1.04268  -0.12172i    1.04198  -0.12102i
+ 1.0e-01  irsla  acoustic   0.0303    1.04269  -0.12172i    1.04199  -0.12101i
+ 1.0e-01  exact   entropy   1.0000    0.00000  -2.32882i    0.00000  -2.35036i
+ 1.0e-01   rsla   entropy   0.0300    0.00000  -2.16518i   -0.00000  -2.41527i
+ 1.0e-01  irsla   entropy   0.0303   -0.00000  -2.16484i    0.00000  -2.41468i
+ 1.0e+00  exact  acoustic   1.0000    1.00670  -0.05066i    1.00649  -0.05060i
+ 1.0e+00   rsla  acoustic   0.0300    1.00921  -0.05092i    1.00896  -0.04996i
+ 1.0e+00  irsla  acoustic   0.0326    1.00874  -0.05088i    1.00876  -0.05002i
+ 1.0e+00  exact   entropy   1.0000    0.00000  -6.49335i    0.00000  -6.49944i
+ 1.0e+00   rsla   entropy   0.0300   -0.00000  -4.50303i    0.00000  -4.93241i
+ 1.0e+00  irsla   entropy   0.0326    0.00000  -4.60500i   -0.00000  -5.02822i
+ 1.0e+01  exact  acoustic   1.0000    1.21720  -0.14437i    1.21673  -0.14409i
+ 1.0e+01   rsla  acoustic   0.0300    1.14938  -0.05844i    1.14866  -0.05770i
+ 1.0e+01  irsla  acoustic   0.0607    1.18066  -0.08906i    1.17957  -0.08815i
+ 1.0e+01  exact   entropy   1.0000   -0.00000  -0.57597i    0.00000  -0.57497i
+ 1.0e+01   rsla   entropy   0.0300   -0.00000  -0.35543i   -0.00000  -0.35599i
+ 1.0e+01  irsla   entropy   0.0607   -0.00000  -0.44237i   -0.00000  -0.44120i
+ 1.0e+02  exact  acoustic   1.0000    1.29062  -0.01743i    1.29023  -0.01729i
+ 1.0e+02   rsla  acoustic   0.0300    1.16742  -0.00678i    1.16703  -0.00628i
+ 1.0e+02  irsla  acoustic   1.0000    1.29070  -0.01742i    1.29023  -0.01729i
+ 1.0e+02  exact   entropy   1.0000   -0.00000  -0.05206i   -0.00000  -0.05200i
+ 1.0e+02   rsla   entropy   0.0300    0.00000  -0.03459i    0.00000  -0.03455i
+ 1.0e+02  irsla   entropy   1.0000   -0.00000  -0.05206i   -0.00000  -0.05200i
+ 1.0e+03  exact  acoustic   1.0000    1.29139  -0.00188i    1.29103  -0.00173i
+ 1.0e+03   rsla  acoustic   0.0300    1.16757  -0.00112i    1.16722  -0.00063i
+ 1.0e+03  irsla  acoustic   1.0000    1.29140  -0.00187i    1.29103  -0.00173i
+ 1.0e+03  exact   entropy   1.0000    0.00000  -0.00521i   -0.00000  -0.00519i
+ 1.0e+03   rsla   entropy   0.0300    0.00000  -0.00346i    0.00000  -0.00345i
+ 1.0e+03  irsla   entropy   1.0000   -0.00000  -0.00521i   -0.00000  -0.00519i
+  wrote data/linear_waves_rhd.csv

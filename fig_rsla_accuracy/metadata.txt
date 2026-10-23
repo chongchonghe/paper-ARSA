@@ -1,4 +1,4 @@
-# fig_rsla_accuracy/run.py, 2026-10-22 12:26, run.py 506f6f0
+# fig_rsla_accuracy/run.py, 2026-10-23 15:00, paper-ARSA 6e34765, Honghu.jl v0.1.0 (tree e63aa35)
 phi = 0.001; Pe_phi = 0.1 at tau v/c = 0.1/(3 (1/h + 1/phi)): 0.0333 h for h << phi, 3.33e-05 for h >> phi; the ARSA can help for 0.0001 < h < 0.1
 system                           tau v/c         h    Pe_phi  t_phi/t_1  region
 PPD midplane, 0.1 au                0.94   3.8e-06   7.5e+05          1  RSLA accurate

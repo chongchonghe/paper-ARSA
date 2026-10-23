@@ -1,6 +1,6 @@
-# mf_shocks.jl, 2026-10-23 11:47, analysis fd897b5, Honghu.jl 3dc9a8f
+# mf_shocks.jl, 2026-10-23 14:33, paper-ARSA 7657978, Honghu.jl v0.1.0 (tree e63aa35)
 
-== subcritical, kappa rho fixed: u = 6 km/s, t = 3.8e+04 s, 64 x 2 x 2 cells, phi0 = 0.001 (reference 408 s) ==
+== subcritical, kappa rho fixed: u = 6 km/s, t = 3.8e+04 s, 64 x 2 x 2 cells, phi0 = 0.001 (reference 399 s) ==
   final: T max 944.7 K, rho/rho0 max 6.36; tau_c in [0.339, 0.339]
   h max 6.26e-05 (over the run, at t = 3.14e+04 s, T = 934.5 K, rho/rho0 = 2.44); P = h/(4(gamma-1)) = 3.91e-05
   isotropic  largest phi_* = 6.26e-05 (phi0 = 0.001); cells with phi_* < phi0: 64/64; cells above the eq:tau_one threshold: 0/64 (threshold in [3.46, 3.65])
@@ -8,7 +8,7 @@
   ARSA with phi inside the flux divergence (flux form): 5.65%
   RSLA 0.776%   ARSA 0.623%   ARSA phi: min 0.00111, max 0.00154, cells at phi = 1: 0/64;  T_rad L1: RSLA 5.75%, ARSA 5.51%
 
-== supercritical, 10 x kappa: u = 20 km/s, t = 7.5e+03 s, 64 x 2 x 2 cells, phi0 = 0.03 (reference 66 s) ==
+== supercritical, 10 x kappa: u = 20 km/s, t = 7.5e+03 s, 64 x 2 x 2 cells, phi0 = 0.03 (reference 65 s) ==
   final: T max 6293 K, rho/rho0 max 14.3; tau_c in [3.39, 48.6]
   h max 0.0412 (over the run, at t = 7.42e+03 s, T = 6167 K, rho/rho0 = 1.06); P = h/(4(gamma-1)) = 0.0258
   isotropic  largest phi_* = 0.0396 (phi0 = 0.03); cells with phi_* < phi0: 60/64; cells above the eq:tau_one threshold: 53/64 (threshold in [3.36, 30.9])

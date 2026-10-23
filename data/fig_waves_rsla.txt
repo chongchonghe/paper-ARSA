@@ -1,0 +1,5 @@
+# fig_waves_rsla.py, 2026-10-23 14:58, paper-ARSA 7657978, Honghu.jl v0.1.0 (tree e63aa35)
+wrote waves_RSLA P = 0.0005 phi = 0.001
+  tau = 1e+04: exact entropy decay 0.000266; RSLA radiation decays 1e+05, 0.000148; acoustic speed exact 1.291, RSLA 1.134; acoustic decay exact 8.88e-05, RSLA 2.2e-05
+wrote waves_RSLA_P0.1 P = 0.1 phi = 0.003
+  tau = 1e+04: exact entropy decay 0.0419; RSLA radiation decays 3e+05, 0.00098; acoustic speed exact 1.294, RSLA 1.005; acoustic decay exact 0.0141, RSLA 4.67e-06

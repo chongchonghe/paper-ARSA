@@ -1,0 +1,16 @@
+# table_media.py, 2026-10-23 14:58, paper-ARSA 7657978, Honghu.jl v0.1.0 (tree e63aa35)
+PPD midplane, 0.1 au       h =  3.8e-06  tau v/c =     0.94  phi_* = 3.78e-06  phi/phi0 (tau/100) =  1e+03  tau_c =      30  phi_*(beta) = 3.4e-06  tau_thresh =  3.47
+PPD midplane, 1 au         h =  8.3e-06  tau v/c =     0.05  phi_* = 8.3e-06  phi/phi0 (tau/100) =  1e+03  tau_c =       5  phi_*(beta) = 7.47e-06  tau_thresh =  3.49
+Hot Jupiter atmosphere     h =  1.3e-05  tau v/c =    1e-05  phi_* = 1.28e-05  phi/phi0 (tau/100) =      1  tau_c =    0.01  phi_*(beta) = 1.15e-05  tau_thresh =   3.5
+First hydrostatic core     h =  0.00012  tau v/c =   0.0013  phi_* = 0.000121  phi/phi0 (tau/100) =   31.6  tau_c =    3.75  phi_*(beta) = 0.000109  tau_thresh =  3.88
+Solar core                 h =   0.0045  tau v/c =        -  phi_* = 0.00452  phi/phi0 (tau/100) =   1.32  tau_c =   1e+10  phi_*(beta) = 0.00407  tau_thresh =   inf
+PPD outer region, 100 au   h =   0.0048  tau v/c =    1e-06  phi_* = 0.00482  phi/phi0 (tau/100) =      1  tau_c =   0.001  phi_*(beta) = 0.00434  tau_thresh =   inf
+Massive protostellar envelope h =    0.061  tau v/c =  0.00015  phi_* = 0.0571  phi/phi0 (tau/100) =   1.01  tau_c =    0.15  phi_*(beta) =  0.0517  tau_thresh =   inf
+PPD atmosphere, 1 au       h =      0.3  tau v/c =    5e-07  phi_* =  0.232  phi/phi0 (tau/100) =      1  tau_c =   5e-05  phi_*(beta) =   0.214  tau_thresh =   inf
+Star-forming clump         h =       16  tau v/c =  1.7e-05  phi_* =  0.942  phi/phi0 (tau/100) =      1  tau_c =    0.01  phi_*(beta) =   0.936  tau_thresh =   inf
+ULIRG nucleus              h =  7.7e+02  tau v/c =    0.011  phi_* =  0.999  phi/phi0 (tau/100) =      1  tau_c =    0.32  phi_*(beta) =   0.999  tau_thresh =   inf
+Massive-star envelope      h =  1.2e+03  tau v/c =   0.0033  phi_* =  0.999  phi/phi0 (tau/100) =      1  tau_c =       1  phi_*(beta) =   0.999  tau_thresh =   inf
+AGN dusty torus            h =    1e+04  tau v/c =     0.01  phi_* =      1  phi/phi0 (tau/100) =      1  tau_c =    0.15  phi_*(beta) =       1  tau_thresh =   inf
+Cold molecular cloud       h =    1e+04  tau v/c =  2.3e-10  phi_* =      1  phi/phi0 (tau/100) =      1  tau_c =   7e-07  phi_*(beta) =       1  tau_thresh =   inf
+Diffuse ISM                h =  1.5e+14  tau v/c =        -  phi_* =      1  phi/phi0 (tau/100) =      1  tau_c =     nan  phi_*(beta) =       1  tau_thresh =   inf
+wrote /private/tmp/claude-502/-Users-u1149259-ai-workspace-2026-iRSLA-re-iRSLA/a015a323-9edb-47e9-868f-55347a919d94/scratchpad/clone/paper-ARSA/tables/tab_media.tex

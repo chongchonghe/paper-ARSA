@@ -8,7 +8,7 @@ This repository makes every figure, table and quoted number of C.-C. He, M. R. K
 julia --project=. -e 'using Pkg; Pkg.instantiate()'   # Julia 1.12; installs Honghu.jl v0.1.0 and its dependencies
 python3 -m pip install -r requirements.txt            # Python 3.13
 ./run_all.sh figures    # the figures and Table 1, from the data in this repository: about 20 s
-./run_all.sh            # everything, the simulations first: about 35 min with 14 threads
+./run_all.sh            # everything, the simulations first: about 25 min with 14 threads
 ```
 
 `PY=<python> ./run_all.sh` picks another Python. The figures set matplotlib's `text.usetex`, so they need a LaTeX installation.
@@ -47,18 +47,18 @@ The shock, pulse and Marshak runs are 3D slabs ($N\times2\times2$ cubic cells, p
 
 | Run | Writes | Time |
 |---|---|---|
-| `julia --project=. -t 4 $EXAMPLES/irsla_paper.jl --no-plot --outdir=data checkerboard` | `data/checkerboard.csv` | 1 min |
+| `julia --project=. -t 4 $EXAMPLES/irsla_paper.jl --no-plot --outdir=data checkerboard` | `data/checkerboard.csv` | 10 s |
 | `julia --project=. -t 4 $EXAMPLES/linear_waves_rhd.jl --no-plot --outdir=data` | `data/linear_waves_rhd.csv` | 1 min |
-| `./run_mf_shocks.sh` | `data/mf_shocks*.csv`, `data/mf_shocks.txt` | 2 min |
-| `julia --project=. -t 1 arsa_phi0.jl` | `data/arsa_phi0.txt` | 15 min |
-| `fig_diffusion_pulse/run.sh` | `fig_diffusion_pulse/profiles.csv`, `metadata.txt` | 30 min |
-| `fig_marshak_vaytet/run.sh` | `fig_marshak_vaytet/*.csv`, `metadata.txt` | 6 min |
+| `./run_mf_shocks.sh` | `data/mf_shocks*.csv`, `data/mf_shocks.txt` | 10 min |
+| `julia --project=. -t 1 arsa_phi0.jl` | `data/arsa_phi0.txt` | 2 min |
+| `fig_diffusion_pulse/run.sh` | `fig_diffusion_pulse/profiles.csv`, `metadata.txt` | 25 min |
+| `fig_marshak_vaytet/run.sh` | `fig_marshak_vaytet/*.csv`, `metadata.txt` | 3 min |
 | `fig_rsla_accuracy/run.sh` | `fig_rsla_accuracy/*.csv`, `metadata.txt` | 1 s |
 | `floor_energy/run.sh` (after the shocks, the pulse and the Marshak wave) | `floor_energy/results.csv`, `metadata.txt` | 1 min |
 | `python3 check_theta.py` | `data/theta_scan.csv`, `data/theta_curves.csv` | 1 min |
-| `python3 check_m1.py` | `data/check_m1.txt` | 3 min |
+| `python3 check_m1.py` | `data/check_m1.txt` | 2 min |
 
-Here `EXAMPLES=$(julia --project=. -e 'using Honghu; print(pkgdir(Honghu, "examples"))')`, the examples folder of the installed Honghu.jl. The times are for one Apple M-series core (four for the first two rows). `./run_all.sh` saves the printouts of the two Honghu.jl examples in `data/checkerboard.txt` and `data/linear_waves_rhd.txt`.
+Here `EXAMPLES=$(julia --project=. -e 'using Honghu; print(pkgdir(Honghu, "examples"))')`, the examples folder of the installed Honghu.jl. The times are from one `./run_all.sh` on an Apple M-series laptop with 18 cores, all runs at once; each run uses one thread, the first two four. `./run_all.sh` saves the printouts of the two Honghu.jl examples in `data/checkerboard.txt` and `data/linear_waves_rhd.txt`.
 
 ## Table 2 and numbers in the text
 

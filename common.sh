@@ -3,10 +3,11 @@
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 PY=${PY:-python3}
 
-ver() {   # commit of this repository, "-dirty" if the files given have uncommitted changes; "no-git" outside git
+ver() {   # commit of this repository, "-dirty" if the files given (relative to the current folder) have
+          # uncommitted changes; "no-git" outside git
     local c
-    c=$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null) || { echo no-git; return; }
-    git -C "$ROOT" diff --quiet HEAD -- "$@" || c+=-dirty
+    c=$(git rev-parse --short HEAD 2>/dev/null) || { echo no-git; return; }
+    git diff --quiet HEAD -- "$@" || c+=-dirty
     echo "$c"
 }
 

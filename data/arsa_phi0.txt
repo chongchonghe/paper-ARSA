@@ -1,3 +1,4 @@
+# src/sim_arsa_phi0.jl, 2026-10-23 19:48, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
 # arsa_phi0.jl: derived variables of the ARSA and errors against chat = c, 64 x 2 x 2 cells, C_r = 0.9 sqrt3 (beta = 0.9)
 # phi_*, its threshold and the cell counts come from the final chat = c state, at the 3D step nu0 = 1/sqrt3
 # (beta = 1); the suffix _a is isotropic radiation (sum sigma = sqrt3), _b streaming along x (sum sigma = 1). Columns:

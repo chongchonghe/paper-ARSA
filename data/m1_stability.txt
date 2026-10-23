@@ -1,3 +1,4 @@
+# src/calc_m1_stability.py, 2026-10-23 19:48, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
 1. max rho(A_x)/max(0.1, sqrt(T_xx)) = 1.699 at f = 0.990, angle(F, x) = 86 deg (1 for the Eddington flux and for M1 at f = 0)
 2. D = 1, RSLA, nu = 1/sqrt(D): max rho - 1 = -5.0e-08 (at f = 0.999, n = [0.03 1.   0.  ], theta = [0.001])
 2. D = 1, bound, nu = 1/sum_d s_d: max rho - 1 = +1.3e-15 (at f = 0.1, n = [ 0.05  0.02 -1.  ], theta = [3.142])

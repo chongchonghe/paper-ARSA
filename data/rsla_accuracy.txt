@@ -1,4 +1,4 @@
-# fig_rsla_accuracy/run.py, 2026-10-23 15:00, paper-ARSA 6e34765, Honghu.jl v0.1.0 (tree e63aa35)
+# src/calc_rsla_accuracy.py, 2026-10-23 19:48, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
 phi = 0.001; Pe_phi = 0.1 at tau v/c = 0.1/(3 (1/h + 1/phi)): 0.0333 h for h << phi, 3.33e-05 for h >> phi; the ARSA can help for 0.0001 < h < 0.1
 system                           tau v/c         h    Pe_phi  t_phi/t_1  region
 PPD midplane, 0.1 au                0.94   3.8e-06   7.5e+05          1  RSLA accurate
@@ -15,4 +15,4 @@ Massive-star envelope             0.0033   1.2e+03        10        999  RSLA in
 AGN dusty torus                     0.01     1e+04        30      1e+03  RSLA inaccurate
 Cold molecular cloud             2.3e-10     1e+04     7e-07      1e+03  fast diffusion
 Diffuse ISM                          nan   1.5e+14       nan      1e+03  no flow / thin
-wrote curves.csv, systems.csv
+wrote data/rsla_accuracy_curves.csv, data/rsla_accuracy_systems.csv

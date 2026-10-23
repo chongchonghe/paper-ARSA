@@ -1,4 +1,4 @@
-# fig_marshak_vaytet/run.jl, 2026-10-23 14:33, paper-ARSA 7657978, Honghu.jl v0.1.0 (tree e63aa35)
+# src/sim_marshak_vaytet.jl, 2026-10-23 19:48, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
 == multigroup Marshak wave, 64 x 2 x 2 cells, 4 groups, C_r = 1.56; reference chat = c: 32618 sub-steps ==
   phi0 = 0.003 RSLA   28.7%  ARSA   24.6%  (76, 76 sub-steps); the RSLA matches the ARSA at phi0 = 0.004124 (24.6%) in 104 sub-steps: speedup 1.37
   phi0 = 0.01  RSLA   13.3%  ARSA   9.53%  (252, 252 sub-steps); the RSLA matches the ARSA at phi0 = 0.01521 (9.52%) in 382 sub-steps: speedup 1.52
@@ -29,4 +29,4 @@
   reduced in groups 1-3 only  L1 of T_gas   5.92%  (32618 sub-steps)
   reduced in all groups       L1 of T_gas   13.3%  (32618 sub-steps)
 
-wrote scores.csv, profiles.csv, groups.csv, budget.csv, attribution.csv
+wrote data/marshak_vaytet_{scores,profiles,groups,budget,attribution}.csv

@@ -1,4 +1,4 @@
-# floor_energy/run.jl, 2026-10-23 14:57, paper-ARSA 7657978, Honghu.jl v0.1.0 (tree e63aa35)
+# src/sim_floor_energy.jl, 2026-10-23 20:12, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
 pulse, advected, phi0 = 0.01                 conservative     1.95%   floor     1.95%   events with E <= floor: 8 (3673 sub-steps); floor adds 2.64e-05 of the reference energy
 pulse, advected, phi0 = v0/c                 conservative     83.6%   floor     86.3%   events with E <= floor: 5332 (438 sub-steps); floor adds 0.102 of the reference energy
 pulse, advected, phi0 = 2 v0/c               conservative       29%   floor     29.1%   events with E <= floor: 1416 (899 sub-steps); floor adds 0.0132 of the reference energy
@@ -8,4 +8,4 @@ Marshak, phi0 = 0.01                         conservative     9.53%   floor     
 Marshak, phi0 = 0.003                        conservative     24.6%   floor     24.6%   events with E <= floor: 4 (76 sub-steps); floor adds 6.18e-09 of the reference energy
 shock, supercritical, phi0 = 0.03            conservative     3.82%   floor     1.56%   events with E <= floor: 1338332 (11869 sub-steps); floor adds 0.0413 of the reference energy
 shock, supercritical, phi0 = 0.0114          conservative     14.1%   floor     2.97%   events with E <= floor: 322468 (4497 sub-steps); floor adds 0.147 of the reference energy
-wrote results.csv
+wrote data/floor_energy.csv

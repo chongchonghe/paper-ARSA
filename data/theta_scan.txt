@@ -1,0 +1,9 @@
+# src/calc_theta_scan.py, 2026-10-23 19:48, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
+cases: 1512, boundary active (nu_pi < nuc): 1173
+max over cases of max_theta rho below nu_pi - 1: 2.6645352591003757e-15
+active cases with theta* = pi: 1173 / 1173
+group                  cases active  max(rho-1) below  theta*=pi  max|nu_pi/nu_f-1|
+M=0.0 chi=0.333     378    290           2.7e-15   290/290   1.3e-08
+M=0.0 chi=1.000     378    303           2.2e-15   303/303   1.0e-07
+M=0.5 chi=0.333     378    290           2.7e-15   290/290   1.2e-04
+M=3.0 chi=0.333     378    290           2.2e-15   290/290   1.0e-03

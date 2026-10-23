@@ -131,7 +131,7 @@ def main():
               r'$5\times10^7$ for warm and cold molecular gas, and $1.5\times10^8$ in the solar core.',
               r'    \label{tab:media}', r'    }', r'\end{table}']
     OUT.write_text('\n'.join(lines) + '\n')
-    print('wrote', OUT)
+    print('wrote', OUT.relative_to(OUT.parents[1]))
 
 
 if __name__ == '__main__':

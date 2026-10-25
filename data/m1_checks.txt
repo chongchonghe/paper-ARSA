@@ -1,4 +1,4 @@
-# checks/m1/*.py, 2026-10-25 21:02, paper-ARSA c5e687e, Honghu.jl v0.1.0 (tree e63aa35)
+# checks/m1/*.py, 2026-10-25 21:16, paper-ARSA a29ebec, Honghu.jl v0.1.0 (tree e63aa35)
 == checks/m1/absorbing_scan.py
 1D cases: 2700  failures: {'actual': 2, 'max_iso': 0, 'lambda_max': 0}
 2D cases: 1197  failures: {'actual': 0, 'max_iso': 0, 'lambda_max': 0}

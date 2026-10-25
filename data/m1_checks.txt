@@ -1,0 +1,619 @@
+# checks/m1/*.py, 2026-10-25 21:02, paper-ARSA c5e687e, Honghu.jl v0.1.0 (tree e63aa35)
+== checks/m1/absorbing_scan.py
+1D cases: 2700  failures: {'actual': 2, 'max_iso': 0, 'lambda_max': 0}
+2D cases: 1197  failures: {'actual': 0, 'max_iso': 0, 'lambda_max': 0}
+3D cases: 1365  failures: {'actual': 0, 'max_iso': 0, 'lambda_max': 0}
+wrote data/m1/absorbing_scan.json
+== checks/m1/m1_diffusion_limits.py
+{
+  "exact_discriminant": "-25310094734/180228450156561",
+  "source_equilibrium_projection": true,
+  "semisimple_unit_eigenvalue_for_positive_q": true,
+  "projected_phase_derivative": "-i Aeq for all q>0 at nu=1",
+  "relaxing_block_det_minus_identity": "455082*q**2/((2*q + 1)*(227541*q + 227500))",
+  "q": 1000,
+  "nu": 1,
+  "tau_cell": 1000,
+  "theta": "2 atan(1/2000)",
+  "spectral_radius_60_and_90_digits": [
+    "1.0000058144010703484787097086820289653068031395194",
+    "1.0000058144010703484787097086820289653068031395194"
+  ],
+  "L0": "sqrt(3)/3",
+  "isotropic_CFL_limit": "1001/501",
+  "uniformity_obstruction": "Keep q, nu, f, theta fixed; alpha=tau/dx and dt=dx/chat.",
+  "scope": "Frozen radiation substep, not full hydrodynamics or a nonlinear Quokka run."
+}
+== checks/m1/m1_exchange_bounds.py
+{
+  "symbolic": {
+    "bernstein_coefficients": [
+      [
+        "8",
+        "7*sqrt(2)/3 + 20/3",
+        "56/27 + 34*sqrt(2)/9",
+        "-4/3 + 13*sqrt(2)/3",
+        "-8/3 + 4*sqrt(2)"
+      ],
+      [
+        "-8/3 + 4*sqrt(2)",
+        "-4 + 11*sqrt(2)/3",
+        "-88/27 + 22*sqrt(2)/9",
+        "4/9 + sqrt(2)/3",
+        "40/9 - 8*sqrt(2)/3"
+      ]
+    ],
+    "scalar_bound_symbolic_certificate": true,
+    "full_cfl_finite_time_constant": true
+  },
+  "scalar_absorption": {
+    "matrix_mode_checks": 8100,
+    "largest_checked_H_norm": 1.0,
+    "table": [
+      {
+        "q": 0.0,
+        "closed_bound_L": 1.0,
+        "checkerboard_L": 1.0,
+        "universal_ellipse_limit_estimate": 1.0,
+        "maximum_modulus_at_closed_bound": 1.0,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 0.01,
+        "closed_bound_L": 1.0047140452079104,
+        "checkerboard_L": 1.005,
+        "universal_ellipse_limit_estimate": 1.005,
+        "maximum_modulus_at_closed_bound": 0.9994310968526334,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 0.1,
+        "closed_bound_L": 1.0471404520791032,
+        "checkerboard_L": 1.05,
+        "universal_ellipse_limit_estimate": 1.05,
+        "maximum_modulus_at_closed_bound": 0.9945674013875763,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 0.5,
+        "closed_bound_L": 1.235702260395516,
+        "checkerboard_L": 1.25,
+        "universal_ellipse_limit_estimate": 1.25,
+        "maximum_modulus_at_closed_bound": 0.9773416703478095,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 1.0,
+        "closed_bound_L": 1.4714045207910318,
+        "checkerboard_L": 1.5,
+        "universal_ellipse_limit_estimate": 1.5,
+        "maximum_modulus_at_closed_bound": 0.9624178286755026,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 2.0,
+        "closed_bound_L": 1.9428090415820636,
+        "checkerboard_L": 2.0,
+        "universal_ellipse_limit_estimate": 1.9869299317261286,
+        "maximum_modulus_at_closed_bound": 0.9465191863681306,
+        "maximizing_cosine": -0.6440182459173016
+      },
+      {
+        "q": 10.0,
+        "closed_bound_L": 5.714045207910317,
+        "checkerboard_L": 6.0,
+        "universal_ellipse_limit_estimate": 5.755941785557221,
+        "maximum_modulus_at_closed_bound": 0.9845801725814266,
+        "maximizing_cosine": -0.5382437853705223
+      },
+      {
+        "q": 100.0,
+        "closed_bound_L": 48.14045207910317,
+        "checkerboard_L": 51.0,
+        "universal_ellipse_limit_estimate": 48.18107235643481,
+        "maximum_modulus_at_closed_bound": 0.9983027834831308,
+        "maximizing_cosine": -0.5043271354344094
+      },
+      {
+        "q": 10000.0,
+        "closed_bound_L": 4715.045207910317,
+        "checkerboard_L": 5001.0,
+        "universal_ellipse_limit_estimate": 4715.085649872902,
+        "maximum_modulus_at_closed_bound": 0.9999828445752744,
+        "maximizing_cosine": -0.5000439272378278
+      }
+    ],
+    "previous_counterexample": {
+      "R": 2.498339227773934,
+      "new_closed_bound_L": 5.714045207910317,
+      "state_specific_limit_L_estimate": 5.950154313414791,
+      "old_example_L": 5.994
+    }
+  },
+  "continuous_obstruction": {
+    "beta": "4/5",
+    "f": "80/91",
+    "q_rate": 1,
+    "K_energy_rate": 1,
+    "K_momentum_rate": 0.0001,
+    "equilibrium_characteristic_discriminant": "-25310094734/180228450156561",
+    "equilibrium_characteristics": [
+      "(0.00011359472634434514+0.0059252300354892505j)",
+      "(0.00011359472634434514-0.0059252300354892505j)"
+    ],
+    "k": 0.01,
+    "continuous_growth_rate": 6.976578278112768e-05,
+    "semidiscrete_growth_rate": 6.847397148620549e-05,
+    "discrete_convergence": [
+      {
+        "dt": 0.01,
+        "rho": 1.0000006847399094,
+        "log_rho_over_dt": 6.847396750058038e-05
+      },
+      {
+        "dt": 0.001,
+        "rho": 1.0000000684739727,
+        "log_rho_over_dt": 6.847397036980242e-05
+      },
+      {
+        "dt": 0.0001,
+        "rho": 1.0000000068473993,
+        "log_rho_over_dt": 6.847399290781405e-05
+      }
+    ]
+  },
+  "coupled_finite_time": {
+    "matrix_mode_checks": 1280,
+    "maximum_norm_over_proved_bound": 0.994382794445162
+  },
+  "full_transport_cfl_finite_time": {
+    "matrix_mode_checks": 1134,
+    "matrix_power_checks": 1134,
+    "largest_L": 0.9800000000000001,
+    "maximum_norm_over_proved_bound": 0.9636875427527689,
+    "maximum_resolvent_decomposition_residual": 6.345079013597437e-16,
+    "gray_resolvent_checks": 117,
+    "maximum_gray_resolvent_norm_over_bound": 0.4448132086049877,
+    "unrestricted_source_step_checks": 27,
+    "enlarged_cfl_checks": 36,
+    "maximum_enlarged_transport_identity_residual": 1.20014149384454e-13,
+    "example_fixed_source_refinement_family": [
+      {
+        "dt": 0.012261863368969433,
+        "dx": 0.010626362290960173,
+        "source_rate_norm": 4.070798364089625,
+        "omega": 1.6310734672360756,
+        "T": 0.24523726737938867,
+        "C_delta": 18.99705903241825,
+        "nsteps": 20
+      },
+      {
+        "dt": 0.006130931684484716,
+        "dx": 0.0053131811454800865,
+        "source_rate_norm": 4.070798364089625,
+        "omega": 1.6310734672360756,
+        "T": 0.24523726737938867,
+        "C_delta": 18.99705903241825,
+        "nsteps": 40
+      },
+      {
+        "dt": 0.003065465842242358,
+        "dx": 0.0026565905727400432,
+        "source_rate_norm": 4.070798364089625,
+        "omega": 1.6310734672360756,
+        "T": 0.24523726737938867,
+        "C_delta": 18.99705903241825,
+        "nsteps": 80
+      }
+    ]
+  }
+}
+== checks/m1/m1_finite_flux_obstruction.py
+{
+  "symbolic": {
+    "general_discriminant": "v*(v*t^2+4*u*a)",
+    "a": "(1-3*b^2)/(3-b^2)",
+    "u": "mu_E/(1+mu_E)",
+    "v": "(1+chi)*mu_M/(1+(1+chi)*mu_M)",
+    "t": "chi_prime+f*a/((1+chi)*(1+mu_E))",
+    "derivative_at_muM_zero": "4*u*(1+chi)*a",
+    "flux_threshold": "2*sqrt(3)/5",
+    "particular_discriminant": "-25310094734/180228450156561",
+    "source_kernel_semisimple": true,
+    "projected_generator_identity": true
+  },
+  "numerical": [
+    {
+      "digits": 70,
+      "generator_growth": "0.0000058143841670939256483800263454050681",
+      "timestep_sequence": [
+        {
+          "nu": "1.0",
+          "q": "1000.0",
+          "spectral_radius": "1.000005814401070348478709708682029",
+          "log_rho_over_nu": "0.0000058143841667840979784120783144799263"
+        },
+        {
+          "nu": "0.1",
+          "q": "100.0",
+          "spectral_radius": "1.0000005814385857419377502205009258",
+          "log_rho_over_nu": "0.0000058143841670658877787447564906078663"
+        },
+        {
+          "nu": "0.01",
+          "q": "10.0",
+          "spectral_radius": "1.0000000581438433612647079924168069",
+          "log_rho_over_nu": "0.0000058143841670911513105194386995656268"
+        },
+        {
+          "nu": "0.001",
+          "q": "1.0",
+          "spectral_radius": "1.0000000058143841839971801631217637",
+          "log_rho_over_nu": "0.0000058143841670936485090859043939733297"
+        },
+        {
+          "nu": "0.0001",
+          "q": "0.1",
+          "spectral_radius": "1.0000000005814384168784251099850794",
+          "log_rho_over_nu": "0.0000058143841670938979373955715596451803"
+        },
+        {
+          "nu": "1.0e-6",
+          "q": "0.001",
+          "spectral_radius": "1.0000000000058143841671108289028947",
+          "log_rho_over_nu": "0.000005814384167093925371273421275955381"
+        },
+        {
+          "nu": "1.0e-8",
+          "q": "1.0e-5",
+          "spectral_radius": "1.0000000000000581438416709409468093",
+          "log_rho_over_nu": "0.0000058143841670939256456089606186587912"
+        }
+      ],
+      "refinement": [
+        {
+          "dx": "0.0001",
+          "alpha": "10000000.0",
+          "dt": "1.0e-8",
+          "steps": 100000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.0581438416709389793739557155965",
+          "matrix_power_relative_error": "2.0021e-62"
+        },
+        {
+          "dx": "1.0e-5",
+          "alpha": "100000000.0",
+          "dt": "1.0e-10",
+          "steps": 10000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.581438416709392287731103066745",
+          "matrix_power_relative_error": "8.9411e-60"
+        },
+        {
+          "dx": "1.0e-6",
+          "alpha": "1000000000.0",
+          "dt": "1.0e-12",
+          "steps": 1000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "5.81438416709392537127342127596",
+          "matrix_power_relative_error": "1.8807e-57"
+        },
+        {
+          "dx": "1.0e-7",
+          "alpha": "10000000000.0",
+          "dt": "1.0e-14",
+          "steps": 100000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "58.1438416709392562066936878344",
+          "matrix_power_relative_error": "2.9892e-55"
+        }
+      ]
+    },
+    {
+      "digits": 100,
+      "generator_growth": "0.0000058143841670939256483800263454050681",
+      "timestep_sequence": [
+        {
+          "nu": "1.0",
+          "q": "1000.0",
+          "spectral_radius": "1.000005814401070348478709708682029",
+          "log_rho_over_nu": "0.0000058143841667840979784120783144799263"
+        },
+        {
+          "nu": "0.1",
+          "q": "100.0",
+          "spectral_radius": "1.0000005814385857419377502205009258",
+          "log_rho_over_nu": "0.0000058143841670658877787447564906078663"
+        },
+        {
+          "nu": "0.01",
+          "q": "10.0",
+          "spectral_radius": "1.0000000581438433612647079924168069",
+          "log_rho_over_nu": "0.0000058143841670911513105194386995656268"
+        },
+        {
+          "nu": "0.001",
+          "q": "1.0",
+          "spectral_radius": "1.0000000058143841839971801631217637",
+          "log_rho_over_nu": "0.0000058143841670936485090859043939733297"
+        },
+        {
+          "nu": "0.0001",
+          "q": "0.1",
+          "spectral_radius": "1.0000000005814384168784251099850794",
+          "log_rho_over_nu": "0.0000058143841670938979373955715596451803"
+        },
+        {
+          "nu": "1.0e-6",
+          "q": "0.001",
+          "spectral_radius": "1.0000000000058143841671108289028947",
+          "log_rho_over_nu": "0.000005814384167093925371273421275955381"
+        },
+        {
+          "nu": "1.0e-8",
+          "q": "1.0e-5",
+          "spectral_radius": "1.0000000000000581438416709409468093",
+          "log_rho_over_nu": "0.0000058143841670939256456089606186587912"
+        }
+      ],
+      "refinement": [
+        {
+          "dx": "0.0001",
+          "alpha": "10000000.0",
+          "dt": "1.0e-8",
+          "steps": 100000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.0581438416709389793739557155965",
+          "matrix_power_relative_error": "9.9949e-93"
+        },
+        {
+          "dx": "1.0e-5",
+          "alpha": "100000000.0",
+          "dt": "1.0e-10",
+          "steps": 10000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.581438416709392287731103066745",
+          "matrix_power_relative_error": "1.1944e-90"
+        },
+        {
+          "dx": "1.0e-6",
+          "alpha": "1000000000.0",
+          "dt": "1.0e-12",
+          "steps": 1000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "5.81438416709392537127342127596",
+          "matrix_power_relative_error": "1.8619e-87"
+        },
+        {
+          "dx": "1.0e-7",
+          "alpha": "10000000000.0",
+          "dt": "1.0e-14",
+          "steps": 100000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "58.1438416709392562066936878344",
+          "matrix_power_relative_error": "4.8841e-87"
+        }
+      ]
+    }
+  ],
+  "scope": "Frozen static full-exchange M1, equal opacities, eta=1, f=80/91; no uniformity in opacity without extra restrictions.",
+  "limitation": "Constant background powers; not a nonlinear streaming transient or full hydrodynamics."
+}
+== checks/m1/m1_stability.py
+{
+  "symbolic": {
+    "common_symmetrizer": true,
+    "directional_characteristic_polynomial": true,
+    "speed_bound_residual": true,
+    "rk2_ellipse_identity": true
+  },
+  "numerical": {
+    "states": 70,
+    "fourier_modes": 21420,
+    "maximum_symmetry_residual": 3.2853386677800245e-11,
+    "maximum_flux_jacobian_error": 1.971116603272094e-10,
+    "maximum_hll_jacobian_error": 1.7033380261821662e-10,
+    "maximum_H_operator_norm": 1.0000000000000007,
+    "maximum_speed_ratio": 1.5977508234040518
+  },
+  "absorption_counterexample": {
+    "beta": "0.9",
+    "reduced_flux": "0.94488188976377952755905511811023622",
+    "normal_cosine": "0.16666666666666666666666666666666667",
+    "sigma": "0.27109189152074239650241056516505061",
+    "lambda_plus": "0.42849151989106786179284858061826893",
+    "q": "10.0",
+    "nu": "22.110583855442882188789501479119228",
+    "tau_cell": "0.4522720912925298573613789875960137",
+    "theta": "2.3561944901923449288469825374596272",
+    "amplification_modulus": "1.0146817927077512442594190517888555",
+    "checkerboard": "0.99800109090909090909090909090909091",
+    "gain_after_1000_steps": "2137310.0694442890000957464827365841",
+    "matrix_spectral_radius": 1.0146817927077516,
+    "real_grid_gain_after_1000_steps": 2137310.0694435197,
+    "finite_material_response": {
+      "K_energy": 0.0001,
+      "K_momentum_prefactor": 0.0001,
+      "spectral_radius": 1.0147929029653833,
+      "checkerboard_spectral_radius": 0.9999454817813938
+    },
+    "scope": "Grey absorption into a fixed reservoir, with constant forcing maintaining the anisotropic background."
+  }
+}
+== checks/m1/m1_thick_cells.py
+{
+  "counterexample": {
+    "beta": "sqrt(143)/13",
+    "f": "2*sqrt(143)/25",
+    "chi": "23/25",
+    "nu": 20000,
+    "tau_cell": 1000,
+    "L": "4000",
+    "q": 20000000,
+    "checker_limit": "10002001/2001",
+    "spectral_radius": 1.5805393117465227,
+    "full_eight_variable_radius": 1.5805393117464364,
+    "checker_radius": 0.6802973381841472,
+    "trace_fourth_power_decimal": 12.037564003805093,
+    "stiff_limit_trace_fourth_power": "2312774128882104366574987547495089238206841219909919632465416247724784100958970002881144893474883/193140569083290502787826711483838083859034029118971134745796557451263686189559883798240182700961",
+    "stiff_limit_radius": 1.5792501820698102,
+    "scope": "Positive frozen responses; not a nonrelativistic ideal gas at energy balance."
+  },
+  "positive_example": {
+    "mu_energy": "1/100",
+    "mu_momentum": "1/100000000",
+    "xi_max": "1/100",
+    "R": "56*sqrt(3)/169 + 133/169",
+    "R_decimal": 1.3609162439281488,
+    "tau_cell": 1000.0,
+    "nu_bound": 113.16682083433219,
+    "L_bound": 74.08507466154754,
+    "asymptotic_L_bound": 74.21470678347816,
+    "isothermal_c_over_sound_speed": 612.3724356957945,
+    "matrix_mode_checks": 442,
+    "largest_contraction_norm": 1.0000000000000036,
+    "largest_power_norm_over_proved_bound": 1.0000000000000355
+  },
+  "diffusion_perturbation": {
+    "matrix_mode_checks": 1296,
+    "maximum_identity_residual": 9.137097591691008e-15,
+    "maximum_perturbation_norm_over_bound": 0.0028412978221241704,
+    "largest_reference_L": 90.79710705863448,
+    "largest_observed_spectral_radius": 1.0000000000000016,
+    "scope": "Matrix checks of the analytic perturbation proof; not a proof by sampling."
+  }
+}
+== checks/m1/m1_unequal_diffusion.py
+{
+  "symbolic": {
+    "full_nonequilibrium_four_force": true,
+    "two_relaxation_time_elimination": true,
+    "fixed_isotropic_channel_identity": true,
+    "gamma": "1+(p*eta-1)/ratio",
+    "adequate_drag_condition": "gamma >= 0 (sufficient, not necessary)"
+  },
+  "numerical": {
+    "statistics": {
+      "states": 30,
+      "derivative_checks": 120,
+      "reference_mode_checks": 1080,
+      "diffusion_mode_checks": 1080,
+      "max_derivative_error": 1.292742060973313e-10,
+      "max_reference_energy_norm": 1.0000000000000309,
+      "max_resolvent_over_bound": 0.01563595011542932,
+      "max_perturbation_over_bound": 4.986610675849318e-13,
+      "max_identity_residual": 9.982146403406032e-15,
+      "max_generator_scaled_difference": 0.007819133371974847
+    },
+    "examples": [
+      {
+        "p": 0.20911292972117443,
+        "opacity_ratio": 0.25,
+        "eta": 4.782105063198976,
+        "gamma": 1.0,
+        "limiting_CFL": 158.43976154554096
+      },
+      {
+        "p": 0.7727798490300918,
+        "opacity_ratio": 2.0,
+        "eta": 2.126020014545461,
+        "gamma": 1.3214727129376973,
+        "limiting_CFL": 5.343106787117365
+      },
+      {
+        "p": 0.2782717404823593,
+        "opacity_ratio": 5.0,
+        "eta": 25.103521193021948,
+        "gamma": 2.197120106923602,
+        "limiting_CFL": 10.316013764643024
+      }
+    ],
+    "scope": "Frozen ratios; gamma>=0. Numerical checks supplement the analytic proof."
+  }
+}
+== checks/m1/m1_unequal_opacities.py
+{
+  "symbolic": {
+    "source_transform_identity": true,
+    "transform_determinant": "(de*p + e**2)*(chi*dm + dm + ff)/(e**2*ff)",
+    "full_static_velocity_derivatives": true
+  },
+  "numerical": {
+    "states": 45,
+    "four_force_derivative_checks": 45,
+    "source_resolvent_checks": 405,
+    "amplification_checks": 540,
+    "maximum_relative_derivative_error": 5.958154141022676e-11,
+    "maximum_transform_residual": 1.6429269500014854e-16,
+    "maximum_resolvent_norm_over_bound": 0.5359186318522062,
+    "energy_velocity_coupling_signs": [
+      -1,
+      0,
+      1
+    ]
+  }
+}
+== checks/m1/p1_dropped_momentum_counterexample.py
+{
+  "model": "Frozen isotropic equilibrium P1, also the full-M1 linearization at f=0",
+  "parameters": {
+    "beta": "9/10",
+    "phi0": "1/10000",
+    "c_over_sound_speed": "100",
+    "gamma": "5/3",
+    "heat_capacity_ratio": "1/10000",
+    "L_at_phi_one": "9000",
+    "qE_at_phi_one": "200000",
+    "qF_at_phi_one": "89991/5",
+    "KE": "20",
+    "KF": "89991/1000000000",
+    "lambdaF_at_phi_one": "1/200000000",
+    "kappa_P_over_kappa_E": "1",
+    "kappa_E_over_kappa_F": "1000000/89991"
+  },
+  "limiter": {
+    "energy_residual": -90.9090909090909,
+    "approximate_momentum_residual": 0.9,
+    "exact_momentum_residual": 1.3049007853367134,
+    "approximate_phi": 1.0,
+    "corrected_phi": 0.6897076085119883
+  },
+  "exact_certificate": {
+    "det_I_minus_G": "-987824202280542000/323989203079622013498380081",
+    "negative": true
+  },
+  "high_precision": [
+    {
+      "digits": 60,
+      "momentum_gain": "1.000067759631462196909325075165667300986",
+      "corrected_gain": "0.999967781919823267242185787227830187225",
+      "energy_gain": "0.979986812284056544138767016361441761112"
+    },
+    {
+      "digits": 90,
+      "momentum_gain": "1.000067759631462196909325075165667300986",
+      "corrected_gain": "0.999967781919823267242185787227830187225",
+      "energy_gain": "0.979986812284056544138767016361441761112"
+    }
+  ],
+  "grid_run": {
+    "steps": 10000,
+    "amplitude_gain": 1.9690936462189863,
+    "matrix_power_relative_error": 8.738619282454564e-13
+  },
+  "corrected_grid_run": {
+    "steps": 10000,
+    "amplitude_gain": 0.7245557188398198,
+    "matrix_power_relative_error": 3.3460769085227404e-12
+  },
+  "physical_scope": {
+    "velocity_background": 0,
+    "reduced_flux": 0,
+    "energy_balance": true,
+    "nominal_RSLA_CFL": "nu0=0.9/sqrt(3)",
+    "flux_cell_optical_depth": 3.463755204976241,
+    "energy_cell_optical_depth": 38.490017945975055,
+    "gas_CFL_per_direction": 51.96152422706632,
+    "limitation": "Radiation-only large step; exceeds ordinary explicit gas CFL. This is not a counterexample to a hydrodynamically CFL-limited full run."
+  }
+}

@@ -14,7 +14,8 @@ Three geometries:
       counterexamples of m1_stability.py and m1_thick_cells.py are of this kind;
   2D, with the flux in the grid plane, as in a 2D simulation;
   3D, with the flux in any direction (one octant, by symmetry).
-Writes data/m1/absorbing_scan.json (the number of cases and every failure per geometry and rule). About 2 minutes.
+Writes data/m1/absorbing_scan.json: the number of cases and, per geometry and rule, every failure with its exact
+parameters (b is the closure coordinate, f = 4b/(3 + b^2); n the flux direction). About 5 minutes.
 
     python3 checks/m1/absorbing_scan.py
 """
@@ -71,8 +72,8 @@ def scan(dim, bs, taus):
                     for nu in ([BETA / den] if den > 0 else list(np.geomspace(1, NU_CAP, 9))):
                         r = rho_max(A, sig, nu, nu * tau, th)
                         if r > 1 + TOL:
-                            out['failures'][rule].append({'f': round(4 * b / (3 + b * b), 4), 'n': np.round(n, 3).tolist(),
-                                                          'tau': float(f'{tau:.3g}'), 'nu': float(f'{nu:.3g}'), 'g': r})
+                            out['failures'][rule].append({'f': 4 * b / (3 + b * b), 'b': float(b), 'n': [float(x) for x in n],
+                                                          'tau': float(tau), 'nu': float(nu), 'g': float(r)})
                             break
     return out
 

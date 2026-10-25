@@ -1,0 +1,40 @@
+{
+  "symbolic": {
+    "common_symmetrizer": true,
+    "directional_characteristic_polynomial": true,
+    "speed_bound_residual": true,
+    "rk2_ellipse_identity": true
+  },
+  "numerical": {
+    "states": 70,
+    "fourier_modes": 21420,
+    "maximum_symmetry_residual": 3.2853386677800245e-11,
+    "maximum_flux_jacobian_error": 1.971116603272094e-10,
+    "maximum_hll_jacobian_error": 1.7033380261821662e-10,
+    "maximum_H_operator_norm": 1.0000000000000007,
+    "maximum_speed_ratio": 1.5977508234040518
+  },
+  "absorption_counterexample": {
+    "beta": "0.9",
+    "reduced_flux": "0.94488188976377952755905511811023622",
+    "normal_cosine": "0.16666666666666666666666666666666667",
+    "sigma": "0.27109189152074239650241056516505061",
+    "lambda_plus": "0.42849151989106786179284858061826893",
+    "q": "10.0",
+    "nu": "22.110583855442882188789501479119228",
+    "tau_cell": "0.4522720912925298573613789875960137",
+    "theta": "2.3561944901923449288469825374596272",
+    "amplification_modulus": "1.0146817927077512442594190517888555",
+    "checkerboard": "0.99800109090909090909090909090909091",
+    "gain_after_1000_steps": "2137310.0694442890000957464827365841",
+    "matrix_spectral_radius": 1.0146817927077516,
+    "real_grid_gain_after_1000_steps": 2137310.0694435197,
+    "finite_material_response": {
+      "K_energy": 0.0001,
+      "K_momentum_prefactor": 0.0001,
+      "spectral_radius": 1.0147929029653833,
+      "checkerboard_spectral_radius": 0.9999454817813938
+    },
+    "scope": "Grey absorption into a fixed reservoir, with constant forcing maintaining the anisotropic background."
+  }
+}

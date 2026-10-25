@@ -1,0 +1,183 @@
+{
+  "symbolic": {
+    "bernstein_coefficients": [
+      [
+        "8",
+        "7*sqrt(2)/3 + 20/3",
+        "56/27 + 34*sqrt(2)/9",
+        "-4/3 + 13*sqrt(2)/3",
+        "-8/3 + 4*sqrt(2)"
+      ],
+      [
+        "-8/3 + 4*sqrt(2)",
+        "-4 + 11*sqrt(2)/3",
+        "-88/27 + 22*sqrt(2)/9",
+        "4/9 + sqrt(2)/3",
+        "40/9 - 8*sqrt(2)/3"
+      ]
+    ],
+    "scalar_bound_symbolic_certificate": true,
+    "full_cfl_finite_time_constant": true
+  },
+  "scalar_absorption": {
+    "matrix_mode_checks": 8100,
+    "largest_checked_H_norm": 1.0,
+    "table": [
+      {
+        "q": 0.0,
+        "closed_bound_L": 1.0,
+        "checkerboard_L": 1.0,
+        "universal_ellipse_limit_estimate": 1.0,
+        "maximum_modulus_at_closed_bound": 1.0,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 0.01,
+        "closed_bound_L": 1.0047140452079104,
+        "checkerboard_L": 1.005,
+        "universal_ellipse_limit_estimate": 1.005,
+        "maximum_modulus_at_closed_bound": 0.9994310968526334,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 0.1,
+        "closed_bound_L": 1.0471404520791032,
+        "checkerboard_L": 1.05,
+        "universal_ellipse_limit_estimate": 1.05,
+        "maximum_modulus_at_closed_bound": 0.9945674013875763,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 0.5,
+        "closed_bound_L": 1.235702260395516,
+        "checkerboard_L": 1.25,
+        "universal_ellipse_limit_estimate": 1.25,
+        "maximum_modulus_at_closed_bound": 0.9773416703478095,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 1.0,
+        "closed_bound_L": 1.4714045207910318,
+        "checkerboard_L": 1.5,
+        "universal_ellipse_limit_estimate": 1.5,
+        "maximum_modulus_at_closed_bound": 0.9624178286755026,
+        "maximizing_cosine": -1.0
+      },
+      {
+        "q": 2.0,
+        "closed_bound_L": 1.9428090415820636,
+        "checkerboard_L": 2.0,
+        "universal_ellipse_limit_estimate": 1.9869299317261286,
+        "maximum_modulus_at_closed_bound": 0.9465191863681306,
+        "maximizing_cosine": -0.6440182459173016
+      },
+      {
+        "q": 10.0,
+        "closed_bound_L": 5.714045207910317,
+        "checkerboard_L": 6.0,
+        "universal_ellipse_limit_estimate": 5.755941785557221,
+        "maximum_modulus_at_closed_bound": 0.9845801725814266,
+        "maximizing_cosine": -0.5382437853705223
+      },
+      {
+        "q": 100.0,
+        "closed_bound_L": 48.14045207910317,
+        "checkerboard_L": 51.0,
+        "universal_ellipse_limit_estimate": 48.18107235643481,
+        "maximum_modulus_at_closed_bound": 0.9983027834831308,
+        "maximizing_cosine": -0.5043271354344094
+      },
+      {
+        "q": 10000.0,
+        "closed_bound_L": 4715.045207910317,
+        "checkerboard_L": 5001.0,
+        "universal_ellipse_limit_estimate": 4715.085649872902,
+        "maximum_modulus_at_closed_bound": 0.9999828445752744,
+        "maximizing_cosine": -0.5000439272378278
+      }
+    ],
+    "previous_counterexample": {
+      "R": 2.498339227773934,
+      "new_closed_bound_L": 5.714045207910317,
+      "state_specific_limit_L_estimate": 5.950154313414791,
+      "old_example_L": 5.994
+    }
+  },
+  "continuous_obstruction": {
+    "beta": "4/5",
+    "f": "80/91",
+    "q_rate": 1,
+    "K_energy_rate": 1,
+    "K_momentum_rate": 0.0001,
+    "equilibrium_characteristic_discriminant": "-25310094734/180228450156561",
+    "equilibrium_characteristics": [
+      "(0.00011359472634434514+0.0059252300354892505j)",
+      "(0.00011359472634434514-0.0059252300354892505j)"
+    ],
+    "k": 0.01,
+    "continuous_growth_rate": 6.976578278112768e-05,
+    "semidiscrete_growth_rate": 6.847397148620549e-05,
+    "discrete_convergence": [
+      {
+        "dt": 0.01,
+        "rho": 1.0000006847399094,
+        "log_rho_over_dt": 6.847396750058038e-05
+      },
+      {
+        "dt": 0.001,
+        "rho": 1.0000000684739727,
+        "log_rho_over_dt": 6.847397036980242e-05
+      },
+      {
+        "dt": 0.0001,
+        "rho": 1.0000000068473993,
+        "log_rho_over_dt": 6.847399290781405e-05
+      }
+    ]
+  },
+  "coupled_finite_time": {
+    "matrix_mode_checks": 1280,
+    "maximum_norm_over_proved_bound": 0.994382794445162
+  },
+  "full_transport_cfl_finite_time": {
+    "matrix_mode_checks": 1134,
+    "matrix_power_checks": 1134,
+    "largest_L": 0.9800000000000001,
+    "maximum_norm_over_proved_bound": 0.9636875427527689,
+    "maximum_resolvent_decomposition_residual": 6.345079013597437e-16,
+    "gray_resolvent_checks": 117,
+    "maximum_gray_resolvent_norm_over_bound": 0.4448132086049877,
+    "unrestricted_source_step_checks": 27,
+    "enlarged_cfl_checks": 36,
+    "maximum_enlarged_transport_identity_residual": 1.20014149384454e-13,
+    "example_fixed_source_refinement_family": [
+      {
+        "dt": 0.012261863368969433,
+        "dx": 0.010626362290960173,
+        "source_rate_norm": 4.070798364089625,
+        "omega": 1.6310734672360756,
+        "T": 0.24523726737938867,
+        "C_delta": 18.99705903241825,
+        "nsteps": 20
+      },
+      {
+        "dt": 0.006130931684484716,
+        "dx": 0.0053131811454800865,
+        "source_rate_norm": 4.070798364089625,
+        "omega": 1.6310734672360756,
+        "T": 0.24523726737938867,
+        "C_delta": 18.99705903241825,
+        "nsteps": 40
+      },
+      {
+        "dt": 0.003065465842242358,
+        "dx": 0.0026565905727400432,
+        "source_rate_norm": 4.070798364089625,
+        "omega": 1.6310734672360756,
+        "T": 0.24523726737938867,
+        "C_delta": 18.99705903241825,
+        "nsteps": 80
+      }
+    ]
+  }
+}

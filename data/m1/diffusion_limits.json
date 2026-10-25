@@ -1,0 +1,19 @@
+{
+  "exact_discriminant": "-25310094734/180228450156561",
+  "source_equilibrium_projection": true,
+  "semisimple_unit_eigenvalue_for_positive_q": true,
+  "projected_phase_derivative": "-i Aeq for all q>0 at nu=1",
+  "relaxing_block_det_minus_identity": "455082*q**2/((2*q + 1)*(227541*q + 227500))",
+  "q": 1000,
+  "nu": 1,
+  "tau_cell": 1000,
+  "theta": "2 atan(1/2000)",
+  "spectral_radius_60_and_90_digits": [
+    "1.0000058144010703484787097086820289653068031395194",
+    "1.0000058144010703484787097086820289653068031395194"
+  ],
+  "L0": "sqrt(3)/3",
+  "isotropic_CFL_limit": "1001/501",
+  "uniformity_obstruction": "Keep q, nu, f, theta fixed; alpha=tau/dx and dt=dx/chat.",
+  "scope": "Frozen radiation substep, not full hydrodynamics or a nonlinear Quokka run."
+}

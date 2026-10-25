@@ -1,0 +1,21 @@
+{
+  "symbolic": {
+    "source_transform_identity": true,
+    "transform_determinant": "(de*p + e**2)*(chi*dm + dm + ff)/(e**2*ff)",
+    "full_static_velocity_derivatives": true
+  },
+  "numerical": {
+    "states": 45,
+    "four_force_derivative_checks": 45,
+    "source_resolvent_checks": 405,
+    "amplification_checks": 540,
+    "maximum_relative_derivative_error": 5.958154141022676e-11,
+    "maximum_transform_residual": 1.6429269500014854e-16,
+    "maximum_resolvent_norm_over_bound": 0.5359186318522062,
+    "energy_velocity_coupling_signs": [
+      -1,
+      0,
+      1
+    ]
+  }
+}

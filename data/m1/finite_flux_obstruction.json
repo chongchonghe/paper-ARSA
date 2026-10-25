@@ -1,0 +1,190 @@
+{
+  "symbolic": {
+    "general_discriminant": "v*(v*t^2+4*u*a)",
+    "a": "(1-3*b^2)/(3-b^2)",
+    "u": "mu_E/(1+mu_E)",
+    "v": "(1+chi)*mu_M/(1+(1+chi)*mu_M)",
+    "t": "chi_prime+f*a/((1+chi)*(1+mu_E))",
+    "derivative_at_muM_zero": "4*u*(1+chi)*a",
+    "flux_threshold": "2*sqrt(3)/5",
+    "particular_discriminant": "-25310094734/180228450156561",
+    "source_kernel_semisimple": true,
+    "projected_generator_identity": true
+  },
+  "numerical": [
+    {
+      "digits": 70,
+      "generator_growth": "0.0000058143841670939256483800263454050681",
+      "timestep_sequence": [
+        {
+          "nu": "1.0",
+          "q": "1000.0",
+          "spectral_radius": "1.000005814401070348478709708682029",
+          "log_rho_over_nu": "0.0000058143841667840979784120783144799263"
+        },
+        {
+          "nu": "0.1",
+          "q": "100.0",
+          "spectral_radius": "1.0000005814385857419377502205009258",
+          "log_rho_over_nu": "0.0000058143841670658877787447564906078663"
+        },
+        {
+          "nu": "0.01",
+          "q": "10.0",
+          "spectral_radius": "1.0000000581438433612647079924168069",
+          "log_rho_over_nu": "0.0000058143841670911513105194386995656268"
+        },
+        {
+          "nu": "0.001",
+          "q": "1.0",
+          "spectral_radius": "1.0000000058143841839971801631217637",
+          "log_rho_over_nu": "0.0000058143841670936485090859043939733297"
+        },
+        {
+          "nu": "0.0001",
+          "q": "0.1",
+          "spectral_radius": "1.0000000005814384168784251099850794",
+          "log_rho_over_nu": "0.0000058143841670938979373955715596451803"
+        },
+        {
+          "nu": "1.0e-6",
+          "q": "0.001",
+          "spectral_radius": "1.0000000000058143841671108289028947",
+          "log_rho_over_nu": "0.000005814384167093925371273421275955381"
+        },
+        {
+          "nu": "1.0e-8",
+          "q": "1.0e-5",
+          "spectral_radius": "1.0000000000000581438416709409468093",
+          "log_rho_over_nu": "0.0000058143841670939256456089606186587912"
+        }
+      ],
+      "refinement": [
+        {
+          "dx": "0.0001",
+          "alpha": "10000000.0",
+          "dt": "1.0e-8",
+          "steps": 100000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.0581438416709389793739557155965",
+          "matrix_power_relative_error": "2.0021e-62"
+        },
+        {
+          "dx": "1.0e-5",
+          "alpha": "100000000.0",
+          "dt": "1.0e-10",
+          "steps": 10000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.581438416709392287731103066745",
+          "matrix_power_relative_error": "8.9411e-60"
+        },
+        {
+          "dx": "1.0e-6",
+          "alpha": "1000000000.0",
+          "dt": "1.0e-12",
+          "steps": 1000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "5.81438416709392537127342127596",
+          "matrix_power_relative_error": "1.8807e-57"
+        },
+        {
+          "dx": "1.0e-7",
+          "alpha": "10000000000.0",
+          "dt": "1.0e-14",
+          "steps": 100000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "58.1438416709392562066936878344",
+          "matrix_power_relative_error": "2.9892e-55"
+        }
+      ]
+    },
+    {
+      "digits": 100,
+      "generator_growth": "0.0000058143841670939256483800263454050681",
+      "timestep_sequence": [
+        {
+          "nu": "1.0",
+          "q": "1000.0",
+          "spectral_radius": "1.000005814401070348478709708682029",
+          "log_rho_over_nu": "0.0000058143841667840979784120783144799263"
+        },
+        {
+          "nu": "0.1",
+          "q": "100.0",
+          "spectral_radius": "1.0000005814385857419377502205009258",
+          "log_rho_over_nu": "0.0000058143841670658877787447564906078663"
+        },
+        {
+          "nu": "0.01",
+          "q": "10.0",
+          "spectral_radius": "1.0000000581438433612647079924168069",
+          "log_rho_over_nu": "0.0000058143841670911513105194386995656268"
+        },
+        {
+          "nu": "0.001",
+          "q": "1.0",
+          "spectral_radius": "1.0000000058143841839971801631217637",
+          "log_rho_over_nu": "0.0000058143841670936485090859043939733297"
+        },
+        {
+          "nu": "0.0001",
+          "q": "0.1",
+          "spectral_radius": "1.0000000005814384168784251099850794",
+          "log_rho_over_nu": "0.0000058143841670938979373955715596451803"
+        },
+        {
+          "nu": "1.0e-6",
+          "q": "0.001",
+          "spectral_radius": "1.0000000000058143841671108289028947",
+          "log_rho_over_nu": "0.000005814384167093925371273421275955381"
+        },
+        {
+          "nu": "1.0e-8",
+          "q": "1.0e-5",
+          "spectral_radius": "1.0000000000000581438416709409468093",
+          "log_rho_over_nu": "0.0000058143841670939256456089606186587912"
+        }
+      ],
+      "refinement": [
+        {
+          "dx": "0.0001",
+          "alpha": "10000000.0",
+          "dt": "1.0e-8",
+          "steps": 100000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.0581438416709389793739557155965",
+          "matrix_power_relative_error": "9.9949e-93"
+        },
+        {
+          "dx": "1.0e-5",
+          "alpha": "100000000.0",
+          "dt": "1.0e-10",
+          "steps": 10000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "0.581438416709392287731103066745",
+          "matrix_power_relative_error": "1.1944e-90"
+        },
+        {
+          "dx": "1.0e-6",
+          "alpha": "1000000000.0",
+          "dt": "1.0e-12",
+          "steps": 1000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "5.81438416709392537127342127596",
+          "matrix_power_relative_error": "1.8619e-87"
+        },
+        {
+          "dx": "1.0e-7",
+          "alpha": "10000000000.0",
+          "dt": "1.0e-14",
+          "steps": 100000000000000,
+          "physical_time": 1,
+          "log_amplitude_gain": "58.1438416709392562066936878344",
+          "matrix_power_relative_error": "4.8841e-87"
+        }
+      ]
+    }
+  ],
+  "scope": "Frozen static full-exchange M1, equal opacities, eta=1, f=80/91; no uniformity in opacity without extra restrictions.",
+  "limitation": "Constant background powers; not a nonlinear streaming transient or full hydrodynamics."
+}

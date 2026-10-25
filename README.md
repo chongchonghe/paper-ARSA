@@ -25,7 +25,9 @@ src/
   calc_*.py                       calculations (linear theory, scans); write data/
   make_*.py                       figures and Table 1, from data/ (or linear theory); write figures/, tables/
   pdars.py  rhd_waves.py  waves.py  paper_style.py     modules the scripts import
-checks/                           scripts that check statements in the text; no output files
+checks/                           scripts that check statements in the text; no output files, except checks/m1/
+  m1/                            checks of the M1 analysis of App. C (B. Wibking); write data/m1/
+lean/                             Lean 4 proofs of the stability results (B. Wibking)
 data/                             all data and printouts (generated, in git)
 figures/                          every figure of the paper, as PDF (generated, in git)
 tables/                           Table 1 (generated, in git)
@@ -68,6 +70,7 @@ Scripts are in `src/`, data in `data/`. `make_waves_rsla.py` also writes `figure
 | `theta_scan` | `calc_theta_scan.py` | `theta_scan.csv`, `theta_curves.csv` | 1 min |
 | `m1_stability` | `calc_m1_stability.py` | `m1_stability.txt` (the printout) | 2 min |
 | `waves_heat_capacity` | `calc_waves_heat_capacity.py` | `waves_heat_capacity.txt` (the printout) | 1 s |
+| `m1_checks` | `checks/m1/*.py` | `m1/*.json` | 5 min |
 | `table_media`, `waves_rsla` | `make_table_media.py`, `make_waves_rsla.py` | `table_media.txt`, `waves_rsla.txt` (printouts quoted in the text) | 5 s |
 
 The times are from one `./run_all.sh` on an Apple M-series laptop with 18 cores, all steps at once. Each step uses one thread, except the two Honghu.jl examples, which use four.
@@ -130,6 +133,12 @@ The scripts in `checks/` check statements in the text; each says in its header w
 - The stability bound: the closed form eq:numax against the full von Neumann analysis (`check_formula.py`), at nonzero Mach numbers (`check_mach.py`, `check_mach_worst.py`), and in 2D and 3D (`check_md.py`, `check_checkerboard_md.py`); the checkerboard as the least stable mode (`check_checkerboard_norm.py`); the energy block in closed form (`sym_energy.py`).
 - Variants: the alternative schemes of Sec. 3.2 (`check_schemes.py`), several groups sharing one gas temperature (`check_multigroup.py`), matter at two temperatures (`check_two_temp.py`, `two_temp_phistar.py`), and a wave-speed correction of the energy dissipation (`check_wavespeed.py`).
 - Checkerboard runs in Honghu.jl against the von Neumann prediction (`checkerboard.jl`), with the earlier and the current limiter, the standard RSLA at large $\mathcal{P}$, the flux checkerboard, long runs and other reconstructions (`cb_*.jl`).
+
+- The M1 analysis of App. C, by B. Wibking (`checks/m1/`, run by the step `m1_checks`): the M1 flux Jacobian and its HLL symmetrizer (`m1_stability.py`, which also has the absorbing-cell counterexample), the exchange with M1 (`m1_exchange_bounds.py`, `m1_unequal_opacities.py`), the diffusion-regime theorem with equal and unequal opacity means (`m1_thick_cells.py`, `m1_unequal_diffusion.py`, `m1_diffusion_limits.py`), the obstruction for strongly anisotropic radiation (`m1_finite_flux_obstruction.py`) and the counterexample to dropping $K_F$ from the limiter (`p1_dropped_momentum_counterexample.py`). Each writes its results to `data/m1/<name>.json`; `data/m1/checks.json` is the output of `m1_stability.py`, and `data/m1/lean_validation.json`, written by hand, records the Lean build. `absorbing_scan.py` tests the checkerboard bound with the actual HLL speeds in absorbing cells with anisotropic radiation, in 1D, 2D and 3D (`data/m1/absorbing_scan.json`).
+
+## Lean proofs
+
+`lean/` holds B. Wibking's Lean 4 formalization of Propositions 1, A.1 and B.1, Lemmas A.1–A.5 and B.1–B.3, and the two full-M1 theorems of App. C; `lean/README.md`, `lean/FORMALIZATION.md` and `lean/M1_FORMALIZATION.md` say what is proved and under which hypotheses. With [elan](https://github.com/leanprover/elan) installed, fetch the pinned mathlib cache as `lean/README.md` describes, then `lean/scripts/check.sh` builds the project (Lean 4.19.0; about 4 minutes) and audits every theorem for axioms beyond the standard three. It is not part of `./run_all.sh`.
 
 ## Citation and license
 

@@ -1,0 +1,47 @@
+{
+  "symbolic": {
+    "full_nonequilibrium_four_force": true,
+    "two_relaxation_time_elimination": true,
+    "fixed_isotropic_channel_identity": true,
+    "gamma": "1+(p*eta-1)/ratio",
+    "adequate_drag_condition": "gamma >= 0 (sufficient, not necessary)"
+  },
+  "numerical": {
+    "statistics": {
+      "states": 30,
+      "derivative_checks": 120,
+      "reference_mode_checks": 1080,
+      "diffusion_mode_checks": 1080,
+      "max_derivative_error": 1.292742060973313e-10,
+      "max_reference_energy_norm": 1.0000000000000309,
+      "max_resolvent_over_bound": 0.01563595011542932,
+      "max_perturbation_over_bound": 4.986610675849318e-13,
+      "max_identity_residual": 9.982146403406032e-15,
+      "max_generator_scaled_difference": 0.007819133371974847
+    },
+    "examples": [
+      {
+        "p": 0.20911292972117443,
+        "opacity_ratio": 0.25,
+        "eta": 4.782105063198976,
+        "gamma": 1.0,
+        "limiting_CFL": 158.43976154554096
+      },
+      {
+        "p": 0.7727798490300918,
+        "opacity_ratio": 2.0,
+        "eta": 2.126020014545461,
+        "gamma": 1.3214727129376973,
+        "limiting_CFL": 5.343106787117365
+      },
+      {
+        "p": 0.2782717404823593,
+        "opacity_ratio": 5.0,
+        "eta": 25.103521193021948,
+        "gamma": 2.197120106923602,
+        "limiting_CFL": 10.316013764643024
+      }
+    ],
+    "scope": "Frozen ratios; gamma>=0. Numerical checks supplement the analytic proof."
+  }
+}

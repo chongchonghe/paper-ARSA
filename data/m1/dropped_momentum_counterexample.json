@@ -1,0 +1,63 @@
+{
+  "model": "Frozen isotropic equilibrium P1, also the full-M1 linearization at f=0",
+  "parameters": {
+    "beta": "9/10",
+    "phi0": "1/10000",
+    "c_over_sound_speed": "100",
+    "gamma": "5/3",
+    "heat_capacity_ratio": "1/10000",
+    "L_at_phi_one": "9000",
+    "qE_at_phi_one": "200000",
+    "qF_at_phi_one": "89991/5",
+    "KE": "20",
+    "KF": "89991/1000000000",
+    "lambdaF_at_phi_one": "1/200000000",
+    "kappa_P_over_kappa_E": "1",
+    "kappa_E_over_kappa_F": "1000000/89991"
+  },
+  "limiter": {
+    "energy_residual": -90.9090909090909,
+    "approximate_momentum_residual": 0.9,
+    "exact_momentum_residual": 1.3049007853367134,
+    "approximate_phi": 1.0,
+    "corrected_phi": 0.6897076085119883
+  },
+  "exact_certificate": {
+    "det_I_minus_G": "-987824202280542000/323989203079622013498380081",
+    "negative": true
+  },
+  "high_precision": [
+    {
+      "digits": 60,
+      "momentum_gain": "1.000067759631462196909325075165667300986",
+      "corrected_gain": "0.999967781919823267242185787227830187225",
+      "energy_gain": "0.979986812284056544138767016361441761112"
+    },
+    {
+      "digits": 90,
+      "momentum_gain": "1.000067759631462196909325075165667300986",
+      "corrected_gain": "0.999967781919823267242185787227830187225",
+      "energy_gain": "0.979986812284056544138767016361441761112"
+    }
+  ],
+  "grid_run": {
+    "steps": 10000,
+    "amplitude_gain": 1.9690936462189863,
+    "matrix_power_relative_error": 8.738619282454564e-13
+  },
+  "corrected_grid_run": {
+    "steps": 10000,
+    "amplitude_gain": 0.7245557188398198,
+    "matrix_power_relative_error": 3.3460769085227404e-12
+  },
+  "physical_scope": {
+    "velocity_background": 0,
+    "reduced_flux": 0,
+    "energy_balance": true,
+    "nominal_RSLA_CFL": "nu0=0.9/sqrt(3)",
+    "flux_cell_optical_depth": 3.463755204976241,
+    "energy_cell_optical_depth": 38.490017945975055,
+    "gas_CFL_per_direction": 51.96152422706632,
+    "limitation": "Radiation-only large step; exceeds ordinary explicit gas CFL. This is not a counterexample to a hydrodynamically CFL-limited full run."
+  }
+}

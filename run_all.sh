@@ -41,6 +41,7 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
         rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity)
                              NAME="src/calc_$1.py"; CMD=("$PY" "src/calc_$1.py") ;;
+        m1_checks)           NAME="checks/m1/*.py"; CMD=(m1_checks) ;;          # App. C, by B. Wibking
         table_media | waves_rsla)                          # figure and table scripts whose numbers the paper quotes
                              NAME="src/make_$1.py"; CMD=("$PY" "src/make_$1.py") ;;
         *)                   echo "unknown step: $1 (the steps are in step_cmd in run_all.sh)" >&2; return 1 ;;
@@ -51,6 +52,14 @@ step() {   # step <step>: run it; header and printout in data/<step>.txt
     step_cmd "$1"
     { echo "# $NAME, $(date '+%Y-%m-%d %H:%M'), paper-ARSA $(ver), Honghu.jl $(honghu)"; "${CMD[@]}"; } 2>&1 |
         tee "data/$1.txt"
+}
+
+m1_checks() {   # the checks of the M1 analysis; each writes its results to data/m1/
+    local f
+    for f in checks/m1/*.py; do
+        echo "== $f"
+        "$PY" "$f" || return 1
+    done
 }
 
 job() {   # job <step>: run a step in the background, its printout also in logs/<step>.log
@@ -81,7 +90,7 @@ case ${1:-all} in
     all)
         pids=(); names=()
         for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
-                 rsla_accuracy theta_scan m1_stability waves_heat_capacity; do
+                 rsla_accuracy theta_scan m1_stability waves_heat_capacity m1_checks; do
             job "$s"
         done
         wait_jobs

@@ -43,8 +43,7 @@ pe_label = ax.text(1.5e-9, 1.5e-7, r'$\mathrm{Pe}_\phi = 0.1$', color=INK, ha='l
                    rotation_mode='anchor')
 
 # the regions
-ax.text(2e-11, 50, bold('radiation is faster than\nthe flow; temperature\ntracks the flow; accuracy\ndepends on the problem\n'
-        '($\\mathrm{Pe}_\\phi < 0.1$)'), color=INK, fontsize=8, ha='left', va='center',
+ax.text(2e-11, 50, bold('diffusion outpaces the\nflow ($\\mathrm{Pe}_\\phi < 0.1$); RSLA\nis accurate in optically\nthick systems'), color=INK, fontsize=8, ha='left', va='center',
         bbox=dict(boxstyle='round,pad=0.4', fc='white', ec=MUTED, lw=0.8))
 ax.text(0.3, 2.0, bold('RSLA inaccurate:\ndiffusion too slow;\nARSA cannot help'), color=RED_INK,
         ha='center', va='center')

@@ -21,7 +21,8 @@ from paper_style import STYLE, TEXTWIDTH, C1, C2, DATA, save
 WIDTHS = 256                 # the widths traveled shown in the rows of pulse_drift.json
 WIDTHS_LONG = 2048           # and in the row of pulse_drift_long.json
 HALF = 7                     # half width of a window [w]
-ROW_H = 1.8                  # height of a row [in]
+AX_H, GAP = 1.30, 0.23       # height of a panel and gap between rows [in]; twice the gap above the last row
+TOP, BOTTOM = 0.37, 0.53     # margins for the legend and the axis label [in]
 
 d = json.load(open(DATA / 'pulse_drift.json'))
 w, L, xs = d['w'], d['L'], np.array(d['x'])
@@ -54,10 +55,12 @@ def lagtext(v):
 
 
 with plt.rc_context(STYLE):
-    fig = plt.figure(figsize=(TEXTWIDTH, 5.08 * ROW_H + 0.55))
+    H = TOP + BOTTOM + 5 * AX_H + 5 * GAP
+    fig = plt.figure(figsize=(TEXTWIDTH, H))
     fig.set_layout_engine('none')
-    gs = fig.add_gridspec(6, 3, height_ratios=[1, 1, 1, 1, 0.01, 1], left=0.075, right=0.99, bottom=0.055,
-                          top=0.962, wspace=0.06, hspace=0.42)
+    ratios = [1, 1, 1, 1, 1e-4, 1]                   # grid row 4: no height, so the gap there is 2 GAP
+    gs = fig.add_gridspec(6, 3, height_ratios=ratios, left=0.075, right=0.99, bottom=BOTTOM / H, top=1 - TOP / H,
+                          wspace=0.06, hspace=GAP / (AX_H * sum(ratios) / 6))
     for (r, K, label), i in zip(rows, GRID):
         T_lo = r['T_lo']
         y = lambda T: (np.array(T) - T_lo) / T_lo

@@ -1,5 +1,7 @@
 """Fig. 6 of the paper (fig:pulse_drift): the advected pulse after WIDTHS widths traveled, one row per
-phi0/P at the peak (3 to 3000), from data/pulse_drift.json (written by sim_pulse_drift.jl). The x-axis is the real
+phi0/P at the peak (3 to 3000), from data/pulse_drift.json (written by sim_pulse_drift.jl), and below them, set
+apart, the pulse at D = 10 phi0 after WIDTHS_LONG widths, from data/pulse_drift_long.json (sim_pulse_drift_long.jl).
+Each row gives the widths traveled at its end. The x-axis is the real
 (unwrapped) position, broken into windows of the same width, 2 HALF pulse widths, so that the pulse has the same
 width on the page in every window: the start (the initial pulse, dashed), and at the end the exact solution
 (phi = 1), the ARSA and the RSLA, in one window when the RSLA lags by less than 2 HALF w (the exact pulse HALF w
@@ -16,14 +18,20 @@ from matplotlib.lines import Line2D
 from matplotlib.ticker import FuncFormatter
 from paper_style import STYLE, TEXTWIDTH, C1, C2, DATA, save
 
-WIDTHS = 256                 # the widths traveled shown
+WIDTHS = 256                 # the widths traveled shown in the rows of pulse_drift.json
+WIDTHS_LONG = 2048           # and in the row of pulse_drift_long.json
 HALF = 7                     # half width of a window [w]
 ROW_H = 1.8                  # height of a row [in]
 
 d = json.load(open(DATA / 'pulse_drift.json'))
 w, L, xs = d['w'], d['L'], np.array(d['x'])
-runs = d['runs']
-K = runs[0]['widths'].index(WIDTHS)
+dl = json.load(open(DATA / 'pulse_drift_long.json'))
+assert dl['w'] == w and dl['L'] == L and len(dl['x']) == len(xs)
+rows = [(r, r['widths'].index(WIDTHS), rf'$\phi_0/\mathcal{{P}} = {r["phi0_P"]}$') for r in d['runs']]
+rl = dl['runs'][0]
+rows.append((rl, rl['widths'].index(WIDTHS_LONG),
+             rf'$\phi_0/\mathcal{{P}} = {rl["phi0_P"]}$' + '\n' + rf'$\mathcal{{D}} = {dl["D"] / dl["phi0"]:.0f}\,\phi_0$'))
+GRID = [0, 1, 2, 3, 5]       # grid row of each row; grid row 4 is the gap above the last row
 
 
 def place(T, centre):        # the box profile at the image of each cell nearest the real position centre
@@ -46,10 +54,11 @@ def lagtext(v):
 
 
 with plt.rc_context(STYLE):
-    fig = plt.figure(figsize=(TEXTWIDTH, len(runs) * ROW_H + 0.55))
+    fig = plt.figure(figsize=(TEXTWIDTH, 5.08 * ROW_H + 0.55))
     fig.set_layout_engine('none')
-    gs = fig.add_gridspec(len(runs), 3, left=0.075, right=0.99, bottom=0.065, top=0.955, wspace=0.06, hspace=0.42)
-    for i, r in enumerate(runs):
+    gs = fig.add_gridspec(6, 3, height_ratios=[1, 1, 1, 1, 0.01, 1], left=0.075, right=0.99, bottom=0.055,
+                          top=0.962, wspace=0.06, hspace=0.42)
+    for (r, K, label), i in zip(rows, GRID):
         T_lo = r['T_lo']
         y = lambda T: (np.array(T) - T_lo) / T_lo
         xr, xl = r['x_exact'][K], r['x_rsla'][K]
@@ -73,15 +82,15 @@ with plt.rc_context(STYLE):
         start.plot(*place(y(r['T_exact'][0]), 0.0), color='k', ls='--', lw=1.0)
         start.set_ylabel(r'$(T - T_{\rm lo})/T_{\rm lo}$')
         start.set_yticks([0, 0.5, 1])
-        start.text(0.04, 0.93, rf'$\phi_0/\mathcal{{P}} = {r["phi0_P"]}$', transform=start.transAxes, va='top')
+        start.text(0.04, 0.93, label, transform=start.transAxes, va='top')
         for ax in ends:
             ax.plot(*place(y(r['T_exact'][K]), xr), color='k', lw=1.8)
             ax.plot(*place(y(r['T_arsa'][K]), r['x_arsa'][K]), color=C2, lw=0.9)
             ax.plot(*place(y(r['T_rsla'][K]), xl), color=C1, lw=1.2)
         lag = r['lag_rsla_w'][K]
-        ends[0].text(0.03, 0.93, rf'RSLA lag ${lagtext(lag)}\,w$',
-                     transform=ends[0].transAxes, va='top', color=C1)
-    fig.text(0.5, 0.008, rf'real position $x$ [cm], after ${WIDTHS}$ widths traveled ($w = {w:g}$ cm)',
+        ends[0].text(0.03, 0.93, f'after {r["widths"][K]} widths', transform=ends[0].transAxes, va='top')
+        ends[0].text(0.03, 0.78, rf'RSLA lag ${lagtext(lag)}\,w$', transform=ends[0].transAxes, va='top', color=C1)
+    fig.text(0.5, 0.008, rf'real position $x$ [cm] (pulse width $w = {w:g}$ cm)',
              ha='center')
     fig.legend(handles=[Line2D([], [], color='k', ls='--', lw=1.0), Line2D([], [], color='k', lw=1.8),
                         Line2D([], [], color=C2, lw=0.9), Line2D([], [], color=C1, lw=1.2)],

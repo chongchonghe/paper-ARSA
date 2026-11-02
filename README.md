@@ -43,7 +43,7 @@ copy_to_paper.sh                  for the authors: copies figures/ and tables/ i
 | Fig. 3 | `figures/checkerboard.pdf` | `make_checkerboard.py` | `checkerboard.csv` (Honghu.jl `examples/irsla_paper.jl`, section `checkerboard`) |
 | Fig. 4 | `figures/waves_ARSA.pdf` | `make_waves_arsa.py` | none (linear theory) |
 | Fig. 5 | `figures/linear_waves_code.pdf` | `make_linear_waves.py` | `linear_waves_rhd.csv` (Honghu.jl `examples/linear_waves_rhd.jl`) |
-| Fig. 6 | `figures/pulse_drift.pdf` | `make_pulse_drift.py` | `pulse_drift.json` (`sim_pulse_drift.jl`) |
+| Fig. 6 | `figures/pulse_drift.pdf` | `make_pulse_drift.py` | `pulse_drift.json` (`sim_pulse_drift.jl`), `pulse_drift_long.json` (`sim_pulse_drift_long.jl`, bottom row) |
 | Figs. 7, 8 | `figures/shocks_Tgas.pdf`, `figures/shocks_Trad.pdf` | `make_mf_shocks.py` | `mf_shocks.csv`, `mf_shocks_profiles.csv` (`sim_mf_shocks.jl`) |
 | Fig. 9 | `figures/marshak_vaytet.pdf` | `make_marshak_vaytet.py` | `marshak_vaytet_*.csv` (`sim_marshak_vaytet.jl`) |
 | Fig. B.10 | `figures/theta_scan.pdf` | `make_theta_scan.py` | `theta_curves.csv` (`calc_theta_scan.py`) |

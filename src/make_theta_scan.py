@@ -1,4 +1,4 @@
-"""Fig. B.10 of the paper (fig:theta): stability limit of each Fourier mode, normalized by that of the
+"""Fig. B.11 of the paper (fig:theta): stability limit of each Fourier mode, normalized by that of the
 checkerboard, from data/theta_curves.csv (written by calc_theta_scan.py). Writes figures/theta_scan.pdf."""
 import pandas as pd, matplotlib
 matplotlib.use('Agg')

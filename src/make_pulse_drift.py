@@ -1,4 +1,4 @@
-"""Fig. of the paper (fig:pulse_drift): the error of the advected pulse against the number of crossings of the box, for
+"""Fig. 7 of the paper (fig:pulse_drift): the error of the advected pulse against the number of crossings of the box, for
 the RSLA and the ARSA at phi0 = 0.01, with h/phi0 at the peak of the pulse from 1e-3 to 0.3, from data/pulse_drift.csv
 (written by sim_pulse_drift.jl). Writes figures/pulse_drift.pdf.
 

@@ -1,4 +1,4 @@
-"""Figs. 7 and 8 of the paper (fig:shocks_Tgas, fig:shocks_Trad): the radiative shocks of Melon Fuksman et
+"""Figs. 8 and 9 of the paper (fig:shocks_Tgas, fig:shocks_Trad): the radiative shocks of Melon Fuksman et
 al. (2021), from data/mf_shocks.csv and data/mf_shocks_profiles.csv (written by sim_mf_shocks.jl). Writes
 figures/shocks_Tgas.pdf and figures/shocks_Trad.pdf.
 

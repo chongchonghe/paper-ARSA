@@ -4,7 +4,7 @@
     \setlength{\tabcolsep}{2.5pt}
     \begin{tabular}{lcccccccc}
     \hline
-    System & $\rho$ & $T$ & $\kappa$ & $v$ & $\mathcal{L}$ & $\mathcal{M}\mathcal{L}/\mathcal{C}$ & $\hat{h}$ & $\phi/\phi_0$ \\
+    System & $\rho$ & $T$ & $\kappa$ & $v$ & $\mathcal{L}$ & $\mathcal{D}$ & $\hat{h}$ & $\phi/\phi_0$ \\
     & [g cm$^{-3}$] & [K] & [cm$^2$ g$^{-1}$] & [km s$^{-1}$] \\
     \hline
     PPD midplane, 0.1 au & $10^{-7}$ & $1000$ & $1$ & 94 & $3\times10^{3}$ & $0.9$ & $3.8\times10^{-6}$ & $1000$ \\
@@ -23,7 +23,7 @@
     Diffuse ISM & $10^{-24}$ & $10^{4}$ & -- & 10 & $\ll 1$ & $\ll 1$ & $1.5\times10^{14}$ & $1.0$ \\
     \hline
     \end{tabular}
-    \caption{Representative parameters of astrophysical systems, good to a factor of 2--3, and the gain of the ARSA, sorted by the heat-capacity ratio $\hat{h}$. Columns are, from left to right, the system being described (here PPD = protoplanetary disk, AGN = active galactic nucleus, ULIRG = ultraluminous infrared galaxy), its characteristic density $\rho$, temperature $T$, specific opacity $\kappa$, velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion parameter $\mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity $\hat{h} = 4a_rT^3/(\rho c_v)$, and the reduction factor that the limiter of the ARSA sets at $\phi_0 = 10^{-3}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. We adopt $c_v = 2\times10^8$~erg~g$^{-1}$~K$^{-1}$ for ionized hydrogen and helium, $8\times10^7$ and $5\times10^7$ for warm and cold molecular gas, and $1.5\times10^8$ in the solar core.
+    \caption{Representative parameters of astrophysical systems, good to a factor of 2--3, and the gain of the ARSA, sorted by the heat-capacity ratio $\hat{h}$. Columns are, from left to right, the system being described (here PPD = protoplanetary disk, AGN = active galactic nucleus, ULIRG = ultraluminous infrared galaxy), its characteristic density $\rho$, temperature $T$, specific opacity $\kappa$, velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion number $\mathcal{D} = \mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity $\hat{h} = 4a_rT^3/(\rho c_v)$, and the reduction factor that the limiter of the ARSA sets at $\phi_0 = 10^{-3}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. We adopt $c_v = 2\times10^8$~erg~g$^{-1}$~K$^{-1}$ for ionized hydrogen and helium, $8\times10^7$ and $5\times10^7$ for warm and cold molecular gas, and $1.5\times10^8$ in the solar core.
     \label{tab:media}
     }
 \end{table}

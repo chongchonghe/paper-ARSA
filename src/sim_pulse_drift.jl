@@ -97,7 +97,8 @@ function exact(T_lo)                                  # T of the exact solution 
             t += dt
         end
         xe = [0.0; cumsum(dm ./ rhoT.(T, T_lo))]; xe .-= xe[NM ÷ 2 + 1]     # x of the cell edges, centre at 0
-        push!(profs, [interp(x, (xe[1:end-1] .+ xe[2:end]) ./ 2, T) for x in XS])
+        xc, s = (xe[1:end-1] .+ xe[2:end]) ./ 2, V0 * k * TOUT                # shifted by v t in the box
+        push!(profs, [interp(mod(x - s + L / 2, L) - L / 2, xc, T) for x in XS])
     end
     profs
 end

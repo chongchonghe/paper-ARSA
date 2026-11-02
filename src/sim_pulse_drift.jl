@@ -1,4 +1,4 @@
-# Under the RSLA a temperature structure carried by the flow drifts behind it (paper eq:drift), even where the gas holds
+# Under the RSLA a temperature structure carried by the flow drifts behind it (paper Sec. 2.2), even where the gas holds
 # most of the heat capacity, h << phi0, the green region of Fig. 1. This test follows the advected pulse of
 # sim_diffusion_pulse.jl (kappa rho w v/c = 14.4, dynamic diffusion) for NCROSS crossings of the periodic box at
 # phi0 = 0.01 (chat = 10 v0), with T_lo chosen so that h/phi0 at the peak of the pulse is each of HPHI (rho, kappa,
@@ -56,7 +56,7 @@ for (x, rows) in zip(HPHI, results)
     T_lo = rows[1][2]
     T0 = Tprof.(XS, T_lo); h = 4 * CGS.a_rad .* T0 .^ 3 ./ (rhoprof.(XS, T_lo) * CV)
     lag1 = rows[1][9] / L                              # RSLA lag per distance travelled, first crossing
-    @printf("\n== h/phi0 at the peak %g: T_lo = %.4g K, h in [%.3g, %.3g], Mach %.2f; RSLA lag per distance after one crossing %.3g = %.2f x h_peak (1 - phi0)/(gamma phi0) (eq:drift) ==\n",
+    @printf("\n== h/phi0 at the peak %g: T_lo = %.4g K, h in [%.3g, %.3g], Mach %.2f; RSLA lag per distance after one crossing %.3g = %.2f x h_peak (1 - phi0)/(gamma phi0) (the drift speed of Sec. 2.2) ==\n",
             x, T_lo, extrema(h)..., V0 / sqrt(GAMMA * CGS.k_B * T_lo / MU), lag1, lag1 / (x * (1 - PHI0) / GAMMA))
     for r in rows
         @printf("  crossing %d: L1 T RSLA %7.3g%% ARSA %6.3g%% | L1 Tr RSLA %7.3g%% ARSA %6.3g%% | lag RSLA %7.2f cm ARSA %6.2f cm\n",

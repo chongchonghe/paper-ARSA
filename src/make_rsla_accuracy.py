@@ -15,7 +15,7 @@ AMBER, AMBER_INK = '#fde5ad', '#8a4a00'       # the ARSA can help
 GREEN, GREEN_INK = '#d8eed3', '#1f5e2a'       # RSLA accurate
 PHI0, PE_T = 1e-3, 0.1                        # as in calc_rsla_accuracy.py; PHI0 is the phi of the RSLA
 H_LO, H_HI = 0.1 * PHI0, 0.1
-DRIFT_D = PHI0 / 3                            # as in calc_rsla_accuracy.py: drift over a structure's life = 1
+DRIFT_D = 0.1 * PHI0                          # as in calc_rsla_accuracy.py: phi >> D
 XLIM, YLIM = (1e-11, 1e8), (1e-7, 1e5)     # x to 1e8: room for the column of labels; y in h (P = 3h/8 up to 4e4)
 
 
@@ -32,7 +32,7 @@ for lo, hi, color in ((YLIM[0], H_LO, GREEN), (H_LO, H_HI, AMBER), (H_HI, YLIM[1
     m = (hc >= lo) & (hc <= hi)
     hh = np.concatenate(([lo], hc[m], [hi]))
     xx = np.interp(np.log(hh), np.log(hc), xc)
-    if color == GREEN:                        # the RSLA is accurate only where structures drift less than their size
+    if color == GREEN:                        # the RSLA is accurate only where advected structures do not drift
         ax.fill_betweenx(hh, xx, DRIFT_D, color=GREEN, lw=0)
         ax.fill_betweenx(hh, DRIFT_D, XLIM[1], color=AMBER, lw=0)
     else:
@@ -51,7 +51,7 @@ ax.text(0.3, 2.0, bold('RSLA inaccurate:\ndiffusion too slow;\nARSA cannot help'
 ax.text(XLIM[1] / 1.5, 1.2e-3, bold('ARSA can help:\nwith $\\phi_0$ above $\\hat{h}$,\n$\\phi = 1$ in thick cells'),
         color=AMBER_INK, ha='right', va='center')
 ax.text(DRIFT_D / 1.5, 3e-7, bold('RSLA\naccurate'), color=GREEN_INK, ha='right', va='center')
-ax.text(DRIFT_D * 2, 2.2e-7, bold('advected structures drift: $3\\mathcal{D}/\\phi > 1$'), color=AMBER_INK,
+ax.text(DRIFT_D * 2, 2.2e-7, bold('advected structures drift: $\\mathcal{D} > 0.1\\,\\phi$'), color=AMBER_INK,
         ha='left', va='center', fontsize=7)
 
 LABEL = {   # label text and position beside the point: (text, x, y, ha)

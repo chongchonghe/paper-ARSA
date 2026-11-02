@@ -1,15 +1,18 @@
-"""The drift of thermal structures under the RSLA (paper Sec. 2.2, eq:drift and eq:drift_life), from the linear waves
-of the RHD equations on a moving background (rhd_waves.py, Mach M = 5, C = 1e4, gamma = 5/3). For the entropy mode,
-which carries a temperature structure with the flow:
+"""Checks the drift of thermal structures under the RSLA (paper Sec. 2.2: a speed of order (h/phi) v, and a drift of
+order D/phi times the size of the structure before it diffuses away, whatever h), from the linear waves of the RHD
+equations on a moving background (src/waves.py, Mach M = 5, C = 1e4, gamma = 5/3). For the entropy mode, which
+carries a temperature structure with the flow:
   drift    (M - Re Omega)/M, the speed at which it falls behind the flow, as a fraction of the flow speed; the exact
-           equations give zero, the RSLA (h/gamma)(1/phi - 1) to first order in h/phi (eq:drift);
-  life     the drift accumulated before the mode decays, (M - Re Omega)/(-Im Omega) radians, against 3 D/phi with
-           D = M tau/C the dynamic-diffusion number of the mode (eq:drift_life).
+           equations give zero, the RSLA (h/gamma)(1/phi - 1) to first order in h/phi;
+  life     the drift accumulated before the mode decays, (M - Re Omega)/(-Im Omega) radians, against 3 D (1 - phi)/phi
+           with D = M tau/C the dynamic-diffusion number of the mode.
 tau is the optical depth per radian, from static (D << phi) to dynamic diffusion (D >> 1). Prints the ratios
 drift/(h (1 - phi)/(gamma phi)) and life/(3 D (1 - phi)/phi), which are 1 to first order in h/phi.
 
-    python calc_entropy_drift.py
+    python checks/check_entropy_drift.py
 """
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src'))   # waves.py
 from waves import modes
 
 C, M, GAMMA = 1e4, 5.0, 5 / 3

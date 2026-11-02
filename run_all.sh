@@ -40,7 +40,7 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
         pulse_drift)         NAME="src/sim_pulse_drift.jl"; CMD=(julia --project=. -t 6 src/sim_pulse_drift.jl) ;;
         mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
-        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity | entropy_drift)
+        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity)
                              NAME="src/calc_$1.py"; CMD=("$PY" "src/calc_$1.py") ;;
         m1_checks)           NAME="checks/m1/*.py"; CMD=(m1_checks) ;;          # App. C, by B. Wibking
         table_media | waves_rsla)                          # figure and table scripts whose numbers the paper quotes
@@ -91,7 +91,7 @@ case ${1:-all} in
     all)
         pids=(); names=()
         for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
-                 rsla_accuracy theta_scan m1_stability waves_heat_capacity m1_checks pulse_drift entropy_drift; do
+                 rsla_accuracy theta_scan m1_stability waves_heat_capacity m1_checks pulse_drift; do
             job "$s"
         done
         wait_jobs

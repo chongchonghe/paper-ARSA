@@ -1,23 +1,26 @@
 # Under the RSLA a temperature structure carried by the flow falls behind it where phi0 is not >> D, even where
 # phi0 >> P (paper Sec. 5.3, Fig. 7). This test follows the advected pulse of sim_diffusion_pulse.jl
-# (kappa rho w v/c = D = 14.4, dynamic diffusion) for NCROSS = 12 crossings of the periodic box (512 pulse widths)
-# at phi0 = 0.01 (chat = 10 v0), with T_lo chosen so that phi0/P at the peak of the pulse is each of PHI0_P (rho,
-# kappa, w and v fixed); P = a_r T^4/(rho k_B T/mu) is the pressure ratio of the paper, P = h/(4 (gamma - 1)). For
-# each phi0/P, the reference (chat = c), the RSLA and the ARSA run as separate jobs. Where h at the peak exceeds
-# phi0 (phi0/P = 1), phi of the ARSA saturates below 1 at the peak; there the ARSA also runs at phi0 = PHI0_HI,
-# above h, as Fig. 1 prescribes (the run arsa_hi; json keys *_arsa_hi). Each job records the position of the pulse
-# NSAMPLE times per crossing: the centroid of T - T_lo in the periodic box (a circular mean, then the mean of x over
-# the box centred on it), unwrapped into the real position x, which starts at 0. Writes data/pulse_drift.json: for
-# each phi0/P, T_lo, P and h at the peak, the Mach number, the smallest phi of the ARSA, and at every integer
-# crossing k = 0..NCROSS the real centroid x [cm] of each run, the lags (x_ref - x)/w of the RSLA and the ARSA in
-# pulse widths w = 24 cm, and the profiles of T and T_rad [K] on the cells XS of the box; run_all.sh saves the
-# printout in data/pulse_drift.txt. The jobs run on single-threaded worker processes, since Honghu.jl spreads its
-# grid loops over the threads of a process: four for the references (about 100 s per crossing each, 25 min in
-# all), two for the other runs (seconds per crossing). logs/pulse_drift.progress shows each crossing as it ends.
+# (kappa rho w v/c = D = 14.4, dynamic diffusion), on NX = 512 cells, for NCROSS = 12 crossings of the periodic box
+# (512 pulse widths) at phi0 = 0.01 (chat = 10 v0), with T_lo chosen so that phi0/P at the peak of the pulse is
+# each of PHI0_P (rho, kappa, w and v fixed); P = a_r T^4/(rho k_B T/mu) is the pressure ratio of the paper,
+# P = h/(4 (gamma - 1)), so h < phi0 at the peak in every row. The RSLA and the ARSA of each phi0/P run as separate
+# jobs; the reference is the exact solution (phi = 1, no RSLA). By Galilean invariance it is the pulse at rest,
+# shifted by v t. At rest the pulse stays in pressure balance and kappa rho dx >> 1, so in the column mass m
+# (dm = rho dx) the enthalpy per mass h = c_p T + (4/3) a T^4/rho obeys dh/dt = (c/(3 kappa)) d^2(a T^4)/dm^2,
+# with rho(T) from the pressure balance; exact() solves it explicitly on NM cells in m (converged to 2e-4 in T)
+# and maps it back to x. Each run records the position of the pulse NSAMPLE times per crossing: the centroid of
+# T - T_lo in the periodic box (a circular mean, then the mean of x over the box centred on it), unwrapped into
+# the real position x, which starts at 0; that of the exact solution is v t. Writes
+# data/pulse_drift.json: for each phi0/P, T_lo, P and h at the peak, the Mach number, the smallest phi of the
+# ARSA, and at every integer crossing k = 0..NCROSS the real centroid x [cm] of each run, the lags (v t - x)/w of
+# the RSLA and the ARSA in pulse widths w = 24 cm, and the profiles of T [K] of the exact solution and of T and
+# T_rad [K] of the runs on the cells XS of the box; run_all.sh saves the printout in data/pulse_drift.txt. The runs
+# use single-threaded worker processes, since Honghu.jl spreads its grid loops over the threads of a process;
+# about 5 min with 8 workers. logs/pulse_drift.progress shows each crossing as it ends.
 #
 #   ./run_all.sh pulse_drift      (or: julia --project=. src/sim_pulse_drift.jl)
 using Distributed, Printf
-addprocs(6; exeflags=`--project=$(Base.active_project()) -t 1`)
+addprocs(8; exeflags=`--project=$(Base.active_project()) -t 1`)
 const SRC = @__DIR__
 @everywhere workers() const SRC = $SRC
 @everywhere begin
@@ -26,9 +29,8 @@ const SRC = @__DIR__
 end
 
 @everywhere begin
-const PHI0_P = (1, 10, 100, 1000)                     # phi0/P at the peak of the pulse
-const PHI0, NCROSS, NSAMPLE, NX = 0.01, 12, 8, 128
-const PHI0_HI = 0.03                                  # the ARSA where h at the peak > PHI0
+const PHI0_P = (3, 30, 300, 3000)                     # phi0/P at the peak of the pulse
+const PHI0, NCROSS, NSAMPLE, NX = 0.01, 12, 8, 512
 const TCROSS = L / V0                                 # one crossing of the box
 const XS = [-L / 2 + (i - 0.5) * L / NX for i in 1:NX]
 const PROGRESS = joinpath(SRC, "..", "logs", "pulse_drift.progress")
@@ -51,7 +53,7 @@ function centroid(T, T_lo)                            # in the periodic box
 end
 
 function track(label, T_lo, phi0, cfl, lim)           # one run: real centroid and profiles at every crossing
-    s = pulse(; T_lo, phi0, cfl, lim)
+    s = pulse(; T_lo, phi0, cfl, lim, n=NX)
     g = s.grid
     prof(s) = (T=gas_temperature(s)[:, 1, 1], Tr=radiation_temperature(s)[:, 1, 1])
     p = prof(s)
@@ -67,49 +69,68 @@ function track(label, T_lo, phi0, cfl, lim)           # one run: real centroid a
         push!(pos, x); push!(profs, p)
         f = Base.Filesystem.open(PROGRESS, Base.JL_O_WRONLY | Base.JL_O_CREAT | Base.JL_O_APPEND, 0o644)
         write(f, string(Libc.strftime("%H:%M:%S", time()), "  ", label, ": crossing ", k, " of ", NCROSS, "\n"))
-        close(f)                                      # one O_APPEND write: the lines of the jobs do not mix
+        close(f)                                      # one O_APPEND write: the lines of the runs do not mix
     end
     (; pos, profs, phimin, steps=s.diag.steps, sub=s.diag.rad_substeps)
 end
 end
 
-const RUNS = ((:ref, 1.0, CR_REF, ConstantChat()), (:rsla, PHI0, CR, ConstantChat()),
-              (:arsa, PHI0, CR, StabilityBound()))
+const NM = 8192                                       # cells in m of the exact solution
+interp(xq, xs, ys) = (i = clamp(searchsortedlast(xs, xq), 1, length(xs) - 1);
+                      ys[i] + (ys[i+1] - ys[i]) * clamp((xq - xs[i]) / (xs[i+1] - xs[i]), 0, 1))
+rhoT(T, T_lo) = RHO0 * T_lo / T + (CGS.a_rad * MU / (3 * CGS.k_B)) * (T_lo^4 / T - T^3)    # pressure balance
+hT(T, T_lo) = GAMMA * CV * T + 4 * CGS.a_rad * T^4 / (3 * rhoT(T, T_lo))                     # enthalpy per mass
+function exact(T_lo)                                  # T of the exact solution on XS at every crossing
+    xf = collect(range(-L / 2, L / 2, length=64NM + 1))   # m(x) of the initial pulse, m = 0 at x = -L/2
+    mf = [0.0; cumsum((rhoprof.(xf[1:end-1], T_lo) .+ rhoprof.(xf[2:end], T_lo)) ./ 2 .* (L / 64NM))]
+    dm = mf[end] / NM
+    T = [Tprof(interp((j - 0.5) * dm, mf, xf), T_lo) for j in 1:NM]
+    h, K, t = hT.(T, T_lo), CGS.c_light / (3 * KAPPA), 0.0
+    dhdT(T) = (hT(T * (1 + 1e-6), T_lo) - hT(T, T_lo)) / (1e-6 * T)
+    profs = []
+    for k in 0:NCROSS
+        while t < k * TCROSS
+            E = CGS.a_rad .* T .^ 4
+            dt = min(0.4 * dm^2 / (K * maximum(4 .* CGS.a_rad .* T .^ 3 ./ dhdT.(T))), k * TCROSS - t)
+            h .+= dt * K .* (circshift(E, 1) .- 2 .* E .+ circshift(E, -1)) ./ dm^2
+            for _ in 1:3; T .-= (hT.(T, T_lo) .- h) ./ dhdT.(T); end    # T from h (Newton)
+            t += dt
+        end
+        xe = [0.0; cumsum(dm ./ rhoT.(T, T_lo))]; xe .-= xe[NM ÷ 2 + 1]     # x of the cell edges, centre at 0
+        push!(profs, [interp(x, (xe[1:end-1] .+ xe[2:end]) ./ 2, T) for x in XS])
+    end
+    profs
+end
+
+const RUNS = ((:rsla, ConstantChat()), (:arsa, StabilityBound()))
 T_los = Dict(r => find_Tlo(PHI0 / r) for r in PHI0_P)
-hpeak(T_lo) = 4 * (GAMMA - 1) * Ppeak(T_lo)
-jobs = [(r, name, phi0, cfl, lim) for (name, phi0, cfl, lim) in RUNS for r in PHI0_P]    # the references first
-append!(jobs, [(r, :arsa_hi, PHI0_HI, CR, StabilityBound()) for r in PHI0_P if hpeak(T_los[r]) > PHI0])
+jobs = [(r, name, lim) for r in PHI0_P for (name, lim) in RUNS]
 mkpath(dirname(PROGRESS)); rm(PROGRESS; force=true)
-out = pmap(j -> track("phi0/P = $(j[1]) $(j[2])", T_los[j[1]], j[3:end]...), jobs)
+out = pmap(j -> track("phi0/P = $(j[1]) $(j[2])", T_los[j[1]], PHI0, CR, j[3]), jobs)
 res = Dict((j[1], j[2]) => o for (j, o) in zip(jobs, out))
 
-@printf("phi0 = %g, D = kappa rho w v/c = %.3g, %d crossings of %g cm (%.3g s each, %.3g w); w = %g cm\n",
-        PHI0, KAPPA * RHO0 * W * V0 / CGS.c_light, NCROSS, L, TCROSS, L / W, W)
+@printf("phi0 = %g, D = kappa rho w v/c = %.3g, %d crossings of %g cm (%.3g s each, %.3g w); w = %g cm, %d cells\n",
+        PHI0, KAPPA * RHO0 * W * V0 / CGS.c_light, NCROSS, L, TCROSS, L / W, W, NX)
 rows = []
 for r in PHI0_P
     T_lo = T_los[r]
-    ref, rsla, arsa = res[(r, :ref)], res[(r, :rsla)], res[(r, :arsa)]
+    rsla, arsa, ex = res[(r, :rsla)], res[(r, :arsa)], exact(T_lo)
     T0 = Tprof.(XS, T_lo); h = 4 * CGS.a_rad .* T0 .^ 3 ./ (rhoprof.(XS, T_lo) * CV)
     mach = V0 / sqrt(GAMMA * CGS.k_B * T_lo / MU)
-    lag(a) = (ref.pos .- a.pos) ./ W
-    @printf("\n== phi0/P at the peak %g: T_lo = %.4g K, P at the peak %.3g, h in [%.3g, %.3g], Mach %.2f; ARSA phi >= %.3g; steps ref %d, RSLA %d, ARSA %d ==\n",
-            r, T_lo, Ppeak(T_lo), extrema(h)..., mach, arsa.phimin, ref.steps, rsla.steps, arsa.steps)
-    hi = get(res, (r, :arsa_hi), nothing)
-    hi === nothing || @printf("  ARSA at phi0 = %g: phi >= %.3g, %d steps\n", PHI0_HI, hi.phimin, hi.steps)
+    xex = [V0 * k * TCROSS for k in 0:NCROSS]              # the centroid of the exact solution, v t
+    lag(a) = (xex .- a.pos) ./ W
+    @printf("\n== phi0/P at the peak %g: T_lo = %.4g K, P at the peak %.3g, h in [%.3g, %.3g], Mach %.2f; ARSA phi >= %.3g; steps RSLA %d, ARSA %d; peak (T - T_lo)/T_lo of the exact solution %.4f at the start, %.4f at the end ==\n",
+            r, T_lo, Ppeak(T_lo), extrema(h)..., mach, arsa.phimin, rsla.steps, arsa.steps,
+            (maximum(ex[1]) - T_lo) / T_lo, (maximum(ex[end]) - T_lo) / T_lo)
     for k in (1, 2, 4, 8, NCROSS)
-        @printf("  crossing %2d (%6.0f w traveled): centroid lag RSLA %9.3f w, ARSA %7.3f w%s\n",
-                k, (ref.pos[k+1] - ref.pos[1]) / W, lag(rsla)[k+1], lag(arsa)[k+1],
-                hi === nothing ? "" : @sprintf(", ARSA at phi0 = %g %7.3f w", PHI0_HI, lag(hi)[k+1]))
+        @printf("  crossing %2d (%4.0f w traveled): centroid lag RSLA %8.3f w, ARSA %7.3f w\n",
+                k, xex[k+1] / W, lag(rsla)[k+1], lag(arsa)[k+1])
     end
-    row = (phi0_P=r, T_lo=T_lo, P_peak=Ppeak(T_lo), h_peak=maximum(h), mach=mach, arsa_phi_min=arsa.phimin,
-           crossing=collect(0:NCROSS), x_ref=ref.pos, x_rsla=rsla.pos, x_arsa=arsa.pos,
-           lag_rsla_w=lag(rsla), lag_arsa_w=lag(arsa),
-           T_ref=[p.T for p in ref.profs], T_rsla=[p.T for p in rsla.profs], T_arsa=[p.T for p in arsa.profs],
-           Tr_ref=[p.Tr for p in ref.profs], Tr_rsla=[p.Tr for p in rsla.profs], Tr_arsa=[p.Tr for p in arsa.profs])
-    hi === nothing || (row = (; row..., phi0_arsa_hi=PHI0_HI, arsa_hi_phi_min=hi.phimin, x_arsa_hi=hi.pos,
-                                lag_arsa_hi_w=lag(hi), T_arsa_hi=[p.T for p in hi.profs],
-                                Tr_arsa_hi=[p.Tr for p in hi.profs]))
-    push!(rows, row)
+    push!(rows, (phi0_P=r, T_lo=T_lo, P_peak=Ppeak(T_lo), h_peak=maximum(h), mach=mach, arsa_phi_min=arsa.phimin,
+                 crossing=collect(0:NCROSS), x_exact=xex, x_rsla=rsla.pos, x_arsa=arsa.pos,
+                 lag_rsla_w=lag(rsla), lag_arsa_w=lag(arsa),
+                 T_exact=ex, T_rsla=[p.T for p in rsla.profs], T_arsa=[p.T for p in arsa.profs],
+                 Tr_rsla=[p.Tr for p in rsla.profs], Tr_arsa=[p.Tr for p in arsa.profs]))
 end
 
 json(io, x::Real) = print(io, isfinite(x) ? @sprintf("%.7g", x) : "null")

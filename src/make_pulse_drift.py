@@ -1,9 +1,8 @@
 """Fig. 7 of the paper (fig:pulse_drift): the advected pulse after K crossings of the periodic box, one row per
-phi0/P at the peak (1 to 1000), from data/pulse_drift.json (written by sim_pulse_drift.jl). The x-axis is the real
+phi0/P at the peak (3 to 3000), from data/pulse_drift.json (written by sim_pulse_drift.jl). The x-axis is the real
 (unwrapped) position, broken into windows of the same width, 2 HALF pulse widths, so that the pulse has the same
-width on the page in every window: the start (the initial pulse, dashed), and at the end the reference (chat = c),
-the ARSA and the RSLA, in one window when the RSLA lags by less than 2 HALF w and in two otherwise. Where the
-ARSA at phi0 = 0.01 saturates (phi0/P = 1), the row shows the ARSA at the higher phi0 of the run arsa_hi.
+width on the page in every window: the start (the initial pulse, dashed), and at the end the exact solution
+(phi = 1), the ARSA and the RSLA, in one window when the RSLA lags by less than 2 HALF w and in two otherwise.
 Writes figures/pulse_drift.pdf.
 
     python make_pulse_drift.py
@@ -13,7 +12,7 @@ import numpy as np, matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-from matplotlib.ticker import MultipleLocator, FuncFormatter
+from matplotlib.ticker import FuncFormatter
 from paper_style import STYLE, TEXTWIDTH, C1, C2, DATA, save
 
 K = 12                       # the crossing shown
@@ -51,8 +50,7 @@ with plt.rc_context(STYLE):
     for i, r in enumerate(runs):
         T_lo = r['T_lo']
         y = lambda T: (np.array(T) - T_lo) / T_lo
-        arsa = 'arsa_hi' if 'x_arsa_hi' in r else 'arsa'
-        xr, xl = r['x_ref'][K], r['x_rsla'][K]
+        xr, xl = r['x_exact'][K], r['x_rsla'][K]
         merged = xr - xl < 2 * HALF * w
         start = fig.add_subplot(gs[i, 0])
         ends = [fig.add_subplot(gs[i, 1:])] if merged else [fig.add_subplot(gs[i, 1]), fig.add_subplot(gs[i, 2])]
@@ -64,28 +62,26 @@ with plt.rc_context(STYLE):
             span = ax.get_position().width * fig.get_figwidth() * cm_per_in
             ax.set_xlim(c - span / 2, c + span / 2)
             ax.set_ylim(-0.08, 1.12)
-            ax.xaxis.set_major_locator(MultipleLocator(100))
+            ax.set_xticks([t for t in np.arange(100 * np.ceil((c - span / 2) / 100), c + span / 2, 100)
+                           if abs(t - c) < span / 2 - 20])        # none within 20 cm of the breaks
             ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f'${v:,.0f}$'.replace(',', r'\,')))
         for a, b in zip(axes[:-1], axes[1:]):
             breaks(a, b)
-        start.plot(*place(y(r['T_ref'][0]), 0.0), color='k', ls='--', lw=1.0)
+        start.plot(*place(y(r['T_exact'][0]), 0.0), color='k', ls='--', lw=1.0)
         start.set_ylabel(r'$(T - T_{\rm lo})/T_{\rm lo}$')
         start.set_yticks([0, 0.5, 1])
         start.text(0.04, 0.93, rf'$\phi_0/\mathcal{{P}} = {r["phi0_P"]}$', transform=start.transAxes, va='top')
         for ax in ends:
-            ax.plot(*place(y(r['T_ref'][K]), xr), color='k', lw=1.8)
-            ax.plot(*place(y(r[f'T_{arsa}'][K]), r[f'x_{arsa}'][K]), color=C2, lw=0.9)
+            ax.plot(*place(y(r['T_exact'][K]), xr), color='k', lw=1.8)
+            ax.plot(*place(y(r['T_arsa'][K]), r['x_arsa'][K]), color=C2, lw=0.9)
             ax.plot(*place(y(r['T_rsla'][K]), xl), color=C1, lw=1.2)
         lag = r['lag_rsla_w'][K]
-        ends[0].text(0.03 if not merged else 0.03, 0.93, rf'RSLA lag ${lagtext(lag)}\,w$',
+        ends[0].text(0.03, 0.93, rf'RSLA lag ${lagtext(lag)}\,w$',
                      transform=ends[0].transAxes, va='top', color=C1)
-        if arsa == 'arsa_hi':
-            ends[-1].text(0.97, 0.93, rf'ARSA at $\phi_0 = {r["phi0_arsa_hi"]:g}$', transform=ends[-1].transAxes,
-                          va='top', ha='right', color=C2)
     fig.text(0.5, 0.008, rf'real position $x$ [cm], after ${K * L / w:.0f}$ widths traveled ($w = {w:g}$ cm)',
              ha='center')
     fig.legend(handles=[Line2D([], [], color='k', ls='--', lw=1.0), Line2D([], [], color='k', lw=1.8),
                         Line2D([], [], color=C2, lw=0.9), Line2D([], [], color=C1, lw=1.2)],
-               labels=['initial', r'reference ($\hat{c} = c$)', 'ARSA', 'RSLA'],
+               labels=['initial', 'exact', 'ARSA', 'RSLA'],
                loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.0))
     save(fig, 'pulse_drift')

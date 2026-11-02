@@ -1,32 +1,44 @@
-# src/sim_pulse_drift.jl, 2026-11-02 23:16, paper-ARSA df1b41e, Honghu.jl v0.1.0 (tree e63aa35)
-phi0 = 0.01, D = kappa rho w v/c = 14.4, 12 crossings of 1024 cm (3.41e-05 s each, 42.7 w); w = 24 cm, 512 cells
+# src/sim_pulse_drift.jl, 2026-11-02 23:51, paper-ARSA 020dbb5, Honghu.jl v0.1.0 (tree e63aa35)
+phi0 = 0.01, D = kappa rho w v/c = 14.4, 256 widths traveled (w = 24 cm), output every 32 w (2.56e-05 s); box 1024 cm (42.7 w), 512 cells
 
-== phi0/P at the peak 3: T_lo = 1.056e+06 K, P at the peak 0.00333, h in [0.000555, 0.00887], Mach 3.79; ARSA phi >= 1; steps RSLA 14982, ARSA 16156; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9166 at the end ==
-  crossing  1 (  43 w traveled): centroid lag RSLA    4.202 w, ARSA  -0.017 w
-  crossing  2 (  85 w traveled): centroid lag RSLA    4.625 w, ARSA   0.000 w
-  crossing  4 ( 171 w traveled): centroid lag RSLA    9.673 w, ARSA  -0.034 w
-  crossing  8 ( 341 w traveled): centroid lag RSLA   17.306 w, ARSA  -0.058 w
-  crossing 12 ( 512 w traveled): centroid lag RSLA   23.171 w, ARSA  -0.083 w
+== phi0/P at the peak 3: T_lo = 1.056e+06 K, P at the peak 0.00333, h in [0.000555, 0.00887], Mach 3.79; ARSA phi >= 1; steps RSLA 7653, ARSA 8107; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9506 at the end ==
+   32 w traveled: centroid lag RSLA    3.288 w, ARSA  -0.014 w
+   64 w traveled: centroid lag RSLA    5.641 w, ARSA  -0.023 w
+   96 w traveled: centroid lag RSLA    3.274 w, ARSA  -0.007 w
+  128 w traveled: centroid lag RSLA    6.008 w, ARSA  -0.018 w
+  160 w traveled: centroid lag RSLA    8.745 w, ARSA  -0.030 w
+  192 w traveled: centroid lag RSLA   11.560 w, ARSA  -0.039 w
+  224 w traveled: centroid lag RSLA   12.418 w, ARSA  -0.046 w
+  256 w traveled: centroid lag RSLA   13.517 w, ARSA  -0.030 w
 
-== phi0/P at the peak 30: T_lo = 4.904e+05 K, P at the peak 0.000333, h in [5.55e-05, 0.000887], Mach 5.56; ARSA phi >= 1; steps RSLA 13143, ARSA 13537; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9874 at the end ==
-  crossing  1 (  43 w traveled): centroid lag RSLA    0.636 w, ARSA  -0.002 w
-  crossing  2 (  85 w traveled): centroid lag RSLA    1.164 w, ARSA  -0.004 w
-  crossing  4 ( 171 w traveled): centroid lag RSLA    1.234 w, ARSA  -0.003 w
-  crossing  8 ( 341 w traveled): centroid lag RSLA    2.739 w, ARSA  -0.009 w
-  crossing 12 ( 512 w traveled): centroid lag RSLA    3.922 w, ARSA  -0.011 w
+== phi0/P at the peak 30: T_lo = 4.904e+05 K, P at the peak 0.000333, h in [5.55e-05, 0.000887], Mach 5.56; ARSA phi >= 1; steps RSLA 6667, ARSA 6766; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9931 at the end ==
+   32 w traveled: centroid lag RSLA    0.492 w, ARSA  -0.002 w
+   64 w traveled: centroid lag RSLA    0.910 w, ARSA  -0.003 w
+   96 w traveled: centroid lag RSLA    1.286 w, ARSA  -0.004 w
+  128 w traveled: centroid lag RSLA    0.742 w, ARSA  -0.001 w
+  160 w traveled: centroid lag RSLA    1.119 w, ARSA  -0.003 w
+  192 w traveled: centroid lag RSLA    1.470 w, ARSA  -0.004 w
+  224 w traveled: centroid lag RSLA    1.850 w, ARSA  -0.005 w
+  256 w traveled: centroid lag RSLA    2.262 w, ARSA  -0.007 w
 
-== phi0/P at the peak 300: T_lo = 2.276e+05 K, P at the peak 3.33e-05, h in [5.56e-06, 8.87e-05], Mach 8.15; ARSA phi >= 1; steps RSLA 11904, ARSA 11904; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9979 at the end ==
-  crossing  1 (  43 w traveled): centroid lag RSLA    0.069 w, ARSA  -0.000 w
-  crossing  2 (  85 w traveled): centroid lag RSLA    0.131 w, ARSA  -0.000 w
-  crossing  4 ( 171 w traveled): centroid lag RSLA    0.181 w, ARSA  -0.000 w
-  crossing  8 ( 341 w traveled): centroid lag RSLA    0.380 w, ARSA  -0.001 w
-  crossing 12 ( 512 w traveled): centroid lag RSLA    0.520 w, ARSA  -0.001 w
+== phi0/P at the peak 300: T_lo = 2.276e+05 K, P at the peak 3.33e-05, h in [5.56e-06, 8.87e-05], Mach 8.15; ARSA phi >= 1; steps RSLA 5920, ARSA 5920; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9985 at the end ==
+   32 w traveled: centroid lag RSLA    0.054 w, ARSA  -0.000 w
+   64 w traveled: centroid lag RSLA    0.100 w, ARSA  -0.000 w
+   96 w traveled: centroid lag RSLA    0.146 w, ARSA  -0.000 w
+  128 w traveled: centroid lag RSLA    0.192 w, ARSA  -0.001 w
+  160 w traveled: centroid lag RSLA    0.233 w, ARSA  -0.001 w
+  192 w traveled: centroid lag RSLA    0.157 w, ARSA  -0.000 w
+  224 w traveled: centroid lag RSLA    0.208 w, ARSA  -0.000 w
+  256 w traveled: centroid lag RSLA    0.252 w, ARSA  -0.000 w
 
-== phi0/P at the peak 3000: T_lo = 1.056e+05 K, P at the peak 3.33e-06, h in [5.56e-07, 8.87e-06], Mach 11.97; ARSA phi >= 1; steps RSLA 11904, ARSA 11904; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9990 at the end ==
-  crossing  1 (  43 w traveled): centroid lag RSLA    0.007 w, ARSA  -0.000 w
-  crossing  2 (  85 w traveled): centroid lag RSLA    0.013 w, ARSA  -0.000 w
-  crossing  4 ( 171 w traveled): centroid lag RSLA    0.026 w, ARSA  -0.000 w
-  crossing  8 ( 341 w traveled): centroid lag RSLA    0.033 w, ARSA   0.000 w
-  crossing 12 ( 512 w traveled): centroid lag RSLA    0.060 w, ARSA   0.000 w
+== phi0/P at the peak 3000: T_lo = 1.056e+05 K, P at the peak 3.33e-06, h in [5.56e-07, 8.87e-06], Mach 11.97; ARSA phi >= 1; steps RSLA 5920, ARSA 5920; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9991 at the end ==
+   32 w traveled: centroid lag RSLA    0.006 w, ARSA  -0.000 w
+   64 w traveled: centroid lag RSLA    0.010 w, ARSA  -0.000 w
+   96 w traveled: centroid lag RSLA    0.015 w, ARSA  -0.000 w
+  128 w traveled: centroid lag RSLA    0.020 w, ARSA  -0.000 w
+  160 w traveled: centroid lag RSLA    0.024 w, ARSA  -0.000 w
+  192 w traveled: centroid lag RSLA    0.029 w, ARSA  -0.000 w
+  224 w traveled: centroid lag RSLA    0.034 w, ARSA  -0.000 w
+  256 w traveled: centroid lag RSLA    0.022 w, ARSA   0.000 w
 
 wrote data/pulse_drift.json

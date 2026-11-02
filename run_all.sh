@@ -37,7 +37,7 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
                              CMD=(julia --project=. -t 4 "$(examples)/irsla_paper.jl" --no-plot --outdir=data checkerboard) ;;
         linear_waves_rhd)    NAME="Honghu.jl examples/linear_waves_rhd.jl"                              # Fig. 5
                              CMD=(julia --project=. -t 4 "$(examples)/linear_waves_rhd.jl" --no-plot --outdir=data) ;;
-        pulse_drift)         NAME="src/sim_pulse_drift.jl"; CMD=(julia --project=. -t 16 src/sim_pulse_drift.jl) ;;
+        pulse_drift)         NAME="src/sim_pulse_drift.jl"; CMD=(julia --project=. src/sim_pulse_drift.jl) ;;
         mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
         rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity)

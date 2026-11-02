@@ -57,7 +57,7 @@ ax.text(DRIFT_D * 2, 2.2e-7, bold('advected structures drift: $\\mathcal{D} > 0.
 LABEL = {   # label text and position beside the point: (text, x, y, ha)
     'PPD midplane, 1 au': ('PPD midplane, 1 au', 0.1, 1.1e-5, 'left'),
     'PPD midplane, 0.1 au': ('PPD midplane, 0.1 au', 1.8, 3.4e-6, 'left'),
-    'Hot Jupiter atmosphere': ('hot Jupiter atmosphere', 2e-5, 3.5e-5, 'left'),
+    'Hot Jupiter atmosphere': ('hot Jupiter atmosphere', 2.5e-4, 3.5e-5, 'left'),     # right of the dashed line
     'First hydrostatic core': ('first hydrostatic core', 2.5e-3, 1.2e-4, 'left'),
     'PPD outer region, 100 au': ('PPD, 100 au', 5e-7, 4.8e-3, 'right'),
     'Massive protostellar envelope': ('massive protostellar envelope', 3e-4, 0.061, 'left'),
@@ -85,6 +85,8 @@ for r in systems:
     if name in LABEL:
         txt, xx, yy, ha = LABEL[name]
         ax.text(xx, yy, txt, ha=ha, va='center', fontsize=8, color=INK)
+        if name == 'Hot Jupiter atmosphere':  # leader line to the label
+            ax.plot([x * 1.6, xx / 1.3], [y * 1.1, yy], color=MUTED, lw=0.6)
     else:
         yy = ycol[name]
         ax.plot([x * 1.6, xcol / 1.3], [y, yy], color=MUTED, lw=0.6)

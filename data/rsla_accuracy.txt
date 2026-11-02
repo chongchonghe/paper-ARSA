@@ -1,18 +1,18 @@
-# src/calc_rsla_accuracy.py, 2026-11-02 15:51, paper-ARSA 842b4f9, Honghu.jl v0.1.0 (tree e63aa35)
-phi = 0.001; Pe_phi = 0.1 at tau v/c = 0.1/(3 (1/h + 1/phi)): 0.0333 h for h << phi, 3.33e-05 for h >> phi; the ARSA can help for 0.0001 < h < 0.1, and for h < 0.0001 where tau v/c > phi/3 = 0.000333
-system                           tau v/c         h    Pe_phi  t_phi/t_1     v_d/v    3D/phi  region
-PPD midplane, 0.1 au                0.94   3.8e-06   7.5e+05          1    0.0023  2.82e+03  ARSA can help
-PPD midplane, 1 au                  0.05   8.3e-06   1.8e+04       1.01     0.005       150  ARSA can help
-Hot Jupiter atmosphere             1e-05   1.3e-05       2.4       1.01    0.0077      0.03  RSLA accurate
-First hydrostatic core            0.0013   0.00012        35       1.12     0.073      3.75  ARSA can help
-Solar core                           nan    0.0045       nan       5.51       2.7       nan  no flow / thin
-PPD outer region, 100 au           1e-06    0.0048    0.0036       5.81       2.9     0.003  fast diffusion
-Massive protostellar envelope    0.00015     0.061      0.46         58        36      0.45  ARSA can help
-PPD atmosphere, 1 au               5e-07       0.3    0.0015        233   1.8e+02    0.0015  fast diffusion
-Star-forming clump               1.7e-05        16      0.05        942   9.7e+03      0.05  fast diffusion
-ULIRG nucleus                      0.011   7.7e+02        32        999   4.6e+05        32  RSLA inaccurate
-Massive-star envelope             0.0033   1.2e+03        10        999   7.3e+05        10  RSLA inaccurate
-AGN dusty torus                     0.01     1e+04        30      1e+03   6.1e+06        30  RSLA inaccurate
-Cold molecular cloud             2.3e-10     1e+04     7e-07      1e+03   6.1e+06     7e-07  fast diffusion
-Diffuse ISM                          nan   1.5e+14       nan      1e+03   9.1e+16       nan  no flow / thin
+# src/calc_rsla_accuracy.py, 2026-11-02 18:26, paper-ARSA e5894bd, Honghu.jl v0.1.0 (tree e63aa35)
+phi = 0.001; Pe_phi = 0.1 at tau v/c = 0.1/(3 (1/h + 1/phi)): 0.0333 h for h << phi, 3.33e-05 for h >> phi; the ARSA can help for 0.0001 < h < 0.1, and for h < 0.0001 where tau v/c > 0.1 phi = 0.0001
+system                           tau v/c         h    Pe_phi  t_phi/t_1  region
+PPD midplane, 0.1 au                0.94   3.8e-06   7.5e+05          1  ARSA can help
+PPD midplane, 1 au                  0.05   8.3e-06   1.8e+04       1.01  ARSA can help
+Hot Jupiter atmosphere             1e-05   1.3e-05       2.4       1.01  RSLA accurate
+First hydrostatic core            0.0013   0.00012        35       1.12  ARSA can help
+Solar core                           nan    0.0045       nan       5.51  no flow / thin
+PPD outer region, 100 au           1e-06    0.0048    0.0036       5.81  fast diffusion
+Massive protostellar envelope    0.00015     0.061      0.46         58  ARSA can help
+PPD atmosphere, 1 au               5e-07       0.3    0.0015        233  fast diffusion
+Star-forming clump               1.7e-05        16      0.05        942  fast diffusion
+ULIRG nucleus                      0.011   7.7e+02        32        999  RSLA inaccurate
+Massive-star envelope             0.0033   1.2e+03        10        999  RSLA inaccurate
+AGN dusty torus                     0.01     1e+04        30      1e+03  RSLA inaccurate
+Cold molecular cloud             2.3e-10     1e+04     7e-07      1e+03  fast diffusion
+Diffuse ISM                          nan   1.5e+14       nan      1e+03  no flow / thin
 wrote data/rsla_accuracy_curves.csv, data/rsla_accuracy_systems.csv

@@ -8,7 +8,7 @@ For each parameter case:
 Cases where phi = 1 is stable at theta = pi (nu_pi = nuc) only need test 1.
 The trivially neutral density mode (eigenvalue exactly 1) is excluded by
 taking the eigenvalues of the (v, T, E, F) block.
-Writes data/theta_scan.csv (Table B.3) and data/theta_curves.csv (Fig. B.11).
+Writes data/theta_scan.csv (Table B.3) and data/theta_curves.csv (Fig. B.10).
 """
 import itertools, csv
 import numpy as np

@@ -1,5 +1,5 @@
 # Under the RSLA a temperature structure carried by the flow falls behind it where phi0 is not >> D, even where
-# phi0 >> P (paper Sec. 5.3, Fig. 7). This test follows the advected pulse of sim_diffusion_pulse.jl
+# phi0 >> P (paper Sec. 5.3, Fig. 6). This test follows the advected pulse of sim_diffusion_pulse.jl
 # (kappa rho w v/c = D = 14.4, dynamic diffusion), on NX = 512 cells, for NOUT DW = 256 pulse widths traveled
 # (6 crossings of the box) at phi0 = 0.01 (chat = 10 v0), with T_lo chosen so that phi0/P at the peak of the pulse is
 # each of PHI0_P (rho, kappa, w and v fixed); P = a_r T^4/(rho k_B T/mu) is the pressure ratio of the paper,

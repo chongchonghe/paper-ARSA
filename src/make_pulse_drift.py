@@ -1,4 +1,4 @@
-"""Fig. 7 of the paper (fig:pulse_drift): the advected pulse after WIDTHS widths traveled, one row per
+"""Fig. 6 of the paper (fig:pulse_drift): the advected pulse after WIDTHS widths traveled, one row per
 phi0/P at the peak (3 to 3000), from data/pulse_drift.json (written by sim_pulse_drift.jl). The x-axis is the real
 (unwrapped) position, broken into windows of the same width, 2 HALF pulse widths, so that the pulse has the same
 width on the page in every window: the start (the initial pulse, dashed), and at the end the exact solution

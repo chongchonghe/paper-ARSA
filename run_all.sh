@@ -81,7 +81,7 @@ figures() {
     step table_media > /dev/null                 # Table 1 (tables/tab_media.tex); numbers of Secs. 3.4 and 6.2
     step waves_rsla > /dev/null                  # Fig. 2; numbers of Sec. 2.4
     local f
-    for f in rsla_accuracy checkerboard waves_arsa linear_waves diffusion_pulse pulse_drift mf_shocks marshak_vaytet theta_scan; do
+    for f in rsla_accuracy checkerboard waves_arsa linear_waves pulse_drift mf_shocks marshak_vaytet theta_scan; do
         "$PY" "src/make_$f.py"                   # every figure of the paper
     done
     echo "figures in figures/, Table 1 in tables/"

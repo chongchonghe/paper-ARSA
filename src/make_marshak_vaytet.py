@@ -1,4 +1,4 @@
-"""Fig. 10 of the paper (fig:marshak_vaytet): the multigroup Marshak wave, from
+"""Fig. 9 of the paper (fig:marshak_vaytet): the multigroup Marshak wave, from
 data/marshak_vaytet_profiles.csv, _scores.csv and _groups.csv (written by sim_marshak_vaytet.jl). Writes
 figures/marshak_vaytet.pdf.
 

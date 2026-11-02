@@ -71,6 +71,7 @@ Scripts are in `src/`, data in `data/`. `make_waves_rsla.py` also writes `figure
 | `m1_stability` | `calc_m1_stability.py` | `m1_stability.txt` (the printout) | 2 min |
 | `waves_heat_capacity` | `calc_waves_heat_capacity.py` | `waves_heat_capacity.txt` (the printout) | 1 s |
 | `m1_checks` | `checks/m1/*.py` | `m1/*.json` | 5 min |
+| `pulse_drift_substep` | `checks/check_pulse_drift_substep.jl` (after `pulse_drift`, whose exact solution it reads) | `pulse_drift_substep.txt` (the printout) | 3 min |
 | `pulse_drift` | `sim_pulse_drift.jl` (eight runs on eight single-threaded worker processes) | `pulse_drift.json` | 3 min |
 | `table_media`, `waves_rsla` | `make_table_media.py`, `make_waves_rsla.py` | `table_media.txt`, `waves_rsla.txt` (printouts quoted in the text) | 5 s |
 
@@ -127,6 +128,7 @@ These values are typed into the paper by hand. All files are in `data/`.
 | App. B.2, absorbing anisotropic cells: every mode stable in all 1197 (2D) and 1365 (3D) cases; 2 of 2700 unstable in 1D, with reduced fluxes above 0.97 at $75^\circ$ and $83^\circ$ to the axis | `m1/absorbing_scan.json` (`checks/m1/absorbing_scan.py`), rule `actual` |
 | App. C, the obstruction for strongly directed radiation: $f > 2\sqrt3/5$; the example $f = 80/91$, $\hat{h} = \phi = 1$, isothermal sound speed $c/61$ | `m1/finite_flux_obstruction.json` (`checks/m1/m1_finite_flux_obstruction.py`, with $\mu_E = 1$, $\mu_M = 10^{-4}$ and $\eta = 1$ in the script): `flux_threshold`, `particular_discriminant` $< 0$; $c/a_{\rm iso} = (3\mu_E/8\mu_M)^{1/2} = 61$ for an ideal gas with $\gamma = 5/3$. The theorem of App. C is proved in `lean/RSLA/M1Full.lean` and `M1UnequalFull.lean` |
 | Sec. 5.3, drift of the advected pulse: the centroid lags of the RSLA and the ARSA after 256 widths traveled; $\mathcal{D} = 14$ | `pulse_drift.txt` (the lines `256 w traveled`); `pulse_drift.json` (`lag_rsla_w`, `lag_arsa_w`); $\mathcal{D} = \kappa\rho w v/c = 14.4$ on the first line of `pulse_drift.txt`; the Mach numbers (3.8 to 12) on its `==` lines |
+| Fig. 6 caption, the top-row ARSA deviation comes from the radiation substeps: $c\,\Delta t/\Delta x \approx 50$ at $\phi = 1$; $L_1$ after 32 widths traveled $4.4\%$, $0.45\%$ with substeps ten times shorter, $4.8\%$ with a seven times shorter hydrodynamic step | `pulse_drift_substep.txt` |
 | Sec. 6.2, PPD midplanes and first hydrostatic core: $\mathcal{D}$ ($1.25\,\phi_0$ for the core, with $\phi_0 = 10^{-3}$), $t_\phi/t_1$ | `rsla_accuracy.txt`, columns `tau v/c`, `t_phi/t_1` |
 | Table B.3 | `theta_scan.csv` |
 | Table 2, columns $\tau_{\rm c}$, $\hat{h}$, $\phi_*$ (largest $\phi_*$, isotropic radiation in 3D): shocks | `mf_shocks.txt`: `tau_c in [...]`, `h max`, `isotropic largest phi_*` |

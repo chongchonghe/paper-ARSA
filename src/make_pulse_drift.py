@@ -1,4 +1,4 @@
-"""Fig. 7 of the paper (fig:pulse_drift): the advected pulse after K crossings of the periodic box, one row per
+"""Fig. 7 of the paper (fig:pulse_drift): the advected pulse after WIDTHS widths traveled, one row per
 phi0/P at the peak (3 to 3000), from data/pulse_drift.json (written by sim_pulse_drift.jl). The x-axis is the real
 (unwrapped) position, broken into windows of the same width, 2 HALF pulse widths, so that the pulse has the same
 width on the page in every window: the start (the initial pulse, dashed), and at the end the exact solution
@@ -15,13 +15,14 @@ from matplotlib.lines import Line2D
 from matplotlib.ticker import FuncFormatter
 from paper_style import STYLE, TEXTWIDTH, C1, C2, DATA, save
 
-K = 12                       # the crossing shown
+WIDTHS = 160                 # the widths traveled shown
 HALF = 6                     # half width of a window [w]
 ROW_H = 1.8                  # height of a row [in]
 
 d = json.load(open(DATA / 'pulse_drift.json'))
 w, L, xs = d['w'], d['L'], np.array(d['x'])
 runs = d['runs']
+K = runs[0]['widths'].index(WIDTHS)
 
 
 def place(T, centre):        # the box profile at the image of each cell nearest the real position centre
@@ -78,7 +79,7 @@ with plt.rc_context(STYLE):
         lag = r['lag_rsla_w'][K]
         ends[0].text(0.03, 0.93, rf'RSLA lag ${lagtext(lag)}\,w$',
                      transform=ends[0].transAxes, va='top', color=C1)
-    fig.text(0.5, 0.008, rf'real position $x$ [cm], after ${K * L / w:.0f}$ widths traveled ($w = {w:g}$ cm)',
+    fig.text(0.5, 0.008, rf'real position $x$ [cm], after ${WIDTHS}$ widths traveled ($w = {w:g}$ cm)',
              ha='center')
     fig.legend(handles=[Line2D([], [], color='k', ls='--', lw=1.0), Line2D([], [], color='k', lw=1.8),
                         Line2D([], [], color=C2, lw=0.9), Line2D([], [], color=C1, lw=1.2)],

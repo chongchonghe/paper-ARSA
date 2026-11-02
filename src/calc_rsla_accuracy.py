@@ -6,10 +6,12 @@ RSLA considered, phi = 1e-3 (PHI0; the worst case: any larger phi is more accura
       over the time the flow takes to cross it; left of the curve even the slowed diffusion is ten times faster
       than the flow, and the temperature tracks the flow, for any phi >= 1e-3; whether the RSLA is accurate
       there depends on the problem (heating faster than the flow, or evolution set by diffusion itself);
-  right of it, by the slowdown (1 + h/phi)/(1 + h) of eq:slowdown:
-      h < 0.1 phi = 1e-4: the RSLA error, about h/phi, is below 10% for any phi >= 1e-3;
+  right of it, by the slowdown (1 + h/phi)/(1 + h) of eq:slowdown and the drift of eq:drift_life:
+      h < 0.1 phi = 1e-4 and tau v/c < phi/3: the RSLA is accurate: its slowdown, about h/phi, is below 10%, and a
+          structure drifts behind the flow by less than its size, 3 (tau v/c)/phi, before diffusion erases it;
+      h < 0.1 phi and tau v/c > phi/3: the drift exceeds the size of the structure; the ARSA can help, as below;
       1e-4 < h < 0.1: the ARSA can help: run with phi0 above h (up to 0.1), it runs thick cells at phi = 1;
-      h > 0.1: the RSLA is inaccurate for any useful phi (eq:rsla_accurate: phi > 0.48 at h = 0.1).
+      h > 0.1: the RSLA is inaccurate for any useful phi (by eq:slowdown, 10% accuracy needs phi > 0.48 at h = 0.1).
 Optically thin systems (tau <= 1, flagged by the column tau) lie outside the diffusion argument: there the
 RSLA delays radiation by the light-crossing time l/c_hat instead.
 Writes data/rsla_accuracy_systems.csv and data/rsla_accuracy_curves.csv.
@@ -23,6 +25,7 @@ from make_table_media import rows                          # the systems of Tabl
 PHI0 = 1e-3                                           # the smallest reduction factor phi considered
 PE_T = 0.1                                            # threshold of Pe_phi
 H_LO, H_HI = 0.1 * PHI0, 0.1                          # edges of the region where the ARSA can help
+DRIFT_D = PHI0 / 3                                    # tau v/c above which advected structures drift (eq:drift_life)
 
 h = np.logspace(-8, 8, 400)
 with open(DATA / 'rsla_accuracy_curves.csv', 'w') as f:
@@ -31,7 +34,8 @@ with open(DATA / 'rsla_accuracy_curves.csv', 'w') as f:
         f.write(f'{hh:.6g},{PE_T / (3 * (1 / hh + 1 / PHI0)):.6g}\n')
 
 print(f'phi = {PHI0}; Pe_phi = {PE_T} at tau v/c = {PE_T}/(3 (1/h + 1/phi)): {PE_T / 3:.3g} h for h << phi, '
-      f'{PE_T * PHI0 / 3:.3g} for h >> phi; the ARSA can help for {H_LO:g} < h < {H_HI:g}')
+      f'{PE_T * PHI0 / 3:.3g} for h >> phi; the ARSA can help for {H_LO:g} < h < {H_HI:g}, and for h < {H_LO:g} '
+      f'where tau v/c > phi/3 = {DRIFT_D:.3g}')
 print(f'{"system":30s} {"tau v/c":>9s} {"h":>9s} {"Pe_phi":>9s} {"t_phi/t_1":>10s}  region')
 with open(DATA / 'rsla_accuracy_systems.csv', 'w') as f:
     f.write('system,tau,tau_v_c,h,Pe_phi,slowdown,region\n')
@@ -43,7 +47,7 @@ with open(DATA / 'rsla_accuracy_systems.csv', 'w') as f:
         else:
             pp = 3 * tvc * (1 / hh + 1 / PHI0)
         region = ('no flow / thin' if np.isnan(pp) else 'fast diffusion' if pp < PE_T else
-                  'RSLA accurate' if hh < H_LO else 'ARSA can help' if hh < H_HI else 'RSLA inaccurate')
+                  'RSLA accurate' if hh < H_LO and tvc < DRIFT_D else 'ARSA can help' if hh < H_HI else 'RSLA inaccurate')
         tau = float('nan') if r['tau'] is None else r['tau']
         f.write(f'"{r["name"]}",{tau:.4g},{tvc:.4g},{hh:.4g},{pp:.4g},{slow:.4g},{region}\n')
         print(f'{r["name"]:30s} {tvc:9.2g} {hh:9.2g} {pp:9.2g} {slow:10.3g}  {region}')

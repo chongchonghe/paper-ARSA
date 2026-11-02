@@ -97,7 +97,7 @@ def main():
     lines = [r'\begin{table}', r'    \centering', r'    \small', r'    \setlength{\tabcolsep}{2.5pt}',
              r'    \begin{tabular}{lcccccccc}', r'    \hline',
              r'    System & $\rho$ & $T$ & $\kappa$ & $v$ & '
-             r'$\mathcal{L}$ & $\mathcal{M}\mathcal{L}/\mathcal{C}$ & $\hat{h}$ & $\phi/\phi_0$ \\',
+             r'$\mathcal{L}$ & $\mathcal{D}$ & $\hat{h}$ & $\phi/\phi_0$ \\',
              r'    & [g cm$^{-3}$] & [K] & [cm$^2$ g$^{-1}$] & [km s$^{-1}$] \\',
              r'    \hline']
     for r in rows():
@@ -122,8 +122,8 @@ def main():
               r'gain of the ARSA, sorted by the heat-capacity ratio $\hat{h}$. Columns are, from left to right, the system '
               r'being described (here PPD = protoplanetary disk, AGN = active galactic nucleus, ULIRG = ultraluminous '
               r'infrared galaxy), its characteristic density $\rho$, temperature $T$, specific opacity $\kappa$, '
-              r'velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion parameter '
-              r'$\mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity '
+              r'velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion number '
+              r'$\mathcal{D} = \mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity '
               r'$\hat{h} = 4a_rT^3/(\rho c_v)$, and the reduction factor that the limiter of the ARSA sets at '
               r'$\phi_0 = 10^{-3}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, '
               r'for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. '

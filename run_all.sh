@@ -37,9 +37,10 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
                              CMD=(julia --project=. -t 4 "$(examples)/irsla_paper.jl" --no-plot --outdir=data checkerboard) ;;
         linear_waves_rhd)    NAME="Honghu.jl examples/linear_waves_rhd.jl"                              # Fig. 5
                              CMD=(julia --project=. -t 4 "$(examples)/linear_waves_rhd.jl" --no-plot --outdir=data) ;;
+        pulse_drift)         NAME="src/sim_pulse_drift.jl"; CMD=(julia --project=. -t 6 src/sim_pulse_drift.jl) ;;
         mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
-        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity)
+        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity | entropy_drift)
                              NAME="src/calc_$1.py"; CMD=("$PY" "src/calc_$1.py") ;;
         m1_checks)           NAME="checks/m1/*.py"; CMD=(m1_checks) ;;          # App. C, by B. Wibking
         table_media | waves_rsla)                          # figure and table scripts whose numbers the paper quotes
@@ -80,8 +81,8 @@ figures() {
     step table_media > /dev/null                 # Table 1 (tables/tab_media.tex); numbers of Secs. 3.4 and 6.2
     step waves_rsla > /dev/null                  # Fig. 2; numbers of Sec. 2.4
     local f
-    for f in rsla_accuracy checkerboard waves_arsa linear_waves diffusion_pulse mf_shocks marshak_vaytet theta_scan; do
-        "$PY" "src/make_$f.py"                   # Figs. 1, 3-9, B.10
+    for f in rsla_accuracy checkerboard waves_arsa linear_waves diffusion_pulse pulse_drift mf_shocks marshak_vaytet theta_scan; do
+        "$PY" "src/make_$f.py"                   # every figure of the paper
     done
     echo "figures in figures/, Table 1 in tables/"
 }
@@ -90,7 +91,7 @@ case ${1:-all} in
     all)
         pids=(); names=()
         for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
-                 rsla_accuracy theta_scan m1_stability waves_heat_capacity m1_checks; do
+                 rsla_accuracy theta_scan m1_stability waves_heat_capacity m1_checks pulse_drift entropy_drift; do
             job "$s"
         done
         wait_jobs

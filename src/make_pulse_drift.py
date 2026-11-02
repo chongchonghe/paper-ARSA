@@ -2,7 +2,8 @@
 phi0/P at the peak (3 to 3000), from data/pulse_drift.json (written by sim_pulse_drift.jl). The x-axis is the real
 (unwrapped) position, broken into windows of the same width, 2 HALF pulse widths, so that the pulse has the same
 width on the page in every window: the start (the initial pulse, dashed), and at the end the exact solution
-(phi = 1), the ARSA and the RSLA, in one window when the RSLA lags by less than 2 HALF w and in two otherwise.
+(phi = 1), the ARSA and the RSLA, in one window when the RSLA lags by less than 2 HALF w (the exact pulse HALF w
+from its right edge) and in two otherwise.
 Writes figures/pulse_drift.pdf.
 
     python make_pulse_drift.py
@@ -15,8 +16,8 @@ from matplotlib.lines import Line2D
 from matplotlib.ticker import FuncFormatter
 from paper_style import STYLE, TEXTWIDTH, C1, C2, DATA, save
 
-WIDTHS = 160                 # the widths traveled shown
-HALF = 6                     # half width of a window [w]
+WIDTHS = 256                 # the widths traveled shown
+HALF = 7                     # half width of a window [w]
 ROW_H = 1.8                  # height of a row [in]
 
 d = json.load(open(DATA / 'pulse_drift.json'))
@@ -55,12 +56,13 @@ with plt.rc_context(STYLE):
         merged = xr - xl < 2 * HALF * w
         start = fig.add_subplot(gs[i, 0])
         ends = [fig.add_subplot(gs[i, 1:])] if merged else [fig.add_subplot(gs[i, 1]), fig.add_subplot(gs[i, 2])]
-        centres = [(xr + xl) / 2] if merged else [xl, xr]
+        centres = [None] if merged else [xl, xr]       # None: the exact pulse HALF w from the right edge
         axes = [start] + ends
         fig.canvas.draw()
         cm_per_in = 2 * HALF * w / (start.get_position().width * fig.get_figwidth())
         for ax, c in zip(axes, [0.0] + centres):
             span = ax.get_position().width * fig.get_figwidth() * cm_per_in
+            c = xr + HALF * w - span / 2 if c is None else c
             ax.set_xlim(c - span / 2, c + span / 2)
             ax.set_ylim(-0.08, 1.12)
             ax.set_xticks([t for t in np.arange(100 * np.ceil((c - span / 2) / 100), c + span / 2, 100)

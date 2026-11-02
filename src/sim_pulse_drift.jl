@@ -9,7 +9,7 @@
 # (dm = rho dx) the enthalpy per mass h = c_p T + (4/3) a T^4/rho obeys dh/dt = (c/(3 kappa)) d^2(a T^4)/dm^2,
 # with rho(T) from the pressure balance; exact() solves it explicitly on NM cells in m (converged to 2e-4 in T)
 # and maps it back to x. Each run records the position of the pulse NSAMPLE times per DW = 32 widths: the centroid of
-# T - T_lo in the periodic box (a circular mean, then the mean of x over the box centred on it), unwrapped into
+# T - T_lo (a circular mean in the periodic box, then the mean of x within WIN = 8 widths of it), unwrapped into
 # the real position x, which starts at 0; that of the exact solution is v t. Writes
 # data/pulse_drift.json: for each phi0/P, T_lo, P and h at the peak, the Mach number, the smallest phi of the
 # ARSA, and every DW widths traveled (0, 32, ..., 256) the real centroid x [cm] of each run, the lags (v t - x)/w of
@@ -31,6 +31,7 @@ end
 @everywhere begin
 const PHI0_P = (3, 30, 300, 3000)                     # phi0/P at the peak of the pulse
 const PHI0, DW, NOUT, NSAMPLE, NX = 0.01, 32, 8, 4, 512   # outputs every DW widths, NOUT of them
+const WIN = 8                                         # half width of the centroid window [w]
 const TOUT = DW * W / V0                              # the time to travel DW widths
 const XS = [-L / 2 + (i - 0.5) * L / NX for i in 1:NX]
 const PROGRESS = joinpath(SRC, "..", "logs", "pulse_drift.progress")
@@ -45,11 +46,12 @@ function find_Tlo(target)                             # bisection in log T_lo; P
     sqrt(lo * hi)
 end
 
-function centroid(T, T_lo)                            # in the periodic box
+function centroid(T, T_lo)                            # in the periodic box, over WIN widths each side of the pulse
     w = T .- T_lo
     c = atan(sum(w .* sin.(2pi .* XS ./ L)), sum(w .* cos.(2pi .* XS ./ L))) * L / (2pi)
     d = mod.(XS .- c .+ L / 2, L) .- L / 2
-    c + sum(d .* w) / sum(w)
+    near = abs.(d) .< WIN * W                         # leaves out the small ripples far from the pulse
+    c + sum(d[near] .* w[near]) / sum(w[near])
 end
 
 function track(label, T_lo, phi0, cfl, lim)           # one run: real centroid and profiles at every output

@@ -43,6 +43,8 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
         rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity)
                              NAME="src/calc_$1.py"; CMD=("$PY" "src/calc_$1.py") ;;
         m1_checks)           NAME="checks/m1/*.py"; CMD=(m1_checks) ;;          # App. C, by B. Wibking
+        pulse_drift_substep) NAME="checks/check_pulse_drift_substep.jl"                  # Fig. 6 caption; reads pulse_drift.json
+                             CMD=(julia --project=. -t 1 checks/check_pulse_drift_substep.jl) ;;          # App. C, by B. Wibking
         table_media | waves_rsla)                          # figure and table scripts whose numbers the paper quotes
                              NAME="src/make_$1.py"; CMD=("$PY" "src/make_$1.py") ;;
         *)                   echo "unknown step: $1 (the steps are in step_cmd in run_all.sh)" >&2; return 1 ;;
@@ -96,6 +98,7 @@ case ${1:-all} in
         done
         wait_jobs
         job floor_energy                 # uses the references of the shocks, the pulse and the Marshak wave
+        job pulse_drift_substep          # uses the exact solution of pulse_drift
         wait_jobs
         figures ;;
     figures)

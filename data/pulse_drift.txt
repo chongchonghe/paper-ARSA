@@ -1,64 +1,32 @@
-# src/sim_pulse_drift.jl, 2026-11-02 18:26, paper-ARSA e5894bd, Honghu.jl v0.1.0 (tree e63aa35)
-phi0 = 0.01, kappa rho w v/c = 14.4, 8 crossings of 1024 cm (3.41e-05 s each); errors relative to the pulse
+# src/sim_pulse_drift.jl, 2026-11-02 23:16, paper-ARSA df1b41e, Honghu.jl v0.1.0 (tree e63aa35)
+phi0 = 0.01, D = kappa rho w v/c = 14.4, 12 crossings of 1024 cm (3.41e-05 s each, 42.7 w); w = 24 cm, 512 cells
 
-== h/phi0 at the peak 0.001: T_lo = 1.099e+05 K, h in [6.25e-07, 9.73e-06], Mach 11.74; RSLA lag per distance after one crossing 0.000111 = 0.19 x h_peak (1 - phi0)/(gamma phi0) (the drift speed of Sec. 2.2) ==
-  crossing 1: L1 T RSLA    1.49% ARSA    1.5% | L1 Tr RSLA    1.49% ARSA    1.5% | lag RSLA    0.11 cm ARSA  -0.07 cm
-  crossing 2: L1 T RSLA    1.97% ARSA   1.83% | L1 Tr RSLA    1.97% ARSA   1.83% | lag RSLA    0.25 cm ARSA  -0.08 cm
-  crossing 3: L1 T RSLA    2.62% ARSA   2.16% | L1 Tr RSLA    2.62% ARSA   2.16% | lag RSLA    0.40 cm ARSA  -0.07 cm
-  crossing 4: L1 T RSLA    3.34% ARSA   2.51% | L1 Tr RSLA    3.34% ARSA   2.51% | lag RSLA    0.53 cm ARSA  -0.07 cm
-  crossing 5: L1 T RSLA    3.96% ARSA    2.8% | L1 Tr RSLA    3.96% ARSA    2.8% | lag RSLA    0.66 cm ARSA  -0.07 cm
-  crossing 6: L1 T RSLA    4.46% ARSA   3.12% | L1 Tr RSLA    4.46% ARSA   3.12% | lag RSLA    0.36 cm ARSA  -0.07 cm
-  crossing 7: L1 T RSLA    4.92% ARSA   3.36% | L1 Tr RSLA    4.92% ARSA   3.36% | lag RSLA    0.44 cm ARSA  -0.07 cm
-  crossing 8: L1 T RSLA    5.34% ARSA   3.64% | L1 Tr RSLA    5.34% ARSA   3.64% | lag RSLA    0.57 cm ARSA  -0.07 cm
+== phi0/P at the peak 3: T_lo = 1.056e+06 K, P at the peak 0.00333, h in [0.000555, 0.00887], Mach 3.79; ARSA phi >= 1; steps RSLA 14982, ARSA 16156; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9166 at the end ==
+  crossing  1 (  43 w traveled): centroid lag RSLA    4.202 w, ARSA  -0.017 w
+  crossing  2 (  85 w traveled): centroid lag RSLA    4.625 w, ARSA   0.000 w
+  crossing  4 ( 171 w traveled): centroid lag RSLA    9.673 w, ARSA  -0.034 w
+  crossing  8 ( 341 w traveled): centroid lag RSLA   17.306 w, ARSA  -0.058 w
+  crossing 12 ( 512 w traveled): centroid lag RSLA   23.171 w, ARSA  -0.083 w
 
-== h/phi0 at the peak 0.003: T_lo = 1.585e+05 K, h in [1.87e-06, 2.92e-05], Mach 9.77; RSLA lag per distance after one crossing 0.00046 = 0.26 x h_peak (1 - phi0)/(gamma phi0) (the drift speed of Sec. 2.2) ==
-  crossing 1: L1 T RSLA    1.82% ARSA   1.51% | L1 Tr RSLA    1.82% ARSA   1.51% | lag RSLA    0.47 cm ARSA  -0.07 cm
-  crossing 2: L1 T RSLA    3.16% ARSA   1.83% | L1 Tr RSLA    3.16% ARSA   1.83% | lag RSLA    0.90 cm ARSA  -0.08 cm
-  crossing 3: L1 T RSLA    4.47% ARSA   2.18% | L1 Tr RSLA    4.47% ARSA   2.18% | lag RSLA    1.32 cm ARSA  -0.07 cm
-  crossing 4: L1 T RSLA     5.6% ARSA   2.53% | L1 Tr RSLA     5.6% ARSA   2.52% | lag RSLA    1.72 cm ARSA  -0.07 cm
-  crossing 5: L1 T RSLA    6.57% ARSA   2.82% | L1 Tr RSLA    6.57% ARSA   2.82% | lag RSLA    1.03 cm ARSA  -0.07 cm
-  crossing 6: L1 T RSLA    7.47% ARSA   3.14% | L1 Tr RSLA    7.47% ARSA   3.14% | lag RSLA    1.31 cm ARSA  -0.07 cm
-  crossing 7: L1 T RSLA    8.25% ARSA   3.38% | L1 Tr RSLA    8.25% ARSA   3.38% | lag RSLA    1.72 cm ARSA  -0.07 cm
-  crossing 8: L1 T RSLA    8.95% ARSA   3.67% | L1 Tr RSLA    8.95% ARSA   3.67% | lag RSLA    2.12 cm ARSA  -0.07 cm
+== phi0/P at the peak 30: T_lo = 4.904e+05 K, P at the peak 0.000333, h in [5.55e-05, 0.000887], Mach 5.56; ARSA phi >= 1; steps RSLA 13143, ARSA 13537; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9874 at the end ==
+  crossing  1 (  43 w traveled): centroid lag RSLA    0.636 w, ARSA  -0.002 w
+  crossing  2 (  85 w traveled): centroid lag RSLA    1.164 w, ARSA  -0.004 w
+  crossing  4 ( 171 w traveled): centroid lag RSLA    1.234 w, ARSA  -0.003 w
+  crossing  8 ( 341 w traveled): centroid lag RSLA    2.739 w, ARSA  -0.009 w
+  crossing 12 ( 512 w traveled): centroid lag RSLA    3.922 w, ARSA  -0.011 w
 
-== h/phi0 at the peak 0.01: T_lo = 2.367e+05 K, h in [6.25e-06, 9.73e-05], Mach 8.00; RSLA lag per distance after one crossing 0.00166 = 0.28 x h_peak (1 - phi0)/(gamma phi0) (the drift speed of Sec. 2.2) ==
-  crossing 1: L1 T RSLA    4.93% ARSA   1.53% | L1 Tr RSLA    4.93% ARSA   1.53% | lag RSLA    1.70 cm ARSA  -0.08 cm
-  crossing 2: L1 T RSLA    8.18% ARSA   1.87% | L1 Tr RSLA    8.18% ARSA   1.87% | lag RSLA    3.14 cm ARSA  -0.08 cm
-  crossing 3: L1 T RSLA      11% ARSA   2.25% | L1 Tr RSLA      11% ARSA   2.25% | lag RSLA    4.50 cm ARSA  -0.08 cm
-  crossing 4: L1 T RSLA    13.2% ARSA   2.59% | L1 Tr RSLA    13.2% ARSA   2.59% | lag RSLA    3.34 cm ARSA  -0.06 cm
-  crossing 5: L1 T RSLA    15.5% ARSA   2.89% | L1 Tr RSLA    15.5% ARSA   2.89% | lag RSLA    3.89 cm ARSA  -0.07 cm
-  crossing 6: L1 T RSLA    17.6% ARSA    3.2% | L1 Tr RSLA    17.6% ARSA    3.2% | lag RSLA    5.24 cm ARSA  -0.07 cm
-  crossing 7: L1 T RSLA    19.1% ARSA   3.44% | L1 Tr RSLA    19.1% ARSA   3.44% | lag RSLA    6.57 cm ARSA  -0.07 cm
-  crossing 8: L1 T RSLA    21.6% ARSA   3.74% | L1 Tr RSLA    21.6% ARSA   3.74% | lag RSLA    8.16 cm ARSA  -0.08 cm
+== phi0/P at the peak 300: T_lo = 2.276e+05 K, P at the peak 3.33e-05, h in [5.56e-06, 8.87e-05], Mach 8.15; ARSA phi >= 1; steps RSLA 11904, ARSA 11904; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9979 at the end ==
+  crossing  1 (  43 w traveled): centroid lag RSLA    0.069 w, ARSA  -0.000 w
+  crossing  2 (  85 w traveled): centroid lag RSLA    0.131 w, ARSA  -0.000 w
+  crossing  4 ( 171 w traveled): centroid lag RSLA    0.181 w, ARSA  -0.000 w
+  crossing  8 ( 341 w traveled): centroid lag RSLA    0.380 w, ARSA  -0.001 w
+  crossing 12 ( 512 w traveled): centroid lag RSLA    0.520 w, ARSA  -0.001 w
 
-== h/phi0 at the peak 0.03: T_lo = 3.414e+05 K, h in [1.87e-05, 0.000292], Mach 6.66; RSLA lag per distance after one crossing 0.00496 = 0.28 x h_peak (1 - phi0)/(gamma phi0) (the drift speed of Sec. 2.2) ==
-  crossing 1: L1 T RSLA    13.2% ARSA   1.61% | L1 Tr RSLA    13.2% ARSA   1.61% | lag RSLA    5.07 cm ARSA  -0.07 cm
-  crossing 2: L1 T RSLA    21.7% ARSA   1.99% | L1 Tr RSLA    21.7% ARSA   1.99% | lag RSLA    9.29 cm ARSA  -0.08 cm
-  crossing 3: L1 T RSLA    28.6% ARSA   2.49% | L1 Tr RSLA    28.6% ARSA   2.49% | lag RSLA   12.74 cm ARSA  -0.09 cm
-  crossing 4: L1 T RSLA    34.9% ARSA   2.77% | L1 Tr RSLA    34.9% ARSA   2.77% | lag RSLA    8.90 cm ARSA  -0.07 cm
-  crossing 5: L1 T RSLA    40.4% ARSA   3.06% | L1 Tr RSLA    40.4% ARSA   3.06% | lag RSLA   12.93 cm ARSA  -0.09 cm
-  crossing 6: L1 T RSLA    44.4% ARSA   3.36% | L1 Tr RSLA    44.4% ARSA   3.36% | lag RSLA   16.84 cm ARSA  -0.10 cm
-  crossing 7: L1 T RSLA    51.5% ARSA   3.63% | L1 Tr RSLA    51.5% ARSA   3.63% | lag RSLA   21.54 cm ARSA  -0.12 cm
-  crossing 8: L1 T RSLA    55.9% ARSA   3.93% | L1 Tr RSLA    55.9% ARSA   3.93% | lag RSLA   25.03 cm ARSA  -0.13 cm
+== phi0/P at the peak 3000: T_lo = 1.056e+05 K, P at the peak 3.33e-06, h in [5.56e-07, 8.87e-06], Mach 11.97; ARSA phi >= 1; steps RSLA 11904, ARSA 11904; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9990 at the end ==
+  crossing  1 (  43 w traveled): centroid lag RSLA    0.007 w, ARSA  -0.000 w
+  crossing  2 (  85 w traveled): centroid lag RSLA    0.013 w, ARSA  -0.000 w
+  crossing  4 ( 171 w traveled): centroid lag RSLA    0.026 w, ARSA  -0.000 w
+  crossing  8 ( 341 w traveled): centroid lag RSLA    0.033 w, ARSA   0.000 w
+  crossing 12 ( 512 w traveled): centroid lag RSLA    0.060 w, ARSA   0.000 w
 
-== h/phi0 at the peak 0.1: T_lo = 5.1e+05 K, h in [6.25e-05, 0.000973], Mach 5.45; RSLA lag per distance after one crossing 0.0154 = 0.26 x h_peak (1 - phi0)/(gamma phi0) (the drift speed of Sec. 2.2) ==
-  crossing 1: L1 T RSLA    39.2% ARSA    1.6% | L1 Tr RSLA    39.2% ARSA    1.6% | lag RSLA   15.81 cm ARSA  -0.11 cm
-  crossing 2: L1 T RSLA    61.2% ARSA   1.98% | L1 Tr RSLA    61.2% ARSA   1.98% | lag RSLA   28.56 cm ARSA  -0.16 cm
-  crossing 3: L1 T RSLA      78% ARSA    2.3% | L1 Tr RSLA      78% ARSA    2.3% | lag RSLA   16.35 cm ARSA  -0.04 cm
-  crossing 4: L1 T RSLA    90.8% ARSA   2.55% | L1 Tr RSLA    90.8% ARSA   2.55% | lag RSLA   30.49 cm ARSA  -0.12 cm
-  crossing 5: L1 T RSLA    98.2% ARSA    2.8% | L1 Tr RSLA    98.2% ARSA    2.8% | lag RSLA   42.88 cm ARSA  -0.18 cm
-  crossing 6: L1 T RSLA     113% ARSA   3.12% | L1 Tr RSLA     113% ARSA   3.12% | lag RSLA   56.39 cm ARSA  -0.24 cm
-  crossing 7: L1 T RSLA     121% ARSA   3.39% | L1 Tr RSLA     121% ARSA   3.39% | lag RSLA   66.52 cm ARSA  -0.29 cm
-  crossing 8: L1 T RSLA     126% ARSA   3.64% | L1 Tr RSLA     126% ARSA   3.64% | lag RSLA   60.96 cm ARSA  -0.22 cm
-
-== h/phi0 at the peak 0.3: T_lo = 7.355e+05 K, h in [0.000187, 0.00292], Mach 4.54; RSLA lag per distance after one crossing 0.0401 = 0.22 x h_peak (1 - phi0)/(gamma phi0) (the drift speed of Sec. 2.2) ==
-  crossing 1: L1 T RSLA    87.4% ARSA   1.12% | L1 Tr RSLA    87.4% ARSA   1.12% | lag RSLA   41.02 cm ARSA  -0.15 cm
-  crossing 2: L1 T RSLA     121% ARSA   1.51% | L1 Tr RSLA     121% ARSA   1.51% | lag RSLA   68.39 cm ARSA  -0.19 cm
-  crossing 3: L1 T RSLA     141% ARSA    1.9% | L1 Tr RSLA     141% ARSA    1.9% | lag RSLA   52.00 cm ARSA  -0.04 cm
-  crossing 4: L1 T RSLA     147% ARSA   2.21% | L1 Tr RSLA     147% ARSA   2.21% | lag RSLA   85.85 cm ARSA  -0.14 cm
-  crossing 5: L1 T RSLA     166% ARSA   2.56% | L1 Tr RSLA     166% ARSA   2.56% | lag RSLA  120.99 cm ARSA  -0.26 cm
-  crossing 6: L1 T RSLA     173% ARSA   2.87% | L1 Tr RSLA     173% ARSA   2.87% | lag RSLA  146.75 cm ARSA  -0.33 cm
-  crossing 7: L1 T RSLA     179% ARSA   3.14% | L1 Tr RSLA     179% ARSA   3.14% | lag RSLA  119.13 cm ARSA  -0.05 cm
-  crossing 8: L1 T RSLA     180% ARSA   3.38% | L1 Tr RSLA     180% ARSA   3.38% | lag RSLA  148.86 cm ARSA  -0.27 cm
-
-wrote data/pulse_drift.csv
+wrote data/pulse_drift.json

@@ -1,14 +1,14 @@
-# src/calc_rsla_accuracy.py, 2026-11-03 14:02, paper-ARSA c7a0555, Honghu.jl v0.1.0 (tree e63aa35)
-phi = 0.001; the RSLA is accurate for h < 0.0001 and D < 0.0001; the ARSA can help for 0.0001 < h < 0.1 at any D, and for h < 0.0001 where D > 0.0001; neither for h > 0.1
+# src/calc_rsla_accuracy.py, 2026-11-03 14:15, paper-ARSA 2708ee2, Honghu.jl v0.1.0 (tree e63aa35)
+phi = 0.01; the RSLA is accurate for h < 0.001 and D < 0.001; the ARSA can help for 0.001 < h < 0.1 at any D, and for h < 0.001 where D > 0.001; neither for h > 0.1
 system                                 D         h  t_phi/t_1  region
 PPD midplane, 0.1 au                0.94   3.8e-06          1  ARSA can help
-PPD midplane, 1 au                  0.05   8.3e-06       1.01  ARSA can help
-First hydrostatic core            0.0013   0.00012       1.12  ARSA can help
-Sun, base of convection zone     7.7e+03    0.0081       8.98  ARSA can help
-RGB star, base of envelope         5e+02      0.04       39.7  ARSA can help
-Massive protostellar envelope    0.00015     0.061         58  ARSA can help
-AGB star, base of envelope         9e+04        17        945  neither accurate
-ULIRG nucleus                      0.011   7.7e+02        999  neither accurate
-Massive-star envelope             0.0033   1.2e+03        999  neither accurate
-AGN dusty torus                     0.01     1e+04      1e+03  neither accurate
+PPD midplane, 1 au                  0.05   8.3e-06          1  ARSA can help
+First hydrostatic core            0.0013   0.00012       1.01  ARSA can help
+Sun, base of convection zone     7.7e+03    0.0081       1.79  ARSA can help
+RGB star, base of envelope         5e+02      0.04       4.84  ARSA can help
+Massive protostellar envelope    0.00015     0.061       6.65  ARSA can help
+AGB star, base of envelope         9e+04        17       94.6  neither accurate
+ULIRG nucleus                      0.011   7.7e+02       99.9  neither accurate
+Massive-star envelope             0.0033   1.2e+03       99.9  neither accurate
+AGN dusty torus                     0.01     1e+04        100  neither accurate
 wrote data/rsla_accuracy_systems.csv

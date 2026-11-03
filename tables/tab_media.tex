@@ -7,11 +7,11 @@
     System & $\rho$ & $T$ & $\kappa$ & $v$ & $\mathcal{L}$ & $\mathcal{D}$ & $\hat{h}$ & $\phi/\phi_0$ \\
     & [g cm$^{-3}$] & [K] & [cm$^2$ g$^{-1}$] & [km s$^{-1}$] \\
     \hline
-    PPD midplane, 0.1 au & $10^{-7}$ & $1000$ & $1$ & 94 & $3\times10^{3}$ & $0.9$ & $3.8\times10^{-6}$ & $1000$ \\
-    PPD midplane, 1 au & $10^{-9}$ & $280$ & $1$ & 30 & $500$ & $0.05$ & $8.3\times10^{-6}$ & $1000$ \\
-    First hydrostatic core & $5\times10^{-12}$ & $100$ & $1$ & 1 & $380$ & $10^{-3}$ & $1.2\times10^{-4}$ & $32$ \\
-    Sun, base of convection zone & $0.2$ & $2.2\times10^{6}$ & $20$ & 0.1 & $2.3\times10^{10}$ & $8\times10^{3}$ & $8.1\times10^{-3}$ & $1.2$ \\
-    RGB star, base of envelope & $0.03$ & $2\times10^{6}$ & $1$ & 0.6 & $2.5\times10^{8}$ & $5\times10^{2}$ & $0.04$ & $1.0$ \\
+    PPD midplane, 0.1 au & $10^{-7}$ & $1000$ & $1$ & 94 & $3\times10^{3}$ & $0.9$ & $3.8\times10^{-6}$ & $100$ \\
+    PPD midplane, 1 au & $10^{-9}$ & $280$ & $1$ & 30 & $500$ & $0.05$ & $8.3\times10^{-6}$ & $100$ \\
+    First hydrostatic core & $5\times10^{-12}$ & $100$ & $1$ & 1 & $380$ & $10^{-3}$ & $1.2\times10^{-4}$ & $100$ \\
+    Sun, base of convection zone & $0.2$ & $2.2\times10^{6}$ & $20$ & 0.1 & $2.3\times10^{10}$ & $8\times10^{3}$ & $8.1\times10^{-3}$ & $100$ \\
+    RGB star, base of envelope & $0.03$ & $2\times10^{6}$ & $1$ & 0.6 & $2.5\times10^{8}$ & $5\times10^{2}$ & $0.04$ & $1.4$ \\
     Massive protostellar envelope & $10^{-14}$ & $100$ & $1$ & 3 & $15$ & $2\times10^{-4}$ & $0.061$ & $1.0$ \\
     AGB star, base of envelope & $3$ & $7\times10^{7}$ & $0.34$ & 6 & $4.5\times10^{9}$ & $9\times10^{4}$ & $17$ & $1.0$ \\
     ULIRG nucleus & $2.5\times10^{-19}$ & $80$ & $1$ & 100 & $32$ & $0.01$ & $770$ & $1.0$ \\
@@ -19,7 +19,7 @@
     AGN dusty torus & $10^{-18}$ & $300$ & $5$ & 200 & $15$ & $0.01$ & $10^{4}$ & $1.0$ \\
     \hline
     \end{tabular}
-    \caption{Representative parameters of optically thick astrophysical systems, good to a factor of 2--3 (for the stars, $\mathcal{L}$ and $v$ to an order of magnitude), and the gain of the ARSA, sorted by the heat-capacity ratio $\hat{h}$. Columns are, from left to right, the system being described (here PPD = protoplanetary disk, AGN = active galactic nucleus, ULIRG = ultraluminous infrared galaxy, RGB = red giant branch, AGB = asymptotic giant branch), its characteristic density $\rho$, temperature $T$, specific opacity $\kappa$, velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion number $\mathcal{D} = \mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity $\hat{h} = 4a_rT^3/(\rho c_v)$, and the reduction factor that the limiter of the ARSA sets at $\phi_0 = 10^{-3}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. We adopt $c_v = 2\times10^8$~erg~g$^{-1}$~K$^{-1}$ for ionized hydrogen and helium, $8\times10^7$ and $5\times10^7$ for warm and cold molecular gas. The stellar rows are at the base of the convective envelope: of the present Sun \citep{Bahcall01a}, of a $1\,M_\odot$ star on the lower RGB, and of an AGB star with hot bottom burning \citep{Karakas14b, Doherty17a}; their $\mathcal{L}$ is across a pressure scale height.
+    \caption{Representative parameters of optically thick astrophysical systems, good to a factor of 2--3 (for the stars, $\mathcal{L}$ and $v$ to an order of magnitude), and the gain of the ARSA, sorted by the heat-capacity ratio $\hat{h}$. Columns are, from left to right, the system being described (here PPD = protoplanetary disk, AGN = active galactic nucleus, ULIRG = ultraluminous infrared galaxy, RGB = red giant branch, AGB = asymptotic giant branch), its characteristic density $\rho$, temperature $T$, specific opacity $\kappa$, velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion number $\mathcal{D} = \mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity $\hat{h} = 4a_rT^3/(\rho c_v)$, and the reduction factor that the limiter of the ARSA sets at $\phi_0 = 10^{-2}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. We adopt $c_v = 2\times10^8$~erg~g$^{-1}$~K$^{-1}$ for ionized hydrogen and helium, $8\times10^7$ and $5\times10^7$ for warm and cold molecular gas. The stellar rows are at the base of the convective envelope: of the present Sun \citep{Bahcall01a}, of a $1\,M_\odot$ star on the lower RGB, and of an AGB star with hot bottom burning \citep{Karakas14b, Doherty17a}; their $\mathcal{L}$ is across a pressure scale height.
     \label{tab:media}
     }
 \end{table}

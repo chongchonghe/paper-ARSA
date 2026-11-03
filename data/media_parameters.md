@@ -96,3 +96,24 @@ The result is sensitive to opacity and density: increasing either by a factor of
 
 
 **Added 2026-10-15:** row S4a (PPD midplane, 0.1 AU), given in the conversation of that day.
+
+
+---
+
+## C. Bases of the convective envelopes of stars (added 2026-11-03)
+
+Three rows of Table 1, all fully ionized ($c_v = 2\times10^8$ erg g$^{-1}$ K$^{-1}$, $\mu = 0.6$), at the base of the convective envelope, where the radiation alone just carries the luminosity $L_\star$ along the adiabatic gradient ($\nabla_{\rm rad} = \nabla_{\rm ad} \approx 0.4$). This fixes the opacity for given $T$, total pressure $P$ and enclosed mass $M_r$:
+
+$$\kappa = \frac{16\pi a c G M_r T^4 \nabla_{\rm ad}}{3 L_\star P}.$$
+
+The size is the pressure scale height $H_p = P r^2/(\rho G M_r)$, so $\mathcal{L} = \kappa\rho H_p$, and the velocity is set by the convective flux, $v \approx [L_\star/(4\pi r^2\rho)]^{1/3}$. $\mathcal{L}$ and $v$ are good to an order of magnitude only, mainly through the radius $r$ of the base; $\mathcal{D} \propto r^{4/3}$. Every row has $\mathcal{D} \gg \phi_0$, so this does not move any of them between regions of Fig. 1.
+
+| System | $T$ [K] | $\rho$ [g cm$^{-3}$] | $M_r$ [$M_\odot$] | $L_\star$ [$L_\odot$] | $r$ [$R_\odot$] | $\kappa$ [cm$^2$ g$^{-1}$] | $H_p$ [cm] | $\mathcal{L}$ | $v$ [km s$^{-1}$] | $P_{\rm rad}/P_{\rm gas}$ |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Sun | $2.2\times10^6$ | 0.2 | 0.98 | 1 | 0.713 | 20 | $5.7\times10^9$ | $2.3\times10^{10}$ | 0.09 | $10^{-3}$ |
+| RGB, $1\,M_\odot$, lower branch | $2\times10^6$ | $3\times10^{-2}$ | 0.3 | 30 | 0.5 | 1.0 | $8.4\times10^9$ | $2.5\times10^8$ | 0.6 | $5\times10^{-3}$ |
+| AGB with hot bottom burning | $7\times10^7$ | 3 | 1.0 | $5\times10^4$ | 0.064 | 0.34 | $4.5\times10^9$ | $4.5\times10^9$ | 6 | 2 |
+
+- **Sun:** $T$, $\rho$ and $r$ at the base of the convection zone from the standard solar model of Bahcall, Pinsonneault & Basu (2001, ApJ 555, 990), $T \approx 2.2\times10^6$ K and $\rho \approx 0.19$ g cm$^{-3}$ at $0.71\,R_\odot$. The relation above gives $\kappa = 20$, as OPAL gives there; electron scattering alone ($\kappa = 0.34$) would let the radiation carry 60 $L_\odot$.
+- **RGB:** $T$ and $\rho$ in the ranges $(1$–$5)\times10^6$ K and $10^{-3}$–$10^{-1}$ g cm$^{-3}$ at the base of the envelope (given by the user, 2026-11-03); $\rho = 3\times10^{-2}$ chosen by the user. With $M_r$ equal to the helium core mass and $L_\star = 30\,L_\odot$, the relation gives $\kappa = 1$, the lower end of the range $1$–$10$ given by the user. $r = 0.5\,R_\odot$ is assumed.
+- **AGB:** hot bottom burning needs the base of the envelope above $5\times10^7$ K, up to $10^8$ K in the most massive AGB stars (Karakas & Lattanzio 2014, PASA 31, e030; Doherty et al. 2017, PASA 34, e056, who give $\rho \sim 10$ g cm$^{-3}$ near $10^8$ K for super-AGB stars). The gas is fully ionized, so $\kappa$ is close to electron scattering. A density $10^{-3}$–$10^{-1}$ g cm$^{-3}$ at this temperature would make $P_{\rm rad}/P_{\rm gas} \sim 600$ and $H_p$ larger than the star; $\rho = 3$ gives $P_{\rm rad}/P_{\rm gas} = 2$ and, with $M_r = 1\,M_\odot$ and $L_\star = 5\times10^4\,L_\odot$, $\kappa = 0.28$ from the relation, consistent with electron scattering. $r$ is set where $H_p = r$. The low-mass and the hot-bottom-burning AGB rows given by the user both have $\hat{h} \gg 0.1$; they are merged into this one row.

@@ -2,7 +2,8 @@
 Also used by calc_rsla_accuracy.py (Fig. 1), which imports the systems and the functions.
 
 Inputs (rho, T, c_v, kappa, tau, v) are order-of-magnitude estimates, good to a factor of 2-3;
-the star-formation and disk rows come from data/media_parameters.md. This script recomputes from them
+the star-formation and disk rows, and the bases of the convective envelopes of stars, come from
+data/media_parameters.md. Only optically thick systems are listed. This script recomputes from them
     h      = 4 a_r T^3 / (rho c_v),        the radiation-to-gas heat-capacity ratio (paper eq:h_ratio),
     tau v/c,                                the dynamic-diffusion indicator (dynamic where >~ 1),
     phi_*  = h / (1 + h),                   eq:phi_star at the largest stable RSLA step (nu0 sum sigma = 1),
@@ -25,33 +26,39 @@ CELLS = 100                                           # cells across the system 
 OUT = Path(__file__).resolve().parents[1] / 'tables' / 'tab_media.tex'
 
 # specific heat at constant volume [erg/g/K], by composition
-CV = {'ion': 2.0e8, 'warm': 8e7, 'cold': 5e7, 'sun': 1.5e8, 'kilonova': 6e6}
+CV = {'ion': 2.0e8, 'warm': 8e7, 'cold': 5e7, 'kilonova': 6e6}
 
 # name (LaTeX), rho [g/cm^3], T [K], c_v key, kappa [cm^2/g] (None: n/a), tau across the system (None: << 1),
 # v [cm/s], v as printed [km/s or c]
-# Rows commented out were removed from Table 1 by the authors (2026-10-21).
+# Rows commented out were removed from Table 1 by the authors (2026-10-21; the optically thin rows and the
+# solar core, whose v ~ 0 leaves D undefined, on 2026-11-03).
 SYSTEMS = [
-    ('Hot Jupiter atmosphere', 1e-7, 1.5e3, 'warm', 0.01, 1, 3e5, '3'),
+    # ('Hot Jupiter atmosphere', 1e-7, 1.5e3, 'warm', 0.01, 1, 3e5, '3'),
     # star formation and disks: data/media_parameters.md (tau = kappa rho L; v in the laboratory frame,
     # Keplerian around 1 Msun in the disk rows); c_v as above, so h is lower than there by 1.4-2.3
     ('Massive protostellar envelope', 1e-14, 100, 'cold', 1, 15, 3e5, '3'),
     ('First hydrostatic core', 5e-12, 100, 'cold', 1, 375, 1e5, '1'),
-    ('PPD atmosphere, 1 au', 1e-14, 200, 'warm', 1, 5e-3, 3e6, '30'),
+    # ('PPD atmosphere, 1 au', 1e-14, 200, 'warm', 1, 5e-3, 3e6, '30'),
     ('PPD midplane, 0.1 au', 1e-7, 1000, 'warm', 1, 3e3, 9.4e6, '94'),
     ('PPD midplane, 1 au', 1e-9, 280, 'warm', 1, 500, 3e6, '30'),
-    ('PPD outer region, 100 au', 1e-15, 20, 'cold', 1, 0.10, 3e5, '3'),
+    # ('PPD outer region, 100 au', 1e-15, 20, 'cold', 1, 0.10, 3e5, '3'),
     ('AGN dusty torus', 1e-18, 300, 'warm', 5, 15, 2e7, '200'),
-    ('Solar core', 150, 1.5e7, 'sun', 1, 1e12, 0.0, r'$\approx 0$'),
+    # ('Solar core', 150, 1.5e7, 'sun', 1, 1e12, 0.0, r'$\approx 0$'),
     # ('SN IIP ejecta, 50 d', 1e-12, 8e3, 'ion', 0.2, 3e2, 4e8, r'$4\times10^{3}$'),
-    ('Star-forming clump', 3e-19, 20, 'cold', 1, 1, 5e5, '5'),
+    # ('Star-forming clump', 3e-19, 20, 'cold', 1, 1, 5e5, '5'),
     ('Massive-star envelope', 1e-9, 2e5, 'ion', 1, 1e2, 1e6, '10'),
-    ('Cold molecular cloud', 2e-22, 15, 'cold', 0.1, 7e-5, 1e5, '1'),
+    # bases of the convective envelopes of stars: data/media_parameters.md, Sec. C (tau = kappa rho H_p,
+    # v from the convective flux; tau and v to an order of magnitude)
+    ('Sun, base of convection zone', 0.2, 2.2e6, 'ion', 20, 2.3e10, 1e4, '0.1'),
+    ('RGB star, base of envelope', 3e-2, 2e6, 'ion', 1, 2.5e8, 6e4, '0.6'),
+    ('AGB star, base of envelope', 3, 7e7, 'ion', 0.34, 4.5e9, 6e5, '6'),
+    # ('Cold molecular cloud', 2e-22, 15, 'cold', 0.1, 7e-5, 1e5, '1'),
     # ('Radiation-mediated shock', 7e-11, 1.7e5, 'ion', 0.34, 340, 5e8, r'$5\times10^{3}$'),
     # ('AGN disk, 20 $r_g$', 1e-9, 5e5, 'ion', 0.34, 3e2, 0.004 * C, r'$0.004c$'),
     # ('Kilonova ejecta, 1 d', 2e-13, 1e4, 'kilonova', 10, 9e2, 0.2 * C, r'$0.2c$'),
     ('ULIRG nucleus', 2.5e-19, 80, 'warm', 1, 32, 1e7, '100'),    # tau = kappa rho L: 160 at kappa = 5
     # ('Super-Eddington inflow', 5e-12, 2.6e5, 'ion', 0.34, 27, 0.14 * C, r'$0.14c$'),
-    ('Diffuse ISM', 1e-24, 1e4, 'ion', None, None, 1e6, '10'),    # warm medium, n ~ 0.5 cm^-3
+    # ('Diffuse ISM', 1e-24, 1e4, 'ion', None, None, 1e6, '10'),    # warm medium, n ~ 0.5 cm^-3
 ]
 
 
@@ -118,17 +125,21 @@ def main():
               'phi_*(beta) = %7.3g  tau_thresh = %5.3g'
               % (r['name'], h, '-' if r['tvc'] is None else '%.2g' % r['tvc'], r['phis'], CELLS, g, tau_c, ps, thr))
     lines += [r'    \hline', r'    \end{tabular}',
-              r'    \caption{Representative parameters of astrophysical systems, good to a factor of 2--3, and the '
+              r'    \caption{Representative parameters of optically thick astrophysical systems, good to a factor of '
+              r'2--3 (for the stars, $\mathcal{L}$ and $v$ to an order of magnitude), and the '
               r'gain of the ARSA, sorted by the heat-capacity ratio $\hat{h}$. Columns are, from left to right, the system '
               r'being described (here PPD = protoplanetary disk, AGN = active galactic nucleus, ULIRG = ultraluminous '
-              r'infrared galaxy), its characteristic density $\rho$, temperature $T$, specific opacity $\kappa$, '
+              r'infrared galaxy, RGB = red giant branch, AGB = asymptotic giant branch), its characteristic density $\rho$, temperature $T$, specific opacity $\kappa$, '
               r'velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion number '
               r'$\mathcal{D} = \mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity '
               r'$\hat{h} = 4a_rT^3/(\rho c_v)$, and the reduction factor that the limiter of the ARSA sets at '
               r'$\phi_0 = 10^{-3}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, '
               r'for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. '
               r'We adopt $c_v = 2\times10^8$~erg~g$^{-1}$~K$^{-1}$ for ionized hydrogen and helium, $8\times10^7$ and '
-              r'$5\times10^7$ for warm and cold molecular gas, and $1.5\times10^8$ in the solar core.',
+              r'$5\times10^7$ for warm and cold molecular gas. The stellar rows are at the base of the convective '
+              r'envelope: of the present Sun \citep{Bahcall01a}, of a $1\,M_\odot$ star on the lower RGB, and of an '
+              r'AGB star with hot bottom burning \citep{Karakas14b, Doherty17a}; their $\mathcal{L}$ is across a '
+              r'pressure scale height.',
               r'    \label{tab:media}', r'    }', r'\end{table}']
     OUT.write_text('\n'.join(lines) + '\n')
     print('wrote', OUT.relative_to(OUT.parents[1]))

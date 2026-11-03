@@ -1,18 +1,14 @@
-# src/calc_rsla_accuracy.py, 2026-11-02 18:26, paper-ARSA e5894bd, Honghu.jl v0.1.0 (tree e63aa35)
-phi = 0.001; Pe_phi = 0.1 at tau v/c = 0.1/(3 (1/h + 1/phi)): 0.0333 h for h << phi, 3.33e-05 for h >> phi; the ARSA can help for 0.0001 < h < 0.1, and for h < 0.0001 where tau v/c > 0.1 phi = 0.0001
-system                           tau v/c         h    Pe_phi  t_phi/t_1  region
-PPD midplane, 0.1 au                0.94   3.8e-06   7.5e+05          1  ARSA can help
-PPD midplane, 1 au                  0.05   8.3e-06   1.8e+04       1.01  ARSA can help
-Hot Jupiter atmosphere             1e-05   1.3e-05       2.4       1.01  RSLA accurate
-First hydrostatic core            0.0013   0.00012        35       1.12  ARSA can help
-Solar core                           nan    0.0045       nan       5.51  no flow / thin
-PPD outer region, 100 au           1e-06    0.0048    0.0036       5.81  fast diffusion
-Massive protostellar envelope    0.00015     0.061      0.46         58  ARSA can help
-PPD atmosphere, 1 au               5e-07       0.3    0.0015        233  fast diffusion
-Star-forming clump               1.7e-05        16      0.05        942  fast diffusion
-ULIRG nucleus                      0.011   7.7e+02        32        999  RSLA inaccurate
-Massive-star envelope             0.0033   1.2e+03        10        999  RSLA inaccurate
-AGN dusty torus                     0.01     1e+04        30      1e+03  RSLA inaccurate
-Cold molecular cloud             2.3e-10     1e+04     7e-07      1e+03  fast diffusion
-Diffuse ISM                          nan   1.5e+14       nan      1e+03  no flow / thin
-wrote data/rsla_accuracy_curves.csv, data/rsla_accuracy_systems.csv
+# src/calc_rsla_accuracy.py, 2026-11-03 14:02, paper-ARSA c7a0555, Honghu.jl v0.1.0 (tree e63aa35)
+phi = 0.001; the RSLA is accurate for h < 0.0001 and D < 0.0001; the ARSA can help for 0.0001 < h < 0.1 at any D, and for h < 0.0001 where D > 0.0001; neither for h > 0.1
+system                                 D         h  t_phi/t_1  region
+PPD midplane, 0.1 au                0.94   3.8e-06          1  ARSA can help
+PPD midplane, 1 au                  0.05   8.3e-06       1.01  ARSA can help
+First hydrostatic core            0.0013   0.00012       1.12  ARSA can help
+Sun, base of convection zone     7.7e+03    0.0081       8.98  ARSA can help
+RGB star, base of envelope         5e+02      0.04       39.7  ARSA can help
+Massive protostellar envelope    0.00015     0.061         58  ARSA can help
+AGB star, base of envelope         9e+04        17        945  neither accurate
+ULIRG nucleus                      0.011   7.7e+02        999  neither accurate
+Massive-star envelope             0.0033   1.2e+03        999  neither accurate
+AGN dusty torus                     0.01     1e+04      1e+03  neither accurate
+wrote data/rsla_accuracy_systems.csv

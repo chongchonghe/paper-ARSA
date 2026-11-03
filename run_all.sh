@@ -41,7 +41,7 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
         pulse_drift_long)    NAME="src/sim_pulse_drift_long.jl"; CMD=(julia --project=. src/sim_pulse_drift_long.jl) ;;
         mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
-        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity)
+        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity | convective_layers)
                              NAME="src/calc_$1.py"; CMD=("$PY" "src/calc_$1.py") ;;
         m1_checks)           NAME="checks/m1/*.py"; CMD=(m1_checks) ;;          # App. C, by B. Wibking
         pulse_drift_substep) NAME="checks/check_pulse_drift_substep.jl"                  # Fig. 6 caption; reads pulse_drift.json
@@ -94,7 +94,8 @@ case ${1:-all} in
     all)
         pids=(); names=()
         for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
-                 rsla_accuracy theta_scan m1_stability waves_heat_capacity m1_checks pulse_drift pulse_drift_long; do
+                 rsla_accuracy theta_scan m1_stability waves_heat_capacity convective_layers m1_checks pulse_drift \
+                 pulse_drift_long; do
             job "$s"
         done
         wait_jobs

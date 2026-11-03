@@ -2,7 +2,7 @@
 Also used by calc_rsla_accuracy.py (Fig. 1), which imports the systems and the functions.
 
 Inputs (rho, T, c_v, kappa, tau, v) are order-of-magnitude estimates, good to a factor of 2-3;
-the star-formation and disk rows, and the bases of the convective envelopes of stars, come from
+the star-formation and disk rows, and the convective envelopes of stars, come from
 data/media_parameters.md. Only optically thick systems are listed. This script recomputes from them
     h      = 4 a_r T^3 / (rho c_v),        the radiation-to-gas heat-capacity ratio (paper eq:h_ratio),
     tau v/c,                                the dynamic-diffusion indicator (dynamic where >~ 1),
@@ -47,10 +47,10 @@ SYSTEMS = [
     # ('SN IIP ejecta, 50 d', 1e-12, 8e3, 'ion', 0.2, 3e2, 4e8, r'$4\times10^{3}$'),
     # ('Star-forming clump', 3e-19, 20, 'cold', 1, 1, 5e5, '5'),
     ('Massive-star envelope', 1e-9, 2e5, 'ion', 1, 1e2, 1e6, '10'),
-    # bases of the convective envelopes of stars: data/media_parameters.md, Sec. C (tau = kappa rho H_p,
-    # v from the convective flux; tau and v to an order of magnitude)
-    ('Sun, base of convection zone', 0.2, 2.2e6, 'ion', 20, 2.3e10, 1e4, '0.1'),
-    ('RGB star, base of envelope', 3e-2, 2e6, 'ion', 1, 2.5e8, 6e4, '0.6'),
+    # convective envelopes of stars: data/media_parameters.md, Sec. C (tau = kappa rho H_p, v from the convective
+    # flux; tau and v to an order of magnitude). The middle layers: data/convective_layers.txt
+    ('Sun, middle of convection zone', 0.054, 9.6e5, 'ion', 100, 1.9e10, 1.2e4, '0.1'),
+    ('RGB star, middle of envelope', 8e-4, 1.8e5, 'ion', 500, 2.8e10, 4.8e4, '0.5'),
     ('AGB star, base of envelope', 3, 7e7, 'ion', 0.34, 4.5e9, 6e5, '6'),
     # ('Cold molecular cloud', 2e-22, 15, 'cold', 0.1, 7e-5, 1e5, '1'),
     # ('Radiation-mediated shock', 7e-11, 1.7e5, 'ion', 0.34, 340, 5e8, r'$5\times10^{3}$'),
@@ -136,10 +136,10 @@ def main():
               r'$\phi_0 = 10^{-2}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, '
               r'for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. '
               r'We adopt $c_v = 2\times10^8$~erg~g$^{-1}$~K$^{-1}$ for ionized hydrogen and helium, $8\times10^7$ and '
-              r'$5\times10^7$ for warm and cold molecular gas. The stellar rows are at the base of the convective '
-              r'envelope: of the present Sun \citep{Bahcall01a}, of a $1\,M_\odot$ star on the lower RGB, and of an '
-              r'AGB star with hot bottom burning \citep{Karakas14b, Doherty17a}; their $\mathcal{L}$ is across a '
-              r'pressure scale height.',
+              r'$5\times10^7$ for warm and cold molecular gas. The stellar rows are halfway in radius between the base '
+              r'of the convective envelope and the surface, in the present Sun \citep{ChristensenDalsgaard96a} and '
+              r'in a $1\,M_\odot$ star on the lower RGB, and at the base of the envelope of an AGB star with hot '
+              r'bottom burning \citep{Karakas14b, Doherty17a}; their $\mathcal{L}$ is across a pressure scale height.',
               r'    \label{tab:media}', r'    }', r'\end{table}']
     OUT.write_text('\n'.join(lines) + '\n')
     print('wrote', OUT.relative_to(OUT.parents[1]))

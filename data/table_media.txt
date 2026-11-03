@@ -1,9 +1,9 @@
-# src/make_table_media.py, 2026-11-03 14:15, paper-ARSA 2708ee2, Honghu.jl v0.1.0 (tree e63aa35)
+# src/make_table_media.py, 2026-11-03 15:01, paper-ARSA 3609349, Honghu.jl v0.1.0 (tree e63aa35)
 PPD midplane, 0.1 au       h =  3.8e-06  tau v/c =     0.94  phi_* = 3.78e-06  phi/phi0 (tau/100) =    100  tau_c =      30  phi_*(beta) = 3.4e-06  tau_thresh =  3.43
 PPD midplane, 1 au         h =  8.3e-06  tau v/c =     0.05  phi_* = 8.3e-06  phi/phi0 (tau/100) =    100  tau_c =       5  phi_*(beta) = 7.47e-06  tau_thresh =  3.43
 First hydrostatic core     h =  0.00012  tau v/c =   0.0013  phi_* = 0.000121  phi/phi0 (tau/100) =    100  tau_c =    3.75  phi_*(beta) = 0.000109  tau_thresh =  3.47
-Sun, base of convection zone h =   0.0081  tau v/c =  7.7e+03  phi_* = 0.00799  phi/phi0 (tau/100) =    100  tau_c = 2.3e+08  phi_*(beta) =  0.0072  tau_thresh =  12.2
-RGB star, base of envelope h =     0.04  tau v/c =    5e+02  phi_* = 0.0388  phi/phi0 (tau/100) =   1.38  tau_c = 2.5e+06  phi_*(beta) =   0.035  tau_thresh =   inf
+RGB star, middle of envelope h =   0.0011  tau v/c =  4.5e+04  phi_* = 0.0011  phi/phi0 (tau/100) =    100  tau_c = 2.8e+08  phi_*(beta) = 0.000992  tau_thresh =   3.8
+Sun, middle of convection zone h =   0.0025  tau v/c =  7.6e+03  phi_* = 0.00247  phi/phi0 (tau/100) =    100  tau_c = 1.9e+08  phi_*(beta) = 0.00223  tau_thresh =   4.4
 Massive protostellar envelope h =    0.061  tau v/c =  0.00015  phi_* = 0.0571  phi/phi0 (tau/100) =   1.04  tau_c =    0.15  phi_*(beta) =  0.0517  tau_thresh =   inf
 AGB star, base of envelope h =       17  tau v/c =    9e+04  phi_* =  0.945  phi/phi0 (tau/100) =      1  tau_c = 4.5e+07  phi_*(beta) =    0.94  tau_thresh =   inf
 ULIRG nucleus              h =  7.7e+02  tau v/c =    0.011  phi_* =  0.999  phi/phi0 (tau/100) =      1  tau_c =    0.32  phi_*(beta) =   0.999  tau_thresh =   inf

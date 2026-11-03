@@ -2,8 +2,8 @@ system,tau,tau_v_c,h,slowdown,region
 "PPD midplane, 0.1 au",3000,0.9407,3.783e-06,1,ARSA can help
 "PPD midplane, 1 au",500,0.05003,8.304e-06,1.001,ARSA can help
 "First hydrostatic core",375,0.001251,0.0001211,1.012,ARSA can help
-"Sun, base of convection zone",2.3e+10,7672,0.008056,1.791,ARSA can help
-"RGB star, base of envelope",2.5e+08,500.3,0.04035,4.84,ARSA can help
+"RGB star, middle of envelope",2.8e+10,4.483e+04,0.001103,1.109,ARSA can help
+"Sun, middle of convection zone",1.9e+10,7605,0.002479,1.245,ARSA can help
 "Massive protostellar envelope",15,0.0001501,0.06053,6.65,ARSA can help
 "AGB star, base of envelope",4.5e+09,9.006e+04,17.3,94.59,neither accurate
 "ULIRG nucleus",32,0.01067,774.7,99.87,neither accurate

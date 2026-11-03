@@ -1,0 +1,6 @@
+# src/calc_convective_layers.py, 2026-11-03 15:01, paper-ARSA 3609349, Honghu.jl v0.1.0 (tree e63aa35)
+middle layers; kappa = 0.34 + 1.64e+24 rho T^-3.5; mu = 0.6, c_v = 2e+08
+Sun (Model S, r = 0.85 R_sun)      r =   0.85 R_sun  T = 9.62e+05 K  rho =   0.0538 g/cm^3  P_rad/P_gas =  0.0003  kappa =    102 cm^2/g  H_p = 3.45e+09 cm  v =  0.117 km/s  L = 1.88e+10  D = 7.38e+03  h =   0.0025
+RGB star: R = 8.62 R_sun, base T = 2e+06 K, rho = 0.03 g/cm^3 at r_b = 0.759 R_sun, h = 0.0404
+RGB star (halfway, r = (r_b + R)/2) r =   4.69 R_sun  T = 1.77e+05 K  rho = 0.000777 g/cm^3  P_rad/P_gas = 0.00013  kappa =    544 cm^2/g  H_p = 6.53e+10 cm  v =   0.48 km/s  L = 2.76e+10  D = 4.42e+04  h =  0.00109
+AGB star, h along the adiabat from the base: 7e+07 K: 17, 1e+07 K: 12, 1e+06 K: 6.3, 1e+05 K: 1.7

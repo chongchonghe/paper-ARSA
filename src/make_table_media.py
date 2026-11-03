@@ -7,7 +7,7 @@ data/media_parameters.md. Only optically thick systems are listed. This script r
     h      = 4 a_r T^3 / (rho c_v),        the radiation-to-gas heat-capacity ratio (paper eq:h_ratio),
     tau v/c,                                the dynamic-diffusion indicator (dynamic where >~ 1),
     phi_*  = h / (1 + h),                   eq:phi_star at the largest stable RSLA step (nu0 sum sigma = 1),
-    phi/phi0                                the limiter eq:phi_sb at phi0 = 1e-3 in a cell of optical depth
+    phi/phi0                                the limiter eq:phi_sb at phi0 = 1e-2 in a cell of optical depth
                                             tau/100 (100 cells across the system), gray, isotropic radiation
                                             in 3D, RSLA step nu0 = beta/sqrt(3), beta = 0.9.
 The printout also gives, for Sec. 3.4, the cell optical depth tau_c = tau/100, phi_* of the limiter
@@ -20,7 +20,7 @@ from pathlib import Path
 import numpy as np
 
 AR, C = 7.5657e-15, 2.99792458e10                     # cgs
-PHI0, BETA = 1e-3, 0.9
+PHI0, BETA = 1e-2, 0.9
 SIGSUM, NU0 = np.sqrt(3.0), 0.9 / np.sqrt(3.0)
 CELLS = 100                                           # cells across the system for the phi/phi0 column
 OUT = Path(__file__).resolve().parents[1] / 'tables' / 'tab_media.tex'
@@ -133,7 +133,7 @@ def main():
               r'velocity $v$, optical depth across the system $\mathcal{L}$, dynamic diffusion number '
               r'$\mathcal{D} = \mathcal{M}\mathcal{L}/\mathcal{C} = \mathcal{L}v/c$, ratio of radiation to gas heat capacity '
               r'$\hat{h} = 4a_rT^3/(\rho c_v)$, and the reduction factor that the limiter of the ARSA sets at '
-              r'$\phi_0 = 10^{-3}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, '
+              r'$\phi_0 = 10^{-2}$ in a cell of optical depth $\mathcal{L}/100$, i.e., with 100 cells across the system, '
               r'for isotropic radiation in three dimensions at the RSLA step $\nu_0 = 0.9/\sqrt{3}$, $\phi/\phi_0$. '
               r'We adopt $c_v = 2\times10^8$~erg~g$^{-1}$~K$^{-1}$ for ionized hydrogen and helium, $8\times10^7$ and '
               r'$5\times10^7$ for warm and cold molecular gas. The stellar rows are at the base of the convective '

@@ -1,11 +1,11 @@
 """When the RSLA is accurate and where the ARSA can help: the optically thick systems of Table 1 (tab:media) in
 the plane of the dynamic-diffusion number D = tau v/c and the heat-capacity ratio h, for the smallest reduction
-factor of the RSLA considered, phi = 1e-3 (PHI0; the worst case: any larger phi is more accurate). The regions
+factor of the RSLA considered, phi = 1e-2 (PHI0; the worst case: any larger phi is more accurate). The regions
 follow the criterion phi >> max(P, D) of eq:rsla_valid, with h for P and the same factor 10 for both:
-  h < 0.1 phi = 1e-4 and D < 0.1 phi: the RSLA is accurate: its slowdown (1 + h/phi)/(1 + h) (eq:slowdown),
+  h < 0.1 phi = 1e-3 and D < 0.1 phi: the RSLA is accurate: its slowdown (1 + h/phi)/(1 + h) (eq:slowdown),
       about h/phi, is below 10%, and structures carried by the flow do not drift (Sec. 2.2);
   h < 0.1 phi and D > 0.1 phi: such structures drift; the ARSA can help, as below;
-  1e-4 < h < 0.1, at any D: the ARSA can help: run with phi0 above h (up to 0.1), it runs thick cells at phi = 1;
+  1e-3 < h < 0.1, at any D: the ARSA can help: run with phi0 above h (up to 0.1), it runs thick cells at phi = 1;
   h > 0.1, at any D: neither is accurate for any useful phi (by eq:slowdown, 10% accuracy needs phi > 0.48 at
       h = 0.1).
 Writes data/rsla_accuracy_systems.csv.
@@ -15,7 +15,7 @@ Writes data/rsla_accuracy_systems.csv.
 from paper_style import DATA
 from make_table_media import rows                          # the systems of Table 1
 
-PHI0 = 1e-3                                           # the smallest reduction factor phi considered
+PHI0 = 1e-2                                           # the smallest reduction factor phi considered
 H_LO, H_HI = 0.1 * PHI0, 0.1                          # edges of the region where the ARSA can help
 DRIFT_D = 0.1 * PHI0                                  # D above which advected structures drift (phi >> D)
 

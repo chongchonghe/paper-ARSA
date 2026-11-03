@@ -12,7 +12,7 @@ INK, MUTED = '#1f1f1f', '#555555'
 RED, RED_INK = '#f8d6d1', '#8e1b1b'           # neither the RSLA nor the ARSA is accurate
 AMBER, AMBER_INK = '#fde5ad', '#8a4a00'       # the ARSA can help
 GREEN, GREEN_INK = '#d8eed3', '#1f5e2a'       # RSLA accurate
-PHI0 = 1e-3                                   # as in calc_rsla_accuracy.py; PHI0 is the phi of the RSLA
+PHI0 = 1e-2                                   # as in calc_rsla_accuracy.py; PHI0 is the phi of the RSLA
 H_LO, H_HI = 0.1 * PHI0, 0.1
 DRIFT_D = 0.1 * PHI0                          # as in calc_rsla_accuracy.py: phi >> D
 XLIM, YLIM = (1e-8, 1e7), (1e-7, 1e5)         # y in h (P = 3h/8 up to 4e4)
@@ -33,7 +33,7 @@ ax.plot([XLIM[0], DRIFT_D], [H_LO, H_LO], color=INK, lw=1.0, ls='--')
 # the regions
 ax.text(2e-8, 2.0, bold('neither RSLA nor ARSA accurate:\nradiation holds much of the heat'), color=RED_INK,
         ha='left', va='center')
-ax.text(2e-8, 3e-3, bold('RSLA inaccurate;\nARSA accurate in thick cells\n(with $\\phi_0$ above $\\hat{h}$)'),
+ax.text(2e-8, 1.5e-2, bold('RSLA inaccurate;\nARSA accurate in thick cells\n(with $\\phi_0$ above $\\hat{h}$)'),
         color=AMBER_INK, ha='left', va='center')
 ax.text(DRIFT_D / 1.5, 1e-5, bold('RSLA\naccurate'), color=GREEN_INK, ha='right', va='center')
 ax.text(DRIFT_D * 2, 2.2e-7, bold('advected structures drift: $\\mathcal{D} > 0.1\\,\\phi_0$'), color=AMBER_INK,

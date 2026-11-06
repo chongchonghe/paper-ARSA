@@ -15,7 +15,8 @@
 #
 # Prints the initial h, tau_c (also at the end), D = rho kappa R0 VOUT/c and phi_* = h/(1 + h); for each phi0, h/phi0,
 # phi_* of the limiter, h nu0 S/(1 + beta h) with nu0 S = beta = 0.9 (isotropic radiation in 3D), and the threshold of
-# eq:tau_one with beta, 2 (S - beta phi0/nu0) phi0/((1 + beta h)(phi0 - phi_*)), at the start; and for each run at r_out = 11 R0 the
+# eq:tau_one with beta, 2 (S - beta phi0/nu0) phi0/((1 + beta h)(phi0 - phi_*)), at the start, and both as Table 3 of
+# the paper gives them, at beta = 1 and nu0 = 1/sqrt3 (phi_* = h/(1 + h)); and for each run at r_out = 11 R0 the
 # box mean of T_gas, its error against the exact solution, its range in the box, phi and the steps. Writes
 # data/expanding_sphere.csv: for each phi0 and method (rsla, arsa) at NOUT radii r_out/R0 from 1 to 11 the time
 # [s], the mean, minimum and maximum of T_gas [K] in the box, the mean T_rad [K], the range of phi, and the exact
@@ -123,8 +124,9 @@ h0 = 4 * CGS.a_rad * T0^3 / (RHO0 * CV)
 for p in PHI0S
     S, nu0, b = sqrt(3), 0.9 / sqrt(3), 0.9
     ps = h0 * nu0 * S / (1 + b * h0)
-    @printf("phi0 = %g: h/phi0 = %.3g, phi_*(beta) = %.3g, tau_thresh(beta) = %.3g\n", p, h0 / p, ps,
-            2 * (S - b * p / nu0) * p / ((1 + b * h0) * (p - ps)))
+    @printf("phi0 = %g: h/phi0 = %.3g, phi_*(beta) = %.3g, tau_thresh(beta) = %.3g; Table 3 (beta = 1): phi_* = %.3g, tau_thresh = %.3g\n",
+            p, h0 / p, ps, 2 * (S - b * p / nu0) * p / ((1 + b * h0) * (p - ps)), h0 / (1 + h0),
+            2 * (S - p * sqrt(3)) * p / ((1 + h0) * (p - h0 / (1 + h0))))
 end
 @printf("exact T at r_out = 11 R0: %.4g K (gas alone: %.4g K)\n", exact(11.0), T0 / 121)
 @printf("%d worker processes, %d threads each\n", nworkers(), THREADS)
@@ -132,7 +134,7 @@ t1 = time()
 res = pmap(a -> run_case(a...), [(p, m) for p in PHI0S for m in ("rsla", "arsa")])
 for r in res
     f = r.rows[end]
-    @printf("phi0 = %-6g %s: T_gas %.4g K, error %+.4f, range in the box [%.4g, %.4g] K, T_rad %.4g K, phi in [%.3g, %.3g], %d steps, %d sub-steps\n",
+    @printf("phi0 = %-6g %s: T_gas %.4g K, error %+.3e, range in the box [%.4g, %.4g] K, T_rad %.4g K, phi in [%.3g, %.3g], %d steps, %d sub-steps\n",
             r.phi0, uppercase(r.method), f.Tg, f.Tg / exact(f.r) - 1, f.Tgmin, f.Tgmax, f.Tr, f.phimin, f.phimax, r.steps, r.sub)
 end
 @printf("(%.0f s)\n", time() - t1)

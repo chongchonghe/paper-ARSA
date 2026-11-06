@@ -120,7 +120,7 @@ if __name__ == '__main__':
     OUT.write_text(json.dumps(result, indent=1) + '\n')
     for dim, r in result['gap'].items():
         print(dim, 'gap below the bound: cases with a bound', r['cases_with_bound'], ' positive:',
-              [(round(g['f'], 3), round(g['n'][0], 3), round(g['gap'], 4)) for g in r['positive']])
-    for dim, r in result.items():
+              [(round(float(g['f']), 3), round(g['n'][0], 3), round(float(g['gap']), 4)) for g in r['positive']])
+    for dim, r in ((k, result[k]) for k in ('1D', '2D', '3D')):
         print(dim, 'cases:', r['cases'], ' failures:', {k: len(v) for k, v in r['failures'].items()})
     print('wrote', OUT.relative_to(OUT.parents[2]))

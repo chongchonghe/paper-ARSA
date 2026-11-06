@@ -39,6 +39,7 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
                              CMD=(julia --project=. -t 4 "$(examples)/linear_waves_rhd.jl" --no-plot --outdir=data) ;;
         pulse_drift)         NAME="src/sim_pulse_drift.jl"; CMD=(julia --project=. src/sim_pulse_drift.jl) ;;
         pulse_drift_long)    NAME="src/sim_pulse_drift_long.jl"; CMD=(julia --project=. src/sim_pulse_drift_long.jl) ;;
+        expanding_sphere)    NAME="src/sim_expanding_sphere.jl"; CMD=(julia --project=. src/sim_expanding_sphere.jl) ;;
         mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
         rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity | convective_layers)
@@ -84,7 +85,7 @@ figures() {
     step table_media > /dev/null                 # Table 1 (tables/tab_media.tex); numbers of Secs. 3.4 and 6.2
     step waves_rsla > /dev/null                  # Fig. 2; numbers of Sec. 2.4
     local f
-    for f in rsla_accuracy checkerboard waves_arsa linear_waves pulse_drift mf_shocks marshak_vaytet theta_scan; do
+    for f in rsla_accuracy checkerboard waves_arsa linear_waves pulse_drift mf_shocks marshak_vaytet expanding_sphere theta_scan; do
         "$PY" "src/make_$f.py"                   # every figure of the paper
     done
     echo "figures in figures/, Table 1 in tables/"
@@ -95,7 +96,7 @@ case ${1:-all} in
         pids=(); names=()
         for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
                  rsla_accuracy theta_scan m1_stability waves_heat_capacity convective_layers m1_checks pulse_drift \
-                 pulse_drift_long; do
+                 pulse_drift_long expanding_sphere; do
             job "$s"
         done
         wait_jobs

@@ -1,8 +1,8 @@
-"""Figure 4 (fig:waves_IRSLA): linear waves under the ARSA at the RSLA time step, phi0 = 1e-3,
+"""Figure fig:waves_IRSLA: linear waves under the ARSA at the RSLA time step, phi0 = 1e-3,
 in the style of Fig. 2 (make_waves_rsla.py: Computer Modern fonts, the same colors, panels without
-gaps, gray bands tau > phi0 C and tau > C). Four cases (2 x 2): P = 1e-4 at M = 0 and 5 (h = 0.27 phi0,
-phi_* < phi0: thick waves reach phi = 1); P = 5e-4, M = 0 (h = 1.3 phi0, phi_* just above phi0:
-phi saturates at 6 phi0; the case of Fig. 2); P = 10, M = 0 (phi_* ~ 1 >> phi0: phi = phi0).
+gaps, gray bands tau > phi0 C and tau > C). Two cases, side by side: P = 1e-4 at M = 5 (h = 0.27 phi0,
+phi_* < phi0: thick waves reach phi = 1); P = 10, M = 0 (phi_* ~ 1 >> phi0: phi = phi0).
+(Until 2026-11-06 also P = 1e-4 at M = 0 and P = 5e-4 at M = 0, in a 2 x 2 layout.)
 Each case has three stacked panels: phase speed relative to the flow, Re(Omega) - M, of all five modes on a
 symmetric-log axis (linear within +-1), broken at +-15 to +-3e3, decay rate -Im(Omega)
 of the forward modes, and the phi of eq:phi_waves. Modes of the reduced equations are matched to the exact ones by
@@ -50,7 +50,7 @@ COL = dict(radiation='C0', acoustic='C1', entropy='C2')
 plt.rcParams.update({**STYLE, 'figure.constrained_layout.use': False})   # keep the stacked panels joined (hspace=0)
 taus = np.logspace(-6, 6, 361)
 sub = slice(0, None, 10)
-CASES = ((1e-4, 0.0), (1e-4, 5.0), (5e-4, 0.0), (10.0, 0.0))     # (P, M)
+CASES = ((1e-4, 5.0), (10.0, 0.0))     # (P, M)
 
 
 def exact_modes(M, P):
@@ -126,8 +126,8 @@ def ptex(P):
     return (r'10^{%d}' % int(e)) if m == '1' else (r'%s\times10^{%d}' % (m, int(e)))
 
 
-fig = plt.figure(figsize=(0.75 * TEXTWIDTH, 7.0))
-sfs = fig.subfigures(2, 2, hspace=0, wspace=0).ravel()
+fig = plt.figure(figsize=(0.75 * TEXTWIDTH, 3.5))
+sfs = fig.subfigures(1, 2, hspace=0, wspace=0).ravel()
 for jc, (sf, (P, M)) in enumerate(zip(sfs, CASES)):
     phif = lambda t: phi_sb(t, P, phi0, gamma, N, Cr)
     tex, vex = exact_modes(M, P)

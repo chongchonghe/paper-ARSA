@@ -26,9 +26,9 @@ def expanding_sphere():
         for meth, c, lab in (('rsla', C1, 'RSLA'), ('arsa', C2, 'ARSA')):
             rows = [r for r in d if r['method'] == meth and float(r['phi0']) == phi0]
             r, T, Te = R0 * col(rows, 'r_out_R0'), col(rows, 'Tg_mean_K'), col(rows, 'T_exact_K')
-            kw = dict(color=c, marker=m, ms=3.5, lw=0.8, mfc='none' if meth == 'arsa' else c, zorder=2)
+            kw = dict(color=c, marker=m, ms=3.5, mfc='none' if meth == 'arsa' else c, zorder=2)
             a0.loglog(r, T, ls='none', label=rf'{lab}, $\phi_0 = {PHI0TEX[phi0]}$', **kw)
-            a1.loglog(r[1:], np.abs(T[1:] / Te[1:] - 1), **kw)
+            a1.loglog(r[1:], np.abs(T[1:] / Te[1:] - 1), ls='none', **kw)
     a0.set_ylabel(r'$T$ [K]')
     a1.set_ylabel(r'$|T - T_{\rm exact}|/T_{\rm exact}$')
     a1.set_xlabel(r'$r_{\rm out}$ [cm]')

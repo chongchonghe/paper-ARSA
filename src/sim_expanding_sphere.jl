@@ -13,7 +13,9 @@
 # at beta = 0.9 (C_r = 0.9 sqrt3). The reference is exact: s = (3/2) ln T - ln rho + (4/3) a T^3 mu/(rho k_B),
 # the entropy of gas plus radiation in units of k_B/mu, is constant.
 #
-# Prints the initial h, tau_c, D = rho kappa R0 VOUT/c and phi_* = h/(1 + h), and for each run at r_out = 11 R0 the
+# Prints the initial h, tau_c (also at the end), D = rho kappa R0 VOUT/c and phi_* = h/(1 + h); for each phi0, h/phi0,
+# phi_* of the limiter, h nu0 S/(1 + beta h) with nu0 S = beta = 0.9 (isotropic radiation in 3D), and the threshold of
+# eq:tau_one with beta, 2 (S - beta phi0/nu0) phi0/((1 + beta h)(phi0 - phi_*)), at the start; and for each run at r_out = 11 R0 the
 # box mean of T_gas, its error against the exact solution, its range in the box, phi and the steps. Writes
 # data/expanding_sphere.csv: for each phi0 and method (rsla, arsa) at NOUT radii r_out/R0 from 1 to 11 the time
 # [s], the mean, minimum and maximum of T_gas [K] in the box, the mean T_rad [K], the range of phi, and the exact
@@ -117,6 +119,13 @@ h0 = 4 * CGS.a_rad * T0^3 / (RHO0 * CV)
 @printf("initial state: h = %.3g, phi_* = h/(1 + h) = %.3g, tau_c = %.3g, D = rho kappa R0 VOUT/c = %.3g, Mach at the box edge %.2f\n",
         h0, h0 / (1 + h0), RHO0 * KAP * 2R0 / N, RHO0 * KAP * R0 * VOUT / CGS.c_light,
         VOUT / sqrt(GAMMA * CGS.k_B * T0 / MU))
+@printf("tau_c at r_out = 11 R0: %.3g\n", RHO0 / 11^3 * KAP * 2R0 / N)
+for p in PHI0S
+    S, nu0, b = sqrt(3), 0.9 / sqrt(3), 0.9
+    ps = h0 * nu0 * S / (1 + b * h0)
+    @printf("phi0 = %g: h/phi0 = %.3g, phi_*(beta) = %.3g, tau_thresh(beta) = %.3g\n", p, h0 / p, ps,
+            2 * (S - b * p / nu0) * p / ((1 + b * h0) * (p - ps)))
+end
 @printf("exact T at r_out = 11 R0: %.4g K (gas alone: %.4g K)\n", exact(11.0), T0 / 121)
 @printf("%d worker processes, %d threads each\n", nworkers(), THREADS)
 t1 = time()

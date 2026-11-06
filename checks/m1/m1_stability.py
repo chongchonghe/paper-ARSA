@@ -201,12 +201,21 @@ def absorption_counterexample():
     measured = np.linalg.norm(state)/np.linalg.norm(initial)
     predicted = float(abs(g)**1000)
     assert abs(measured/predicted-1) < 1e-9
+    # True stability limit over all modes, as a fraction of the checkerboard bound (2+q)/(2 sigma).
+    ths = np.linspace(1e-3, np.pi, 20000)
+    def unstable(nu_):
+        w_ = nu_*(float(sigma)*(1-np.cos(ths))+1j*float(lam)*np.sin(ths))
+        return np.max(np.abs((1+(1-w_)**2/(1+float(q)))/(2+float(q)))) > 1+1e-12
+    nu_pi, lo, hi = float((2+q)/(2*sigma)), 0.0, float((2+q)/(2*sigma))
+    for _ in range(60):
+        lo, hi = (lo, (lo+hi)/2) if unstable((lo+hi)/2) else ((lo+hi)/2, hi)
     return {**{key: mp.nstr(value, 35) for key, value in dict(
                 beta=b, reduced_flux=4*b/(3+b*b), normal_cosine=mu,
                 sigma=sigma, lambda_plus=lam, q=q, nu=nu, tau_cell=q/nu,
                 theta=theta, amplification_modulus=abs(g), checkerboard=checker,
                 gain_after_1000_steps=abs(g)**1000).items()},
             'matrix_spectral_radius': rho, 'real_grid_gain_after_1000_steps': measured,
+            'stable_limit_over_checkerboard_bound': lo/nu_pi,
             'finite_material_response': {'K_energy': ke, 'K_momentum_prefactor': km,
                                          'spectral_radius': coupled_rho,
                                          'checkerboard_spectral_radius': coupled_checker},

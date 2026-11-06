@@ -128,6 +128,11 @@ for r in PHI0_P
     for k in 1:NOUT
         @printf("  %3d w traveled: centroid lag RSLA %8.3f w, ARSA %7.3f w\n", k * DW, lag(rsla)[k+1], lag(arsa)[k+1])
     end
+    tauc = KAPPA .* rhoprof.(XS, T_lo) .* (L / NX)                 # cell optical depth of the initial pulse
+    thr = 2 * (sqrt(3) - PHI0 * sqrt(3)) * PHI0 ./ ((1 .+ h) .* (PHI0 .- h ./ (1 .+ h)))   # eq:tau_one, beta = 1, nu0 = 1/sqrt3
+    @printf("  Table 3: h max %.3g, tau_c in [%.3g, %.3g], tau_thresh (beta = 1) in [%.3g, %.3g]; after %d w |lag| RSLA %.4g w, ARSA %.4g w, ratio %.3g\n",
+            maximum(h), extrema(tauc)..., extrema(thr)..., NOUT * DW, abs(lag(rsla)[end]), abs(lag(arsa)[end]),
+            abs(lag(rsla)[end] / lag(arsa)[end]))
     push!(rows, (phi0_P=r, T_lo=T_lo, P_peak=Ppeak(T_lo), h_peak=maximum(h), mach=mach, arsa_phi_min=arsa.phimin,
                  widths=collect(0:DW:NOUT * DW), x_exact=xex, x_rsla=rsla.pos, x_arsa=arsa.pos,
                  lag_rsla_w=lag(rsla), lag_arsa_w=lag(arsa),

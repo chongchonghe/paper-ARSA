@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from paper_style import STYLE, TEXTWIDTH, C1, C2, read, col, save
 
 MARKERS = {3e-4: 'o', 3e-3: 's'}
+PHI0TEX = {3e-4: r'3\times10^{-4}', 3e-3: r'3\times10^{-3}'}
 R0 = 1e13                    # r_out at t = 0 [cm]
 
 
@@ -26,7 +27,7 @@ def expanding_sphere():
             rows = [r for r in d if r['method'] == meth and float(r['phi0']) == phi0]
             r, T, Te = R0 * col(rows, 'r_out_R0'), col(rows, 'Tg_mean_K'), col(rows, 'T_exact_K')
             kw = dict(color=c, marker=m, ms=3.5, lw=0.8, mfc='none' if meth == 'arsa' else c, zorder=2)
-            a0.loglog(r, T, ls='none', label=rf'{lab}, $\phi_0 = {phi0:g}$', **kw)
+            a0.loglog(r, T, ls='none', label=rf'{lab}, $\phi_0 = {PHI0TEX[phi0]}$', **kw)
             a1.loglog(r[1:], np.abs(T[1:] / Te[1:] - 1), **kw)
     a0.set_ylabel(r'$T$ [K]')
     a1.set_ylabel(r'$|T - T_{\rm exact}|/T_{\rm exact}$')

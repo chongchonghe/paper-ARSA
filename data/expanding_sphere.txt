@@ -1,13 +1,13 @@
-# src/sim_expanding_sphere.jl, 2026-11-06 18:42, paper-ARSA 114bfab, Honghu.jl v0.1.0 (tree e63aa35)
+# src/sim_expanding_sphere.jl, 2026-11-06 19:17, paper-ARSA 7c79b3c, Honghu.jl v0.1.0 (tree e63aa35)
 initial state: h = 0.000255, phi_* = h/(1 + h) = 0.000255, tau_c = 1.19e+05, D = rho kappa R0 VOUT/c = 63.4, Mach at the box edge 0.60
 tau_c at r_out = 11 R0: 89.2
-phi0 = 0.0003: h/phi0 = 0.851, phi_*(beta) = 0.00023, tau_thresh(beta) = 14.8
-phi0 = 0.003: h/phi0 = 0.0851, phi_*(beta) = 0.00023, tau_thresh(beta) = 3.74
+phi0 = 0.0003: h/phi0 = 0.851, phi_*(beta) = 0.00023, tau_thresh(beta) = 14.8; Table 3 (beta = 1): phi_* = 0.000255, tau_thresh = 23.3
+phi0 = 0.003: h/phi0 = 0.0851, phi_*(beta) = 0.00023, tau_thresh(beta) = 3.74; Table 3 (beta = 1): phi_* = 0.000255, tau_thresh = 3.77
 exact T at r_out = 11 R0: 82.65 K (gas alone: 82.64 K)
 4 worker processes, 2 threads each
-phi0 = 0.0003 RSLA: T_gas 305.9 K, error +2.7015, range in the box [305.5, 306.6] K, T_rad 305.9 K, phi in [0.0003, 0.0003], 523 steps, 2999 sub-steps
-phi0 = 0.0003 ARSA: T_gas 82.94 K, error +0.0035, range in the box [82.66, 83.55] K, T_rad 82.94 K, phi in [1, 1], 427 steps, 2909 sub-steps
-phi0 = 0.003  RSLA: T_gas 87.79 K, error +0.0622, range in the box [87.7, 88.03] K, T_rad 87.79 K, phi in [0.003, 0.003], 2775 steps, 27699 sub-steps
-phi0 = 0.003  ARSA: T_gas 82.71 K, error +0.0007, range in the box [82.63, 82.93] K, T_rad 82.71 K, phi in [1, 1], 2775 steps, 27699 sub-steps
-(280 s)
+phi0 = 0.0003 RSLA: T_gas 305.9 K, error +2.702e+00, range in the box [305.5, 306.6] K, T_rad 305.9 K, phi in [0.0003, 0.0003], 523 steps, 2999 sub-steps
+phi0 = 0.0003 ARSA: T_gas 82.94 K, error +3.457e-03, range in the box [82.66, 83.55] K, T_rad 82.94 K, phi in [1, 1], 427 steps, 2909 sub-steps
+phi0 = 0.003  RSLA: T_gas 87.79 K, error +6.218e-02, range in the box [87.7, 88.03] K, T_rad 87.79 K, phi in [0.003, 0.003], 2775 steps, 27699 sub-steps
+phi0 = 0.003  ARSA: T_gas 82.71 K, error +6.709e-04, range in the box [82.63, 82.93] K, T_rad 82.71 K, phi in [1, 1], 2775 steps, 27699 sub-steps
+(283 s)
 wrote data/expanding_sphere.csv

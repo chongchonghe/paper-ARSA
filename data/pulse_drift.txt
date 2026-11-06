@@ -1,4 +1,4 @@
-# src/sim_pulse_drift.jl, 2026-11-03 00:02, paper-ARSA a86c17b, Honghu.jl v0.1.0 (tree e63aa35)
+# src/sim_pulse_drift.jl, 2026-11-06 19:32, paper-ARSA f466c53, Honghu.jl v0.1.0 (tree e63aa35)
 phi0 = 0.01, D = kappa rho w v/c = 14.4, 256 widths traveled (w = 24 cm), output every 32 w (2.56e-05 s); box 1024 cm (42.7 w), 512 cells
 
 == phi0/P at the peak 3: T_lo = 1.056e+06 K, P at the peak 0.00333, h in [0.000555, 0.00887], Mach 3.79; ARSA phi >= 1; steps RSLA 7653, ARSA 8107; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9506 at the end ==
@@ -10,6 +10,7 @@ phi0 = 0.01, D = kappa rho w v/c = 14.4, 256 widths traveled (w = 24 cm), output
   192 w traveled: centroid lag RSLA   10.916 w, ARSA  -0.032 w
   224 w traveled: centroid lag RSLA   11.826 w, ARSA  -0.036 w
   256 w traveled: centroid lag RSLA   13.012 w, ARSA  -0.040 w
+  Table 3: h max 0.00887, tau_c in [600, 1.2e+03], tau_thresh (beta = 1) in [3.63, 28.2]; after 256 w |lag| RSLA 13.01 w, ARSA 0.04008 w, ratio 325
 
 == phi0/P at the peak 30: T_lo = 4.904e+05 K, P at the peak 0.000333, h in [5.55e-05, 0.000887], Mach 5.56; ARSA phi >= 1; steps RSLA 6667, ARSA 6766; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9931 at the end ==
    32 w traveled: centroid lag RSLA    0.490 w, ARSA  -0.002 w
@@ -20,6 +21,7 @@ phi0 = 0.01, D = kappa rho w v/c = 14.4, 256 widths traveled (w = 24 cm), output
   192 w traveled: centroid lag RSLA    1.533 w, ARSA  -0.004 w
   224 w traveled: centroid lag RSLA    1.842 w, ARSA  -0.005 w
   256 w traveled: centroid lag RSLA    2.234 w, ARSA  -0.007 w
+  Table 3: h max 0.000887, tau_c in [600, 1.2e+03], tau_thresh (beta = 1) in [3.45, 3.76]; after 256 w |lag| RSLA 2.234 w, ARSA 0.006638 w, ratio 337
 
 == phi0/P at the peak 300: T_lo = 2.276e+05 K, P at the peak 3.33e-05, h in [5.56e-06, 8.87e-05], Mach 8.15; ARSA phi >= 1; steps RSLA 5920, ARSA 5920; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9985 at the end ==
    32 w traveled: centroid lag RSLA    0.054 w, ARSA  -0.000 w
@@ -30,6 +32,7 @@ phi0 = 0.01, D = kappa rho w v/c = 14.4, 256 widths traveled (w = 24 cm), output
   192 w traveled: centroid lag RSLA    0.215 w, ARSA  -0.000 w
   224 w traveled: centroid lag RSLA    0.249 w, ARSA  -0.000 w
   256 w traveled: centroid lag RSLA    0.282 w, ARSA  -0.001 w
+  Table 3: h max 8.87e-05, tau_c in [600, 1.2e+03], tau_thresh (beta = 1) in [3.43, 3.46]; after 256 w |lag| RSLA 0.2824 w, ARSA 0.0005146 w, ratio 549
 
 == phi0/P at the peak 3000: T_lo = 1.056e+05 K, P at the peak 3.33e-06, h in [5.56e-07, 8.87e-06], Mach 11.97; ARSA phi >= 1; steps RSLA 5920, ARSA 5920; peak (T - T_lo)/T_lo of the exact solution 0.9991 at the start, 0.9991 at the end ==
    32 w traveled: centroid lag RSLA    0.006 w, ARSA  -0.000 w
@@ -40,5 +43,6 @@ phi0 = 0.01, D = kappa rho w v/c = 14.4, 256 widths traveled (w = 24 cm), output
   192 w traveled: centroid lag RSLA    0.022 w, ARSA   0.000 w
   224 w traveled: centroid lag RSLA    0.026 w, ARSA   0.000 w
   256 w traveled: centroid lag RSLA    0.029 w, ARSA   0.000 w
+  Table 3: h max 8.87e-06, tau_c in [600, 1.2e+03], tau_thresh (beta = 1) in [3.43, 3.43]; after 256 w |lag| RSLA 0.02922 w, ARSA 5.854e-05 w, ratio 499
 
 wrote data/pulse_drift.json

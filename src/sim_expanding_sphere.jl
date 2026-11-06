@@ -4,7 +4,7 @@
 # T = 1e4 K for gas and radiation, mu = 0.5, gamma = 5/3, kappa = 0.4 cm^2/g, and the sphere grows from R0 = 1e13 cm
 # to 11 R0; unlike the paper, the opacity is absorption (kappa_P = kappa_E = kappa_F), so the gas and the radiation
 # share one temperature on the adiabat of gas plus radiation, and the expansion is slower, VOUT = 10 km/s (the paper:
-# 1e4 km/s), so that chat = 30 VOUT at phi0 = 1e-3 and the flow stays subsonic within the box (the RSLA error depends
+# 1e4 km/s), so that chat = 9 VOUT at phi0 = 3e-4 and the flow stays subsonic within the box (the RSLA error depends
 # on h/phi0 only). The pure-scattering case of the paper is not run: with kappa_E = 0 the limiter sets phi = phi0.
 #
 # The box [-R0, R0]^3 of N^3 cubic cells is the interior of the sphere. Its ghost cells copy the nearest interior
@@ -17,14 +17,14 @@
 # box mean of T_gas, its error against the exact solution, its range in the box, phi and the steps. Writes
 # data/expanding_sphere.csv: for each phi0 and method (rsla, arsa) at NOUT radii r_out/R0 from 1 to 11 the time
 # [s], the mean, minimum and maximum of T_gas [K] in the box, the mean T_rad [K], the range of phi, and the exact
-# T [K]. run_all.sh saves the printout in data/expanding_sphere.txt. The six runs use one worker process each,
+# T [K]. run_all.sh saves the printout in data/expanding_sphere.txt. The four runs use one worker process each,
 # with THREADS threads (environment variable, default 1): Honghu.jl spreads its grid loops over the threads of a
-# process. On a machine with 64 cores, THREADS=10.
+# process. On a machine with 64 cores, THREADS=16.
 #
 #   ./run_all.sh expanding_sphere      (or: julia --project=. src/sim_expanding_sphere.jl)
-#   THREADS=10 ./run_all.sh expanding_sphere
+#   THREADS=16 ./run_all.sh expanding_sphere
 using Distributed, Printf
-const PHI0S = (1e-3, 3e-3, 1e-2)
+const PHI0S = (3e-4, 3e-3)
 const THREADS = parse(Int, get(ENV, "THREADS", "1"))
 addprocs(2 * length(PHI0S); exeflags=`--project=$(Base.active_project()) -t $THREADS`)
 

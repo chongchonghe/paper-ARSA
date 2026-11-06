@@ -29,6 +29,7 @@
     "gain_after_1000_steps": "2137310.0694442890000957464827365841",
     "matrix_spectral_radius": 1.0146817927077516,
     "real_grid_gain_after_1000_steps": 2137310.0694435197,
+    "stable_limit_over_checkerboard_bound": 0.9916923855719363,
     "finite_material_response": {
       "K_energy": 0.0001,
       "K_momentum_prefactor": 0.0001,

@@ -1,4 +1,4 @@
-# checks/m1/*.py, 2026-10-25 21:16, paper-ARSA a29ebec, Honghu.jl v0.1.0 (tree e63aa35)
+# checks/m1/*.py, 2026-11-06 12:00, paper-ARSA be5e1c6, Honghu.jl v0.1.0 (tree e63aa35)
 == checks/m1/absorbing_scan.py
 1D cases: 2700  failures: {'actual': 2, 'max_iso': 0, 'lambda_max': 0}
 2D cases: 1197  failures: {'actual': 0, 'max_iso': 0, 'lambda_max': 0}
@@ -431,6 +431,7 @@ wrote data/m1/absorbing_scan.json
     "gain_after_1000_steps": "2137310.0694442890000957464827365841",
     "matrix_spectral_radius": 1.0146817927077516,
     "real_grid_gain_after_1000_steps": 2137310.0694435197,
+    "stable_limit_over_checkerboard_bound": 0.9916923855719363,
     "finite_material_response": {
       "K_energy": 0.0001,
       "K_momentum_prefactor": 0.0001,

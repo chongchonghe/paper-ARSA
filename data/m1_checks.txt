@@ -1,5 +1,8 @@
-# checks/m1/*.py, 2026-11-06 12:00, paper-ARSA be5e1c6, Honghu.jl v0.1.0 (tree e63aa35)
+# checks/m1/*.py, 2026-11-06 12:20, paper-ARSA f4ab3ad, Honghu.jl v0.1.0 (tree e63aa35)
 == checks/m1/absorbing_scan.py
+1D gap below the bound: cases with a bound 1375  positive: [(0.913, 0.125, 0.0757), (0.913, 0.25, 0.0003), (0.974, 0.125, 0.076), (0.974, 0.25, 0.2328), (0.99, 0.125, 0.904)]
+2D gap below the bound: cases with a bound 693  positive: []
+3D gap below the bound: cases with a bound 808  positive: []
 1D cases: 2700  failures: {'actual': 2, 'max_iso': 0, 'lambda_max': 0}
 2D cases: 1197  failures: {'actual': 0, 'max_iso': 0, 'lambda_max': 0}
 3D cases: 1365  failures: {'actual': 0, 'max_iso': 0, 'lambda_max': 0}

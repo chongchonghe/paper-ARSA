@@ -14,8 +14,12 @@ Three geometries:
       counterexamples of m1_stability.py and m1_thick_cells.py are of this kind;
   2D, with the flux in the grid plane, as in a 2D simulation;
   3D, with the flux in any direction (one octant, by symmetry).
+It also measures, for the rule actual, how far below the bound itself (beta = 1) the stable limit lies in each case
+with a bound: gap = 1 - nu_true/nu_bound, with nu_true the largest stable nu found by bisection.
 Writes data/m1/absorbing_scan.json: the number of cases and, per geometry and rule, every failure with its exact
-parameters (b is the closure coordinate, f = 4b/(3 + b^2); n the flux direction). About 5 minutes.
+parameters (b is the closure coordinate, f = 4b/(3 + b^2); n the flux direction); under 'gap', per geometry, the
+number of cases with a bound, every case with a positive gap, and the largest gap in 1D with the flux within 68 degrees
+of the axis (cosine >= 0.375). About 6 minutes.
 
     python3 checks/m1/absorbing_scan.py
 """
@@ -78,11 +82,45 @@ def scan(dim, bs, taus):
     return out
 
 
+def gaps(dim, bs, taus):
+    """The gap below the bound (beta = 1) with the actual speeds, in every case where the bound sets a step."""
+    th = phases(dim)
+    out = {'cases_with_bound': 0, 'positive': []}
+    for b in bs:
+        for n in directions(dim):
+            u, a, h, speeds = matrices(b, n)
+            A, sig = a[:dim], speeds[:dim]
+            for tau in taus:
+                den = sum(sig) - tau / 2
+                if den <= 0:
+                    continue
+                out['cases_with_bound'] += 1
+                nub = 1 / den
+                if rho_max(A, sig, nub * (1 - 1e-9), nub * tau * (1 - 1e-9), th) <= 1 + TOL:
+                    continue
+                lo, hi = 0.0, nub
+                for _ in range(30):
+                    m = (lo + hi) / 2
+                    lo, hi = (m, hi) if rho_max(A, sig, m, m * tau, th) <= 1 + TOL else (lo, m)
+                out['positive'].append({'f': 4 * b / (3 + b * b), 'n': [float(x) for x in n], 'tau': float(tau),
+                                        'gap': 1 - lo / nub})
+    return out
+
+
 if __name__ == '__main__':
     result = {'1D': scan(1, np.r_[0.0, np.linspace(0.05, 0.95, 10), 0.98], np.geomspace(1e-3, 1e3, 25)),
               '2D': scan(2, np.r_[0.0, np.linspace(0.1, 0.9, 6), 0.95, 0.98], np.geomspace(1e-3, 1e3, 19)),
               '3D': scan(3, np.r_[0.0, np.linspace(0.2, 0.9, 4), 0.95, 0.98], np.geomspace(1e-3, 1e3, 13))}
+    grids = {'1D': (1, np.r_[0.0, np.linspace(0.05, 0.95, 10), 0.98], np.geomspace(1e-3, 1e3, 25)),
+             '2D': (2, np.r_[0.0, np.linspace(0.1, 0.9, 6), 0.95, 0.98], np.geomspace(1e-3, 1e3, 19)),
+             '3D': (3, np.r_[0.0, np.linspace(0.2, 0.9, 4), 0.95, 0.98], np.geomspace(1e-3, 1e3, 13))}
+    result['gap'] = {k: gaps(*v) for k, v in grids.items()}
+    result['gap']['1D']['max_gap_within_68deg'] = max(
+        [g['gap'] for g in result['gap']['1D']['positive'] if g['n'][0] >= 0.375], default=0.0)
     OUT.write_text(json.dumps(result, indent=1) + '\n')
+    for dim, r in result['gap'].items():
+        print(dim, 'gap below the bound: cases with a bound', r['cases_with_bound'], ' positive:',
+              [(round(g['f'], 3), round(g['n'][0], 3), round(g['gap'], 4)) for g in r['positive']])
     for dim, r in result.items():
         print(dim, 'cases:', r['cases'], ' failures:', {k: len(v) for k, v in r['failures'].items()})
     print('wrote', OUT.relative_to(OUT.parents[2]))

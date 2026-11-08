@@ -30,7 +30,15 @@ ARSA = dict(color=C2, lw=1.2, ls=(0, (3, 1.5)), zorder=3)   # dashed and on top,
 d = json.load(open(DATA / 'pulse_drift.json'))
 w, L, xs = d['w'], d['L'], np.array(d['x'])
 dr = json.load(open(DATA / 'pulse_rest.json'))
-rows = [(r, r['widths'].index(WIDTHS), rf'$\mathcal{{P}}/\phi_0 = {1 / r["phi0_P"]:.2g}$') for r in d['runs']]
+def sci(v):                  # v in LaTeX with two significant figures, a x 10^b from 1e3 up
+    if v == 0 or v < 1e3:
+        return f'{v:.2g}'
+    m, e = f'{v:.1e}'.split('e')
+    return rf'{m}\times10^{{{int(e)}}}'
+
+
+rows = [(r, r['widths'].index(WIDTHS), rf'$\mathcal{{P}}/\phi_0 = {1 / r["phi0_P"]:.2g}$, '
+         rf'$\mathcal{{D}}/\phi_0 = {sci(d["D"] / d["phi0"])}$') for r in d['runs']]
 GAMMA = 5 / 3                # hhat = 4 (gamma - 1) P: t_diff = 3 kappa rho0 w^2/(hhat c) = t_w/hhat at the peak
 GRID = [0, 1]                # grid row of each drift row; grid row 2 is the gap above the row of the pulse at rest
 
@@ -111,12 +119,16 @@ with plt.rc_context(STYLE):
     end.plot(xr_, y(dr['T_rsla'][-1]), color=C1, lw=1.2)
     end.plot(xr_, y(dr['T_arsa'][-1]), **ARSA)
     hhat = 4 * (GAMMA - 1) * dr['phi0'] / dr['phi0_P']             # at the peak
-    end.text(0.03, 0.93, rf'weak pulse at rest, $\mathcal{{P}}/\phi_0 = {1 / dr["phi0_P"]:.2g}$, '
-             rf'$t = {dr["t"][-1] * hhat / dr["t_w"]:.1f}\,t_{{\rm diff}}$', transform=end.transAxes, va='top')
+    end.text(0.03, 0.93, 'weak pulse at rest', transform=end.transAxes, va='top')
+    end.text(0.03, 0.78, rf'$\mathcal{{P}}/\phi_0 = {1 / dr["phi0_P"]:.2g}$, $\mathcal{{D}}/\phi_0 = 0$',
+             transform=end.transAxes, va='top')
     ex = np.array(dr['T_exact'][-1]) - T_lo
     l1 = lambda T: np.sum(np.abs(np.array(T) - T_lo - ex)) / np.sum(np.abs(ex))
-    end.text(0.03, 0.78, rf'$L_1$ error: RSLA ${100 * l1(dr["T_rsla"][-1]):.0f}\%$, ARSA ${100 * l1(dr["T_arsa"][-1]):.2f}\%$',
-             transform=end.transAxes, va='top')
+    t0 = end.text(0.03, 0.63, rf'$L_1$ error at $t = {dr["t"][-1] * hhat / dr["t_w"]:.1f}\,t_{{\rm diff}}$:',
+                  transform=end.transAxes, va='top')
+    t1 = end.annotate(rf'RSLA ${100 * l1(dr["T_rsla"][-1]):.0f}\%$', xy=(1, 0), xycoords=t0, xytext=(3, 0), textcoords='offset points', va='bottom', color=C1)
+    t2 = end.annotate(',', xy=(1, 0), xycoords=t1, va='bottom')
+    end.annotate(rf'ARSA ${100 * l1(dr["T_arsa"][-1]):.2f}\%$', xy=(1, 0), xycoords=t2, xytext=(3, 0), textcoords='offset points', va='bottom', color=C2)
     fig.text(0.5, 0.008, rf'real position $x$ [cm] (pulse width $w = {w:g}$ cm)',
              ha='center')
     fig.legend(handles=[Line2D([], [], color='k', ls='--', lw=1.0), Line2D([], [], color='k', lw=1.8),

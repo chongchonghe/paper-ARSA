@@ -25,6 +25,7 @@ SCALE = 0.8                  # the figure is SCALE times the text width, so that
 AX_H, GAP = 1.30 * SCALE, 0.23 * SCALE   # height of a panel and gap between rows [in]; twice the gap above the last row
 TOP, BOTTOM = 0.37 * SCALE, 0.53 * SCALE # margins for the legend and the axis label [in]
 LEFT = 0.49                  # margin for the y label [in]
+ARSA = dict(color=C2, lw=1.2, ls=(0, (3, 1.5)), zorder=3)   # dashed and on top, so that it shows over the exact line
 
 d = json.load(open(DATA / 'pulse_drift.json'))
 w, L, xs = d['w'], d['L'], np.array(d['x'])
@@ -85,8 +86,8 @@ with plt.rc_context(STYLE):
         start.set_yticks([0, 0.5, 1])
         for ax in ends:
             ax.plot(*place(y(r['T_exact'][K]), xr), color='k', lw=1.8)
-            ax.plot(*place(y(r['T_arsa'][K]), r['x_arsa'][K]), color=C2, lw=0.9)
             ax.plot(*place(y(r['T_rsla'][K]), xl), color=C1, lw=1.2)
+            ax.plot(*place(y(r['T_arsa'][K]), r['x_arsa'][K]), **ARSA)
         lag = r['lag_rsla_w'][K]
         ends[0].text(0.03, 0.93, label + f', after {r["widths"][K]} widths', transform=ends[0].transAxes, va='top')
         ends[0].text(0.03, 0.78, rf'RSLA lag ${lagtext(lag)}\,w$', transform=ends[0].transAxes, va='top', color=C1)
@@ -105,8 +106,8 @@ with plt.rc_context(STYLE):
     start.set_ylabel(rf'$(T - T_{{\rm lo}})/({amp:g}\,T_{{\rm lo}})$')
     start.set_yticks([0, 0.5, 1])
     end.plot(xr_, y(dr['T_exact'][-1]), color='k', lw=1.8)
-    end.plot(xr_, y(dr['T_arsa'][-1]), color=C2, lw=0.9)
     end.plot(xr_, y(dr['T_rsla'][-1]), color=C1, lw=1.2)
+    end.plot(xr_, y(dr['T_arsa'][-1]), **ARSA)
     end.text(0.03, 0.93, rf'weak pulse at rest, $\phi_0/\mathcal{{P}} = {dr["phi0_P"]}$, $t = {dr["t"][-1] * 1e3:.1f}$ ms',
              transform=end.transAxes, va='top')
     ex = np.array(dr['T_exact'][-1]) - T_lo
@@ -117,7 +118,7 @@ with plt.rc_context(STYLE):
     fig.text(0.5, 0.008, rf'real position $x$ [cm] (pulse width $w = {w:g}$ cm)',
              ha='center')
     fig.legend(handles=[Line2D([], [], color='k', ls='--', lw=1.0), Line2D([], [], color='k', lw=1.8),
-                        Line2D([], [], color=C2, lw=0.9), Line2D([], [], color=C1, lw=1.2)],
-               labels=['initial', 'exact', 'ARSA', 'RSLA'],
+                        Line2D([], [], color=C1, lw=1.2), Line2D([], [], **ARSA)],
+               labels=['initial', 'exact', 'RSLA', 'ARSA'],
                loc='upper center', ncol=4, bbox_to_anchor=(0.5, 1.0))
     save(fig, 'pulse_drift')

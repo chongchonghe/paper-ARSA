@@ -108,6 +108,11 @@ with plt.rc_context(STYLE):
     end.plot(xr_, y(dr['T_rsla'][-1]), color=C1, lw=1.2)
     end.text(0.03, 0.93, rf'$\phi_0/\mathcal{{P}} = {dr["phi0_P"]}$, at rest, $t = {dr["t"][-1] * 1e3:.1f}$ ms',
              transform=end.transAxes, va='top')
+    ex = np.array(dr['T_exact'][-1]) - T_lo
+    l1 = lambda T: np.sum(np.abs(np.array(T) - T_lo - ex)) / np.sum(np.abs(ex))
+    end.text(0.03, 0.78, rf'$L_1$ error of $T - T_{{\rm lo}}$: RSLA ${100 * l1(dr["T_rsla"][-1]):.0f}\%$',
+             transform=end.transAxes, va='top', color=C1)
+    end.text(0.03, 0.63, rf'ARSA ${100 * l1(dr["T_arsa"][-1]):.2f}\%$', transform=end.transAxes, va='top', color=C2)
     fig.text(0.5, 0.008, rf'real position $x$ [cm] (pulse width $w = {w:g}$ cm)',
              ha='center')
     fig.legend(handles=[Line2D([], [], color='k', ls='--', lw=1.0), Line2D([], [], color='k', lw=1.8),

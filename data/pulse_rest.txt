@@ -1,0 +1,13 @@
+# src/sim_pulse_rest.jl, 2026-11-08 14:29, paper-ARSA 3546930, Honghu.jl v0.1.0 (tree e63aa35)
+phi0 = 0.01, phi0/P at the peak 3: T_lo = 1.056e+06 K, P at the peak 0.00333, h in [0.000555, 0.00887] (h/phi0 up to 0.887), kappa = 30 cm^2/g
+tau_c in [36, 72]; tau_thresh in [3.63, 28.2] (beta = 1, nu0 = 1/sqrt3, Table 3) and [3.61, 16.4] (beta = 0.9, the limiter)
+box 384 cm, 192 cells; t_w = 3 kappa rho0 w^2/c = 2.075e-06 s; outputs at [0, 1000, 2000, 3000] t_w
+(1099 s)
+RSLA: phi >= 0.01, 179580 steps, 1795791 sub-steps
+ARSA: phi >= 1, 179580 steps, 1795791 sub-steps
+  t =     0 t_w: peak (T - T_lo)/T_lo exact 0.9991, RSLA 0.9991, ARSA 0.9991; L1 of T - T_lo RSLA 5.001e-06, ARSA 5.001e-06
+  t =  1000 t_w: peak (T - T_lo)/T_lo exact 0.4168, RSLA 0.4572, ARSA 0.4166; L1 of T - T_lo RSLA 0.1222, ARSA 0.001234
+  t =  2000 t_w: peak (T - T_lo)/T_lo exact 0.3337, RSLA 0.3692, ARSA 0.3333; L1 of T - T_lo RSLA 0.1378, ARSA 0.0006551
+  t =  3000 t_w: peak (T - T_lo)/T_lo exact 0.2898, RSLA 0.3227, ARSA 0.2897; L1 of T - T_lo RSLA 0.1451, ARSA 0.0007024
+Table 3: h max 0.00887, tau_c in [36, 72], tau_thresh (beta = 1) in [3.63, 28.2]; at 3000 t_w L1 RSLA 0.1451, ARSA 0.0007024, ratio 207
+wrote data/pulse_rest.json

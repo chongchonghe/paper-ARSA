@@ -1,10 +1,12 @@
-# The pulse of sim_pulse_drift.jl at rest (D = 0, the left edge of Fig. 1), in the upper part of the amber region:
-# phi0/P = 3 at the peak (h = 0.89 phi0 there), so that the RSLA slows the thermal diffusion of the core, with no
-# drift. The pulse diffuses on t_diff ~ 3 kappa rho w^2/(h c), so the run is long: to NW t_w, t_w = 3 kappa rho0 w^2/c,
-# when the exact peak has fallen to about 0.4 T_lo. kappa = 30 cm^2/g keeps the cells thick enough for the ARSA to
+# A weak pulse at rest (D = 0, the left edge of Fig. 1), in the upper part of the amber region: the pulse of
+# sim_pulse_drift.jl with amplitude AMP = 0.1 instead of 1, T = T_lo [1 + AMP exp(-x^2/(2 w^2))], and phi0/P = 3 at
+# the peak, so that h = 0.61-0.89 phi0 over the whole pulse and the RSLA slows the diffusion of all of it, by
+# (1 + h)/(1 + h/phi0), about a factor of 2, with no drift. (Until 2026-11-08 the full pulse, AMP = 1, whose wings
+# have h = 0.055 phi0.) The pulse diffuses on t_diff ~ 3 kappa rho w^2/(h c), so the run is long: to NW t_w,
+# t_w = 3 kappa rho0 w^2/c, when the exact peak has fallen to about a third. kappa = 30 cm^2/g keeps the cells thick enough for the ARSA to
 # reach phi = 1 (tau_c = 36-72 against tau_thresh <= 28) at the least cost: the radiation substep does not depend on
 # kappa, so the number of substeps scales with it. Without advection the box only needs to hold the diffused pulse:
-# L = 384 cm on NX = 192 cells (dx = 2 cm, as in sim_pulse_drift.jl; (T - T_lo)/T_lo < 1e-3 beyond 160 cm at the end).
+# L = 768 cm on NX = 384 cells (dx = 2 cm, as in sim_pulse_drift.jl).
 # The RSLA and the ARSA at phi0 = 0.01, 3D slab NX x 2 x 2, C_r = 0.9 sqrt3, against the exact solution (the enthalpy
 # diffusion of sim_pulse_drift.jl in column mass, on NM cells, without the shift by v t).
 #
@@ -12,7 +14,7 @@
 # the limiter), and for each run the smallest phi, the steps, and at every output the peak of (T - T_lo)/T_lo and the
 # L1 error of T - T_lo relative to the exact pulse. Writes data/pulse_rest.json: phi0, kappa, w, L, t_w, the output
 # times t [s], the cell centres x [cm], and T [K] of the exact solution, the RSLA and the ARSA at every output (the
-# first is the initial pulse); run_all.sh saves the printout in data/pulse_rest.txt. Two single-threaded workers.
+# first is the initial pulse), and amp; run_all.sh saves the printout in data/pulse_rest.txt. Two single-threaded workers.
 #
 #   ./run_all.sh pulse_rest      (or: julia --project=. src/sim_pulse_rest.jl)
 using Distributed, Printf
@@ -23,14 +25,15 @@ using Honghu
 const CGS = Honghu.CGS
 const MU, GAMMA, RHO0, W = 2.33 * CGS.m_u, 5 / 3, 1.2, 24.0     # as in sim_diffusion_pulse.jl
 const CV = CGS.k_B / (MU * (GAMMA - 1))
-const PHI0, R, KAP, L, NX, NT = 0.01, 3, 30.0, 384.0, 192, 2   # phi0, phi0/P at the peak, kappa, box, cells
+const PHI0, R, KAP, L, NX, NT = 0.01, 3, 30.0, 768.0, 384, 2   # phi0, phi0/P at the peak, kappa, box, cells
+const AMP = 0.1                                                 # amplitude of the pulse
 const CR = 0.9 * sqrt(3)
 const TW = 3 * KAP * RHO0 * W^2 / CGS.c_light                    # t_w
-const NW = 3000                                                 # run to NW t_w
-const TOUTS = [0.0, 1000TW, 2000TW, 3000TW]
+const NW = 1000                                                 # run to NW t_w
+const TOUTS = [0.0, 250TW, 500TW, 1000TW]
 const XS = [-L / 2 + (i - 0.5) * L / NX for i in 1:NX]
 
-Tprof(x, T_lo) = T_lo * (1 + exp(-x^2 / (2 * W^2)))
+Tprof(x, T_lo) = T_lo * (1 + AMP * exp(-x^2 / (2 * W^2)))
 rhoprof(x, T_lo) = (T = Tprof(x, T_lo);
     RHO0 * T_lo / T + (CGS.a_rad * MU / (3 * CGS.k_B)) * (T_lo^4 / T - T^3))   # gas + radiation pressure balance
 Ppeak(T_lo) = CGS.a_rad * Tprof(0.0, T_lo)^3 * MU / (rhoprof(0.0, T_lo) * CGS.k_B)
@@ -71,7 +74,7 @@ function find_Tlo(target)                             # as in sim_pulse_drift.jl
     sqrt(lo * hi)
 end
 
-const NM = 3072                                       # cells in m of the exact solution (dm as in sim_pulse_drift.jl)
+const NM = 6144                                       # cells in m of the exact solution (dm as in sim_pulse_drift.jl)
 interp(xq, xs, ys) = (i = clamp(searchsortedlast(xs, xq), 1, length(xs) - 1);
                       ys[i] + (ys[i+1] - ys[i]) * clamp((xq - xs[i]) / (xs[i+1] - xs[i]), 0, 1))
 rhoT(T, T_lo) = RHO0 * T_lo / T + (CGS.a_rad * MU / (3 * CGS.k_B)) * (T_lo^4 / T - T^3)
@@ -106,8 +109,8 @@ tauc = KAP .* rho .* (L / NX)
 thr1 = 2 * (sqrt(3) - PHI0 * sqrt(3)) * PHI0 ./ ((1 .+ h) .* (PHI0 .- h ./ (1 .+ h)))               # Table 3
 ps9 = 0.9 .* h ./ (1 .+ 0.9 .* h)
 thr9 = 2 * (sqrt(3) - 0.9 * PHI0 / (0.9 / sqrt(3))) * PHI0 ./ ((1 .+ 0.9 .* h) .* (PHI0 .- ps9))    # the limiter
-@printf("phi0 = %g, phi0/P at the peak %g: T_lo = %.4g K, P at the peak %.3g, h in [%.3g, %.3g] (h/phi0 up to %.3f), kappa = %g cm^2/g\n",
-        PHI0, R, T_lo, Ppeak(T_lo), extrema(h)..., maximum(h) / PHI0, KAP)
+@printf("amplitude %g; phi0 = %g, phi0/P at the peak %g: T_lo = %.4g K, P at the peak %.3g, h in [%.3g, %.3g] (h/phi0 up to %.3f), kappa = %g cm^2/g\n",
+        AMP, PHI0, R, T_lo, Ppeak(T_lo), extrema(h)..., maximum(h) / PHI0, KAP)
 @printf("tau_c in [%.3g, %.3g]; tau_thresh in [%.3g, %.3g] (beta = 1, nu0 = 1/sqrt3, Table 3) and [%.3g, %.3g] (beta = 0.9, the limiter)\n",
         extrema(tauc)..., extrema(thr1)..., extrema(thr9)...)
 @printf("box %g cm, %d cells; t_w = 3 kappa rho0 w^2/c = %.4g s; outputs at %s t_w\n", L, NX, TW, string(round.(Int, TOUTS ./ TW)))
@@ -119,10 +122,10 @@ rsla, arsa = fetch.(fut)
 for (name, r) in (("RSLA", rsla), ("ARSA", arsa))
     @printf("%s: phi >= %.3g, %d steps, %d sub-steps\n", name, r.phimin, r.steps, r.sub)
 end
-pk(T) = (maximum(T) - T_lo) / T_lo
+pk(T) = (maximum(T) - T_lo) / (AMP * T_lo)
 l1(T, e) = sum(abs, T .- e) / sum(abs, e .- T_lo)
 for k in eachindex(TOUTS)
-    @printf("  t = %5d t_w: peak (T - T_lo)/T_lo exact %.4f, RSLA %.4f, ARSA %.4f; L1 of T - T_lo RSLA %.4g, ARSA %.4g\n",
+    @printf("  t = %5d t_w: peak (T - T_lo)/(AMP T_lo) exact %.4f, RSLA %.4f, ARSA %.4f; L1 of T - T_lo RSLA %.4g, ARSA %.4g\n",
             round(Int, TOUTS[k] / TW), pk(ex[k]), pk(rsla.Ts[k]), pk(arsa.Ts[k]), l1(rsla.Ts[k], ex[k]), l1(arsa.Ts[k], ex[k]))
 end
 @printf("Table 3: h max %.3g, tau_c in [%.3g, %.3g], tau_thresh (beta = 1) in [%.3g, %.3g]; at %d t_w L1 RSLA %.4g, ARSA %.4g, ratio %.3g\n",
@@ -134,7 +137,7 @@ json(io, x::Symbol) = print(io, '"', x, '"')
 json(io, x::AbstractVector) = (print(io, '['); for (i, v) in enumerate(x); i > 1 && print(io, ','); json(io, v); end; print(io, ']'))
 json(io, x::NamedTuple) = (print(io, '{'); for (i, (k, v)) in enumerate(pairs(x)); i > 1 && print(io, ",\n"); json(io, k); print(io, ':'); json(io, v); end; print(io, '}'))
 open(joinpath(@__DIR__, "..", "data", "pulse_rest.json"), "w") do io
-    json(io, (phi0=PHI0, phi0_P=R, kappa=KAP, w=W, L=L, T_lo=T_lo, t_w=TW, t=TOUTS, x=XS,
+    json(io, (phi0=PHI0, phi0_P=R, amp=AMP, kappa=KAP, w=W, L=L, T_lo=T_lo, t_w=TW, t=TOUTS, x=XS,
               T_exact=ex, T_rsla=rsla.Ts, T_arsa=arsa.Ts))
 end
 println("wrote data/pulse_rest.json")

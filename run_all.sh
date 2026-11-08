@@ -38,7 +38,7 @@ step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in
         linear_waves_rhd)    NAME="Honghu.jl examples/linear_waves_rhd.jl"                              # Fig. 5
                              CMD=(julia --project=. -t 4 "$(examples)/linear_waves_rhd.jl" --no-plot --outdir=data) ;;
         pulse_drift)         NAME="src/sim_pulse_drift.jl"; CMD=(julia --project=. src/sim_pulse_drift.jl) ;;
-        pulse_drift_long)    NAME="src/sim_pulse_drift_long.jl"; CMD=(julia --project=. src/sim_pulse_drift_long.jl) ;;
+        pulse_rest)          NAME="src/sim_pulse_rest.jl"; CMD=(julia --project=. src/sim_pulse_rest.jl) ;;
         expanding_sphere)    NAME="src/sim_expanding_sphere.jl"; CMD=(julia --project=. src/sim_expanding_sphere.jl) ;;
         mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
@@ -96,7 +96,7 @@ case ${1:-all} in
         pids=(); names=()
         for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
                  rsla_accuracy theta_scan m1_stability waves_heat_capacity convective_layers m1_checks pulse_drift \
-                 pulse_drift_long expanding_sphere; do
+                 pulse_rest expanding_sphere; do
             job "$s"
         done
         wait_jobs

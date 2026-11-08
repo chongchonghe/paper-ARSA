@@ -16,11 +16,11 @@
 # the RSLA and the ARSA in pulse widths w = 24 cm, and the profiles of T [K] of the exact solution and of T and
 # T_rad [K] of the runs on the cells XS of the box; run_all.sh saves the printout in data/pulse_drift.txt. The runs
 # use single-threaded worker processes, since Honghu.jl spreads its grid loops over the threads of a process;
-# about 3 min with 8 workers. logs/pulse_drift.progress shows each output as it is reached.
+# about 3 min with 4 workers. logs/pulse_drift.progress shows each output as it is reached.
 #
 #   ./run_all.sh pulse_drift      (or: julia --project=. src/sim_pulse_drift.jl)
 using Distributed, Printf
-addprocs(8; exeflags=`--project=$(Base.active_project()) -t 1`)
+addprocs(4; exeflags=`--project=$(Base.active_project()) -t 1`)
 const SRC = @__DIR__
 @everywhere workers() const SRC = $SRC
 @everywhere begin
@@ -29,7 +29,7 @@ const SRC = @__DIR__
 end
 
 @everywhere begin
-const PHI0_P = (3, 30, 300, 3000)                     # phi0/P at the peak of the pulse
+const PHI0_P = (3, 300)                               # phi0/P at the peak of the pulse (until 2026-11-08 also 30 and 3000)
 const PHI0, DW, NOUT, NSAMPLE, NX = 0.01, 32, 8, 4, 512   # outputs every DW widths, NOUT of them
 const WIN = 8                                         # half width of the centroid window [w]
 const TOUT = DW * W / V0                              # the time to travel DW widths

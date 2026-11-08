@@ -1,6 +1,6 @@
 """Fig. of the paper (fig:pulse_drift): the advected pulse after WIDTHS widths traveled, one row per
 phi0/P at the peak (3 and 300), from data/pulse_drift.json (written by sim_pulse_drift.jl), and below them, set
-apart, the pulse at rest at phi0/P = 3 at the end of its run, from data/pulse_rest.json (sim_pulse_rest.jl), over its
+apart, the weak pulse (amplitude 0.1, shown divided by it) at rest at phi0/P = 3 at the end of its run, from data/pulse_rest.json (sim_pulse_rest.jl), over its
 whole box. (Until 2026-11-08 also phi0/P = 30 and 3000, and the pulse at D = 10 phi0 in the bottom row.)
 Each drift row gives the widths traveled at its end. The x-axis is the real
 (unwrapped) position, broken into windows of the same width, 2 HALF pulse widths, so that the pulse has the same
@@ -91,22 +91,23 @@ with plt.rc_context(STYLE):
         ends[0].text(0.03, 0.93, label + f', after {r["widths"][K]} widths', transform=ends[0].transAxes, va='top')
         ends[0].text(0.03, 0.78, rf'RSLA lag ${lagtext(lag)}\,w$', transform=ends[0].transAxes, va='top', color=C1)
     # the pulse at rest: the initial pulse, and at the end the exact solution, the ARSA and the RSLA, over the box
-    T_lo, xr_ = dr['T_lo'], np.array(dr['x'])
-    y = lambda T: (np.array(T) - T_lo) / T_lo
+    T_lo, xr_, amp = dr['T_lo'], np.array(dr['x']), dr['amp']
+    y = lambda T: (np.array(T) - T_lo) / (amp * T_lo)
     start, end = fig.add_subplot(gs[3, 0]), fig.add_subplot(gs[3, 1:])
     for ax in (start, end):
         ax.set_xlim(-dr['L'] / 2, dr['L'] / 2)
         ax.set_ylim(-0.08, 1.12)
         ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f'${v:,.0f}$'.replace(',', r'\,')))
-    start.set_xticks([-100, 0, 100]); end.set_xticks([-150, -100, -50, 0, 50, 100, 150])
+    start.set_xlim(-HALF * w, HALF * w); start.set_xticks([-100, 0, 100])
+    end.set_xticks(np.arange(-300, 301, 100))
     end.tick_params(axis='y', labelleft=False)
     start.plot(xr_, y(dr['T_exact'][0]), color='k', ls='--', lw=1.0)
-    start.set_ylabel(r'$(T - T_{\rm lo})/T_{\rm lo}$')
+    start.set_ylabel(rf'$(T - T_{{\rm lo}})/({amp:g}\,T_{{\rm lo}})$')
     start.set_yticks([0, 0.5, 1])
     end.plot(xr_, y(dr['T_exact'][-1]), color='k', lw=1.8)
     end.plot(xr_, y(dr['T_arsa'][-1]), color=C2, lw=0.9)
     end.plot(xr_, y(dr['T_rsla'][-1]), color=C1, lw=1.2)
-    end.text(0.03, 0.93, rf'$\phi_0/\mathcal{{P}} = {dr["phi0_P"]}$, at rest, $t = {dr["t"][-1] * 1e3:.1f}$ ms',
+    end.text(0.03, 0.93, rf'weak pulse at rest, $\phi_0/\mathcal{{P}} = {dr["phi0_P"]}$, $t = {dr["t"][-1] * 1e3:.1f}$ ms',
              transform=end.transAxes, va='top')
     ex = np.array(dr['T_exact'][-1]) - T_lo
     l1 = lambda T: np.sum(np.abs(np.array(T) - T_lo - ex)) / np.sum(np.abs(ex))

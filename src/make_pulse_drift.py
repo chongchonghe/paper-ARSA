@@ -1,7 +1,8 @@
-"""Fig. 6 of the paper (fig:pulse_drift): the advected pulse after WIDTHS widths traveled, one row per
-phi0/P at the peak (3 to 3000), from data/pulse_drift.json (written by sim_pulse_drift.jl), and below them, set
-apart, the pulse at D = 10 phi0 after WIDTHS_LONG widths, from data/pulse_drift_long.json (sim_pulse_drift_long.jl).
-Each row gives the widths traveled at its end. The x-axis is the real
+"""Fig. of the paper (fig:pulse_drift): the advected pulse after WIDTHS widths traveled, one row per
+phi0/P at the peak (3 and 300), from data/pulse_drift.json (written by sim_pulse_drift.jl), and below them, set
+apart, the pulse at rest at phi0/P = 3 at the end of its run, from data/pulse_rest.json (sim_pulse_rest.jl), over its
+whole box. (Until 2026-11-08 also phi0/P = 30 and 3000, and the pulse at D = 10 phi0 in the bottom row.)
+Each drift row gives the widths traveled at its end. The x-axis is the real
 (unwrapped) position, broken into windows of the same width, 2 HALF pulse widths, so that the pulse has the same
 width on the page in every window: the start (the initial pulse, dashed), and at the end the exact solution
 (phi = 1), the ARSA and the RSLA, in one window when the RSLA lags by less than 2 HALF w (the exact pulse HALF w
@@ -19,7 +20,6 @@ from matplotlib.ticker import FuncFormatter
 from paper_style import STYLE, TEXTWIDTH, C1, C2, DATA, save
 
 WIDTHS = 256                 # the widths traveled shown in the rows of pulse_drift.json
-WIDTHS_LONG = 2048           # and in the row of pulse_drift_long.json
 HALF = 7                     # half width of a window [w]
 SCALE = 0.8                  # the figure is SCALE times the text width, so that its text prints larger
 AX_H, GAP = 1.30 * SCALE, 0.23 * SCALE   # height of a panel and gap between rows [in]; twice the gap above the last row
@@ -28,13 +28,9 @@ LEFT = 0.49                  # margin for the y label [in]
 
 d = json.load(open(DATA / 'pulse_drift.json'))
 w, L, xs = d['w'], d['L'], np.array(d['x'])
-dl = json.load(open(DATA / 'pulse_drift_long.json'))
-assert dl['w'] == w and dl['L'] == L and len(dl['x']) == len(xs)
+dr = json.load(open(DATA / 'pulse_rest.json'))
 rows = [(r, r['widths'].index(WIDTHS), rf'$\phi_0/\mathcal{{P}} = {r["phi0_P"]}$') for r in d['runs']]
-rl = dl['runs'][0]
-rows.append((rl, rl['widths'].index(WIDTHS_LONG),
-             rf'$\phi_0/\mathcal{{P}} = {rl["phi0_P"]}$, $\mathcal{{D}} = {dl["D"] / dl["phi0"]:.0f}\,\phi_0$'))
-GRID = [0, 1, 2, 3, 5]       # grid row of each row; grid row 4 is the gap above the last row
+GRID = [0, 1]                # grid row of each drift row; grid row 2 is the gap above the row of the pulse at rest
 
 
 def place(T, centre):        # the box profile at the image of each cell nearest the real position centre
@@ -57,12 +53,12 @@ def lagtext(v):
 
 
 with plt.rc_context(STYLE):
-    H = TOP + BOTTOM + 5 * AX_H + 5 * GAP
+    H = TOP + BOTTOM + 3 * AX_H + 3 * GAP
     fig = plt.figure(figsize=(SCALE * TEXTWIDTH, H))
     fig.set_layout_engine('none')
-    ratios = [1, 1, 1, 1, 1e-4, 1]                   # grid row 4: no height, so the gap there is 2 GAP
-    gs = fig.add_gridspec(6, 3, height_ratios=ratios, left=LEFT / (SCALE * TEXTWIDTH), right=0.99, bottom=BOTTOM / H, top=1 - TOP / H,
-                          wspace=0.06, hspace=GAP / (AX_H * sum(ratios) / 6))
+    ratios = [1, 1, 1e-4, 1]                         # grid row 2: no height, so the gap there is 2 GAP
+    gs = fig.add_gridspec(4, 3, height_ratios=ratios, left=LEFT / (SCALE * TEXTWIDTH), right=0.99, bottom=BOTTOM / H, top=1 - TOP / H,
+                          wspace=0.06, hspace=GAP / (AX_H * sum(ratios) / 4))
     for (r, K, label), i in zip(rows, GRID):
         T_lo = r['T_lo']
         y = lambda T: (np.array(T) - T_lo) / T_lo
@@ -94,6 +90,24 @@ with plt.rc_context(STYLE):
         lag = r['lag_rsla_w'][K]
         ends[0].text(0.03, 0.93, label + f', after {r["widths"][K]} widths', transform=ends[0].transAxes, va='top')
         ends[0].text(0.03, 0.78, rf'RSLA lag ${lagtext(lag)}\,w$', transform=ends[0].transAxes, va='top', color=C1)
+    # the pulse at rest: the initial pulse, and at the end the exact solution, the ARSA and the RSLA, over the box
+    T_lo, xr_ = dr['T_lo'], np.array(dr['x'])
+    y = lambda T: (np.array(T) - T_lo) / T_lo
+    start, end = fig.add_subplot(gs[3, 0]), fig.add_subplot(gs[3, 1:])
+    for ax in (start, end):
+        ax.set_xlim(-dr['L'] / 2, dr['L'] / 2)
+        ax.set_ylim(-0.08, 1.12)
+        ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f'${v:,.0f}$'.replace(',', r'\,')))
+    start.set_xticks([-100, 0, 100]); end.set_xticks([-150, -100, -50, 0, 50, 100, 150])
+    end.tick_params(axis='y', labelleft=False)
+    start.plot(xr_, y(dr['T_exact'][0]), color='k', ls='--', lw=1.0)
+    start.set_ylabel(r'$(T - T_{\rm lo})/T_{\rm lo}$')
+    start.set_yticks([0, 0.5, 1])
+    end.plot(xr_, y(dr['T_exact'][-1]), color='k', lw=1.8)
+    end.plot(xr_, y(dr['T_arsa'][-1]), color=C2, lw=0.9)
+    end.plot(xr_, y(dr['T_rsla'][-1]), color=C1, lw=1.2)
+    end.text(0.03, 0.93, rf'$\phi_0/\mathcal{{P}} = {dr["phi0_P"]}$, at rest, $t = {dr["t"][-1] * 1e3:.1f}$ ms',
+             transform=end.transAxes, va='top')
     fig.text(0.5, 0.008, rf'real position $x$ [cm] (pulse width $w = {w:g}$ cm)',
              ha='center')
     fig.legend(handles=[Line2D([], [], color='k', ls='--', lw=1.0), Line2D([], [], color='k', lw=1.8),

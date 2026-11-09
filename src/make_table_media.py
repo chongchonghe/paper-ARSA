@@ -56,7 +56,7 @@ SYSTEMS = [
     # ('Radiation-mediated shock', 7e-11, 1.7e5, 'ion', 0.34, 340, 5e8, r'$5\times10^{3}$'),
     # ('AGN disk, 20 $r_g$', 1e-9, 5e5, 'ion', 0.34, 3e2, 0.004 * C, r'$0.004c$'),
     # ('Kilonova ejecta, 1 d', 2e-13, 1e4, 'kilonova', 10, 9e2, 0.2 * C, r'$0.2c$'),
-    ('ULIRG nucleus', 2.5e-19, 80, 'warm', 1, 32, 1e7, '100'),    # tau = kappa rho L: 160 at kappa = 5
+    ('ULIRG nucleus', 2.5e-19, 80, 'cold', 1, 32, 1e7, '100'),    # tau = kappa rho L: 160 at kappa = 5
     # ('Super-Eddington inflow', 5e-12, 2.6e5, 'ion', 0.34, 27, 0.14 * C, r'$0.14c$'),
     # ('Diffuse ISM', 1e-24, 1e4, 'ion', None, None, 1e6, '10'),    # warm medium, n ~ 0.5 cm^-3
 ]

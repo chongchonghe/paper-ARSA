@@ -47,7 +47,7 @@ LABEL = {   # label text and position beside the point: (text, x, y, ha)
     'Sun, middle of convection zone': ('Sun, middle of\nconvection zone', 7.4e3, 0.012, 'center'),
     'RGB star, middle of envelope': ('RGB star, middle\nof envelope', 4.4e4, 2.2e-4, 'center'),
     'AGB star, base of envelope': ('AGB star, base\nof envelope', 9e4, 1.2, 'center'),
-    'ULIRG nucleus': ('ULIRG nucleus', 0.02, 7.7e2, 'left'),
+    'ULIRG nucleus': ('ULIRG nucleus', 0.02, 1.2e3, 'left'),
     'Massive-star envelope': ('massive-star envelope', 2e-3, 1.2e3, 'right'),
     'AGN dusty torus': ('AGN dusty torus', 0.02, 1e4, 'left'),
 }

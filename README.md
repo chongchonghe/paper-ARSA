@@ -11,13 +11,13 @@ python3 -m pip install -r requirements.txt            # Python 3.13
 ./run_all.sh            # everything, the simulations first: about 25 min with 14 threads
 ```
 
-`PY=<python> ./run_all.sh` picks another Python. The figures set matplotlib's `text.usetex`, so they need a LaTeX installation. Every script runs from any directory.
+`./run_all.sh <step>` runs one step (the steps are in `step_cmd` of `run_all.sh`); the longest are `pulse_rest` (12 min) and `mf_shocks` (10 min). Each step writes its printout to `data/<step>.txt`, after a header with the date, the commit of this repository (`-dirty`: uncommitted changes in `src/` or `Manifest.toml`) and the Honghu.jl version; the data in git were made with the commit that their header names. `PY=<python> ./run_all.sh` picks another Python. The figures set matplotlib's `text.usetex`, so they need a LaTeX installation. Every script runs from any directory.
 
 ## Layout
 
 ```
 run_all.sh                        the single entry point
-src/sim_*.jl                      simulations with Honghu.jl; write data/
+src/sim_*.jl                      simulations with Honghu.jl; write data/ (sim_diffusion_pulse.jl: the pulse set-up that sim_pulse_drift.jl reads)
 src/calc_*.py                     calculations (linear theory, scans); write data/
 src/make_*.py                     figures and Table 1, from data/ (or linear theory); write figures/, tables/
 src/pdars.py rhd_waves.py waves.py paper_style.py    modules the scripts import
@@ -42,24 +42,7 @@ copy_to_paper.sh                  for the authors: copies figures/ and tables/ i
 | Fig. 9 | `marshak_vaytet.pdf` | `make_marshak_vaytet.py` | `marshak_vaytet_*.csv` (`marshak_vaytet`) |
 | Fig. A.10, Table A.2 | `theta_scan.pdf`; Table A.2 typed in | `make_theta_scan.py` | `theta_curves.csv`, `theta_scan.csv` (`theta_scan`) |
 
-Figures are in `figures/`. Two figures are made but not in the current paper: `checkerboard.pdf` (step `checkerboard`) and `waves_RSLA_P0.1.pdf` (Fig. 2 at $\mathcal{P} = 0.1$, $\phi = 3\times10^{-3}$).
-
-## The steps
-
-`./run_all.sh` runs the steps in parallel, each in its own process, then `floor_energy`, then the figures; `./run_all.sh <step> ...` runs only the steps named. Each step writes its printout to `data/<step>.txt`, after a header with the date, the commit of this repository (`-dirty`: uncommitted changes in `src/` or `Manifest.toml`) and the Honghu.jl version. The data in git were made with the commit that their header names. Times are from one `./run_all.sh` on an 18-core Apple laptop.
-
-| Step | Script | Writes (in `data/`) | Time |
-|---|---|---|---|
-| `linear_waves_rhd` | Honghu.jl `examples/linear_waves_rhd.jl` | `linear_waves_rhd.csv` | 1 min |
-| `pulse_drift` | `sim_pulse_drift.jl` (worker processes, one thread each) | `pulse_drift.json` | 3 min |
-| `pulse_rest` | `sim_pulse_rest.jl` (two workers) | `pulse_rest.json` | 12 min |
-| `expanding_sphere` | `sim_expanding_sphere.jl` (four workers; `THREADS=<n>`) | `expanding_sphere.csv` | 5 min |
-| `mf_shocks` | `sim_mf_shocks.jl` | `mf_shocks*.csv` | 10 min |
-| `marshak_vaytet` | `sim_marshak_vaytet.jl` | `marshak_vaytet_*.csv` | 3 min |
-| `rsla_accuracy`, `convective_layers`, `theta_scan`, `m1_stability` | `calc_*.py` | `rsla_accuracy_systems.csv`, `theta_scan.csv`, `theta_curves.csv`; printouts | 1 s–2 min |
-| `m1_checks` | `checks/m1/*.py` | `m1/*.json` | 5 min |
-| `table_media`, `waves_rsla` | `make_table_media.py`, `make_waves_rsla.py` | printouts | 5 s |
-| `checkerboard`, `arsa_phi0`, `diffusion_pulse`, `floor_energy`, `pulse_drift_substep`, `waves_heat_capacity` | supporting runs, not quoted in the current paper | see each script's header | 10 s–25 min |
+Figures are in `figures/`. `make_waves_rsla.py` also writes `waves_RSLA_P0.1.pdf` (Fig. 2 at $\mathcal{P} = 0.1$, $\phi = 3\times10^{-3}$), which the paper does not show.
 
 ## Data files
 

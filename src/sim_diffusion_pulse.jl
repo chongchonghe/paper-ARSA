@@ -6,10 +6,13 @@
 # phi0 = v0/c (chat = v0), 2 v0/c and 0.01, against chat = c at the same resolution. Then the same
 # pulse at rest (static diffusion), T_lo = 1e6 K, phi0 = 0.01, to t = 4.8e-4 s.
 #
+# Not a step of run_all.sh (its runs are not in the paper): sim_pulse_drift.jl reads the definitions above
+# `n = 128` (constants, Tprof, rhoprof, pulse) from this file.
+#
 # Every run is a 3D slab: n x NT x NT cubic cells, periodic in y and z, the same in every column (a set of
 # parallel slabs, as a 3D code sees a planar problem). The RSLA and the ARSA take the 3D RSLA step for
-# isotropic radiation at beta = 0.9, C_r = 3 nu0 = 0.9 sqrt3; the references chat = c take nu0 = 0.4 per
-# direction, as the 1D references did. phi_* and the threshold of eq:tau_one are for isotropic radiation
+# isotropic radiation at beta = 0.9, C_r = 3 nu0 = 0.9 sqrt3; the references chat = c take nu = 0.4
+# (C_r = 1.2). phi_* and the threshold of eq:tau_one are for isotropic radiation
 # in 3D at beta = 1: nu0 = 1/sqrt3, sum_d sigma_d = sqrt3, so phi_* = h/(1 + h).
 #
 # Prints, for each T_lo: the derived variables (h, tau_c, phi_*, the eq:tau_one threshold) from the

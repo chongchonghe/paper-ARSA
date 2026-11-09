@@ -1,5 +1,0 @@
-# src/calc_waves_heat_capacity.py, 2026-10-23 19:48, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
-h = 0.001333, h/phi = 1.333, h/gamma = 0.0008; tau = 1e+04
-exact: Pe_phi = 2.25e+03, 1/Pe_phi = 0.000444; acoustic speed 1.2910, sqrt(gamma_phi) = 1.2907; slow decay 0.0002663, closed form 0.0002665; acoustic decay 8.877e-05, (gamma_phi - 1)/2 x slow = 8.87e-05
-RSLA : Pe_phi = 5.25e+03, 1/Pe_phi = 0.00019; acoustic speed 1.1341, sqrt(gamma_phi) = 1.1339; slow decay 0.0001481, closed form 0.0001481; acoustic decay 2.2e-05, (gamma_phi - 1)/2 x slow = 2.116e-05
-exact/RSLA: slow decay (gamma + h/phi)/(gamma + h) = 1.799; (gamma_1 - 1)/(gamma_phi - 1) = (1 + h/phi)/(1 + h) = 2.330; product 4.19

@@ -90,7 +90,7 @@ const CASES = (
 n = 64
 dx = L / n
 xs = [(i - 0.5) * dx for i in 1:n]
-if !isdefined(Main, :NOMAIN)                                      # sim_arsa_phi0.jl and sim_floor_energy.jl include the definitions only
+if !isdefined(Main, :NOMAIN)                                      # NOMAIN: include the definitions only
     summary, profiles, scan, match = [], [], [], []
     phimatch = Ref(NaN)                                              # set by the bisection of test 3
     for (test, name, u, tmax, op, phi0) in CASES

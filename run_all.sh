@@ -33,20 +33,16 @@ examples() {   # the examples folder of the installed Honghu.jl
 
 step_cmd() {   # step_cmd <step>: the script of the step in NAME, its command in CMD
     case $1 in
-        checkerboard)        NAME="Honghu.jl examples/irsla_paper.jl, section checkerboard"             # Fig. 3
-                             CMD=(julia --project=. -t 4 "$(examples)/irsla_paper.jl" --no-plot --outdir=data checkerboard) ;;
         linear_waves_rhd)    NAME="Honghu.jl examples/linear_waves_rhd.jl"                              # Fig. 5
                              CMD=(julia --project=. -t 4 "$(examples)/linear_waves_rhd.jl" --no-plot --outdir=data) ;;
         pulse_drift)         NAME="src/sim_pulse_drift.jl"; CMD=(julia --project=. src/sim_pulse_drift.jl) ;;
         pulse_rest)          NAME="src/sim_pulse_rest.jl"; CMD=(julia --project=. src/sim_pulse_rest.jl) ;;
         expanding_sphere)    NAME="src/sim_expanding_sphere.jl"; CMD=(julia --project=. src/sim_expanding_sphere.jl) ;;
-        mf_shocks | arsa_phi0 | diffusion_pulse | marshak_vaytet | floor_energy)
+        mf_shocks | marshak_vaytet)
                              NAME="src/sim_$1.jl"; CMD=(julia --project=. -t 1 "src/sim_$1.jl") ;;
-        rsla_accuracy | theta_scan | m1_stability | waves_heat_capacity | convective_layers)
+        rsla_accuracy | theta_scan | m1_stability | convective_layers)
                              NAME="src/calc_$1.py"; CMD=("$PY" "src/calc_$1.py") ;;
         m1_checks)           NAME="checks/m1/*.py"; CMD=(m1_checks) ;;          # App. C, by B. Wibking
-        pulse_drift_substep) NAME="checks/check_pulse_drift_substep.jl"                  # Fig. 6 caption; reads pulse_drift.json
-                             CMD=(julia --project=. -t 1 checks/check_pulse_drift_substep.jl) ;;
         table_media | waves_rsla)                          # figure and table scripts whose numbers the paper quotes
                              NAME="src/make_$1.py"; CMD=("$PY" "src/make_$1.py") ;;
         *)                   echo "unknown step: $1 (the steps are in step_cmd in run_all.sh)" >&2; return 1 ;;
@@ -85,7 +81,7 @@ figures() {
     step table_media > /dev/null                 # Table 1 (tables/tab_media.tex); numbers of Secs. 3.4 and 6.2
     step waves_rsla > /dev/null                  # Fig. 2; numbers of Sec. 2.4
     local f
-    for f in rsla_accuracy checkerboard waves_arsa linear_waves pulse_drift mf_shocks marshak_vaytet expanding_sphere theta_scan; do
+    for f in rsla_accuracy waves_arsa linear_waves pulse_drift mf_shocks marshak_vaytet expanding_sphere theta_scan; do
         "$PY" "src/make_$f.py"                   # every figure of the paper
     done
     echo "figures in figures/, Table 1 in tables/"
@@ -94,14 +90,10 @@ figures() {
 case ${1:-all} in
     all)
         pids=(); names=()
-        for s in checkerboard linear_waves_rhd mf_shocks arsa_phi0 diffusion_pulse marshak_vaytet \
-                 rsla_accuracy theta_scan m1_stability waves_heat_capacity convective_layers m1_checks pulse_drift \
-                 pulse_rest expanding_sphere; do
+        for s in linear_waves_rhd mf_shocks marshak_vaytet rsla_accuracy theta_scan m1_stability \
+                 convective_layers m1_checks pulse_drift pulse_rest expanding_sphere; do
             job "$s"
         done
-        wait_jobs
-        job floor_energy                 # uses the references of the shocks, the pulse and the Marshak wave
-        job pulse_drift_substep          # uses the exact solution of pulse_drift
         wait_jobs
         figures ;;
     figures)

@@ -1,5 +1,0 @@
-# checks/check_pulse_drift_substep.jl, 2026-11-03 01:08, paper-ARSA d636a29, Honghu.jl v0.1.0 (tree e63aa35)
-phi0/P = 3 (T_lo = 1.056e+06 K), 512 cells, ARSA at phi0 = 0.01, to 32 widths traveled; L1 of T - T_lo against the exact solution, relative to the pulse
-  as in Fig. 6                       c dt_sub/dx =  47.2,  1017 hydro steps,   8131 radiation substeps; phi >= 1; L1 = 4.44%
-  radiation substeps 10x shorter     c dt_sub/dx =   5.2,  1016 hydro steps,  74144 radiation substeps; phi >= 1; L1 = 0.45%
-  hydro step shorter, same substeps  c dt_sub/dx =  52.0,  7385 hydro steps,   7385 radiation substeps; phi >= 1; L1 = 4.83%

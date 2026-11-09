@@ -1,4 +1,4 @@
-# src/calc_rsla_accuracy.py, 2026-11-03 15:01, paper-ARSA 3609349, Honghu.jl v0.1.0 (tree e63aa35)
+# src/calc_rsla_accuracy.py, 2026-11-09 14:43, paper-ARSA 15451c5, Honghu.jl v0.1.0 (tree e63aa35)
 phi = 0.01; the RSLA is accurate for h < 0.001 and D < 0.001; the ARSA can help for 0.001 < h < 0.1 at any D, and for h < 0.001 where D > 0.001; neither for h > 0.1
 system                                 D         h  t_phi/t_1  region
 PPD midplane, 0.1 au                0.94   3.8e-06          1  ARSA can help
@@ -8,7 +8,7 @@ RGB star, middle of envelope     4.5e+04    0.0011       1.11  ARSA can help
 Sun, middle of convection zone   7.6e+03    0.0025       1.24  ARSA can help
 Massive protostellar envelope    0.00015     0.061       6.65  ARSA can help
 AGB star, base of envelope         9e+04        17       94.6  neither accurate
-ULIRG nucleus                      0.011   7.7e+02       99.9  neither accurate
 Massive-star envelope             0.0033   1.2e+03       99.9  neither accurate
+ULIRG nucleus                      0.011   1.2e+03       99.9  neither accurate
 AGN dusty torus                     0.01     1e+04        100  neither accurate
 wrote data/rsla_accuracy_systems.csv

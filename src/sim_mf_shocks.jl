@@ -7,7 +7,7 @@
 #
 # Every run is a 3D slab: 64 x NT x NT cubic cells, periodic in y and z, the same in every column. The
 # RSLA and the ARSA take the 3D RSLA step at beta = 0.9, C_r = 3 nu0 = 0.9 sqrt3; the references chat = c
-# take nu0 = 0.4 per direction (C_r = 1.2). phi_* and the threshold of eq:tau_one are for 3D at beta = 1,
+# take nu = 0.4 (C_r = 3 nu = 1.2). phi_* and the threshold of eq:tau_one are for 3D at beta = 1,
 # nu0 = 1/sqrt3, with sum_d sigma_d = sqrt3 (isotropic radiation) or 1 (streaming along x).
 #
 # For each case: the dimensionless numbers (P, h, phi_*, tau_c, the threshold of eq:tau_one)

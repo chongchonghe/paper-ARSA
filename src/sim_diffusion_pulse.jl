@@ -25,7 +25,7 @@ const MU, GAMMA, KAPPA, RHO0, W, V0, TMAX, L = 2.33 * CGS.m_u, 5 / 3, 500.0, 1.2
 const CV = CGS.k_B / (MU * (GAMMA - 1))
 const NT = 2                                 # cells in y and in z
 const CR = 0.9 * sqrt(3)                     # C_r = 3 nu0, nu0 = 0.9/sqrt3: the 3D RSLA step at beta = 0.9
-const CR_REF = 1.2                           # references: nu0 = 0.4 per direction
+const CR_REF = 1.2                           # references: nu = 0.4 (C_r = 3 nu)
 const SIGSUM, NU1 = sqrt(3), 1 / sqrt(3)     # isotropic radiation in 3D; largest stable nu0 (beta = 1)
 
 Tprof(x, T_lo) = T_lo * (1 + exp(-x^2 / (2 * W^2)))

@@ -75,16 +75,13 @@ All files are in `data/`. Units are cgs, temperatures in K, errors are fractions
 - **`theta_scan.csv`**: per case, `nu_pi`, `active`, `max_g_below`, `theta_star`, `nu_formula` (eq:numax) and the parameters. `theta_curves.csv`: $\nu_{\rm crit}(\theta)$ for Fig. A.10.
 - **`media_parameters.md`**: derivation and sources of the star-formation, disk and stellar rows of Table 1 (input).
 
-## The tests
+## Conventions and caveats
 
-All runs except the linear waves are 3D: the pulse, shocks and Marshak wave as slabs of $N\times2\times2$ cubic cells, periodic in $y$ and $z$; the sphere as a $32^3$ box. The RSLA and the ARSA run at $\nu_0 = 0.9/\sqrt{3}$ (Honghu.jl $C_r = 3\nu_0 = 0.9\sqrt{3}$), the ARSA with $\beta = 0.9$; the $\hat c = c$ references at $\nu = 0.4$ ($C_r = 1.2$). The 1D linear waves use the $P_1$ closure at $\nu_0 = 0.9\sqrt{3}$.
-
-- **Advected pulse** (Sec. 5.2, Fig. 5): a Gaussian pulse, $w = 24$ cm, in pressure balance, $\rho = 1.2$ g cm$^{-3}$, $\kappa = 500$ cm$^2$ g$^{-1}$, $512$ cells over 1024 cm, moving at $3\times10^7$ cm/s for 256 widths; $T_{\rm lo}$ set by bisection so that $\phi_0/\mathcal{P} = 3$ and 300 at the peak. Reference: the exact solution, i.e. the enthalpy diffusion of the pulse at rest in column mass, shifted by $vt$. Position: the centroid of $T - T_{\rm lo}$.
-- **Weak pulse at rest** (Sec. 5.2, Fig. 5 bottom): amplitude 0.1, $\phi_0/\mathcal{P} = 3$ at the peak, $\kappa = 30$ cm$^2$ g$^{-1}$, 384 cells over 768 cm, to $1000\,t_w = 2.1$ ms; exact reference as above, without the shift.
-- **Expanding sphere** (Sec. 5.3, Fig. 6): the interior of the sphere of Roth & Kasen (2015), with absorbing opacity and $v_{\rm out} = 10$ km/s, in homologous flow; exact reference (the adiabat of gas plus radiation). Caveat: in a uniform flow the test checks the heat capacity of the reduced radiation and the work on it, not transport across gradients.
-- **Radiative shocks** (Sec. 5.4, Figs. 7, 8): the shocks of Melon Fuksman et al. (2021) on 64 cells; the supercritical one with a constant mass opacity ten times theirs.
-- **Marshak wave** (Sec. 5.5, Fig. 9): the multigroup wave of Vaytet et al. (2011), four groups, 64 cells. Equal accuracy: a bisection in $\phi_0$ for the RSLA with the error of the ARSA; the speedup is the ratio of sub-steps.
-- **Fig. 1**: the systems of Table 1 in the plane of $\mathcal{D}$ and $\mathcal{P} = 3\hat{h}/8$ ($\gamma = 5/3$) at $\phi_0 = 10^{-2}$; regions from eq:rsla_valid with a factor of 10. Caveat: positions inherit the uncertainties of Table 1 (a factor of 2–3).
+- **Time step.** Honghu.jl's `cfl_radiation` is $C_r = \hat c\,\Delta t\sum_d \Delta x_d^{-1}$, i.e. $C_r = D\nu_0$ for cubic cells. The 3D runs (the pulse, shocks and Marshak wave as $N\times2\times2$ slabs, the sphere as a $32^3$ box) use $C_r = 0.9\sqrt{3}$ for the RSLA and the ARSA ($\nu_0 = 0.9/\sqrt{3}$) and $C_r = 1.2$ for the $\hat c = c$ references ($\nu = 0.4$); the 1D linear waves ($P_1$) use $C_r = \nu_0 = 0.9\sqrt{3}$.
+- **Thresholds.** The printouts give $\phi_*$ and $\tau_{\rm thresh}$ both at the bound, $\beta = 1$ and $\nu_0\sum_d\sigma_d = 1$ (labelled `Table 3` or `beta = 1`), which the paper quotes, and at the values of the runs, $\beta = \nu_0\sum_d\sigma_d = 0.9$ (labelled `beta`), which are slightly smaller.
+- **Sphere.** In a uniform flow the test checks the heat capacity of the reduced radiation and the work on it, not transport across gradients.
+- **Fig. 1.** The positions inherit the uncertainties of Table 1, a factor of 2–3.
+- **Marshak wave.** The regular steps in $T_{{\rm rad},4}$, about 4 cells apart, appear in the $\hat c = c$ reference too; they come from the transport of the free-streaming group, not from the ARSA, and their cause has not been checked.
 
 ## Key numbers and their sources
 

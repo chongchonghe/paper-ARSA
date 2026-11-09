@@ -33,7 +33,7 @@ ax.plot([XLIM[0], DRIFT_D], [H_LO, H_LO], color=INK, lw=1.0, ls='--')
 # the regions
 ax.text(2e-8, 2.0, bold('neither RSLA nor ARSA accurate:\nradiation holds much of the heat'), color=RED_INK,
         ha='left', va='center')
-ax.text(2e-8, 1.5e-2, bold('RSLA inaccurate;\nARSA accurate in thick cells\n(with $\\phi_0$ above $\\hat{h}$)'),
+ax.text(2e-8, 1.5e-2, bold('RSLA inaccurate;\nARSA accurate in thick cells\n($\\tau_{\\rm c} > 3.5$ in 3D) if $\\phi_0 > \\hat{h}$'),
         color=AMBER_INK, ha='left', va='center')
 ax.text(DRIFT_D / 1.5, 1e-5, bold('RSLA\naccurate'), color=GREEN_INK, ha='right', va='center')
 ax.text(DRIFT_D * 2, 2.2e-7, bold('advected structures drift: $\\mathcal{D} > 0.1\\,\\phi_0$'), color=AMBER_INK,

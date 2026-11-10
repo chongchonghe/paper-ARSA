@@ -1,12 +1,13 @@
-# src/sim_mf_shocks.jl, 2026-10-23 19:48, paper-ARSA 0dd9edf, Honghu.jl v0.1.0 (tree e63aa35)
+# src/sim_mf_shocks.jl, 2026-11-11 02:54, paper-ARSA 6ce929a, Honghu.jl v0.1.0 (tree e63aa35)
 
-== subcritical, kappa rho fixed: u = 6 km/s, t = 3.8e+04 s, 64 x 2 x 2 cells, phi0 = 0.001 (reference 402 s) ==
+== subcritical, kappa rho fixed: u = 6 km/s, t = 3.8e+04 s, 64 x 2 x 2 cells, phi0 = 0.001 (reference 406 s) ==
   final: T max 944.7 K, rho/rho0 max 6.36; tau_c in [0.339, 0.339]
   h max 6.26e-05 (over the run, at t = 3.14e+04 s, T = 934.5 K, rho/rho0 = 2.44); P = h/(4(gamma-1)) = 3.91e-05
   isotropic  largest phi_* = 6.26e-05 (phi0 = 0.001); cells with phi_* < phi0: 64/64; cells above the eq:tau_one threshold: 0/64 (threshold in [3.46, 3.65])
   streaming  largest phi_* = 3.61e-05 (phi0 = 0.001); cells with phi_* < phi0: 64/64; cells above the eq:tau_one threshold: 0/64 (threshold in [2, 2.06])
   ARSA with phi inside the flux divergence (flux form): 5.65%
   RSLA 0.776%   ARSA 0.623%   ARSA phi: min 0.00111, max 0.00154, cells at phi = 1: 0/64;  T_rad L1: RSLA 5.75%, ARSA 5.51%
+  total energy E_gas + E_rad at t_end (the box is open: inflow): reference 6.297521e+31 erg (gained 1.5526e+31 over the run, E_rad 1.73e-06 of it); error of RSLA -1.677e-03, ARSA -1.441e-03 of the reference total, -6.803e-03 and -5.846e-03 of the energy gained
 
 == supercritical, 10 x kappa: u = 20 km/s, t = 7.5e+03 s, 64 x 2 x 2 cells, phi0 = 0.03 (reference 65 s) ==
   final: T max 6293 K, rho/rho0 max 14.3; tau_c in [3.39, 48.6]
@@ -15,6 +16,7 @@
   streaming  largest phi_* = 0.0229 (phi0 = 0.03); cells with phi_* < phi0: 64/64; cells above the eq:tau_one threshold: 59/64 (threshold in [1.9, 7.6])
   ARSA with phi inside the flux divergence (flux form): 51.5%
   RSLA 14.1%   ARSA 3.82%   ARSA phi: min 0.0562, max 1, cells at phi = 1: 53/64;  T_rad L1: RSLA 14.2%, ARSA 3.83%
+  total energy E_gas + E_rad at t_end (the box is open: inflow): reference 6.335890e+32 erg (gained 1.1185e+32 over the run, E_rad 0.000581 of it); error of RSLA -1.401e-02, ARSA -4.126e-03 of the reference total, -7.936e-02 and -2.337e-02 of the energy gained
   test 3 at phi0 = 0.03: RSLA 14.1%, ARSA 3.82%, ARSA cells at phi = 1: 53/64
   test 3 at phi0 = 0.01: RSLA 29.6%, ARSA 16.1%, ARSA cells at phi = 1: 2/64
   test 3 at phi0 = 0.001: RSLA 67.4%, ARSA 63.1%, ARSA cells at phi = 1: 1/64
@@ -27,6 +29,7 @@
   streaming  largest phi_* = 0.0229 (phi0 = 0.0113658); cells with phi_* < phi0: 58/64; cells above the eq:tau_one threshold: 55/64 (threshold in [1.96, 295])
   ARSA with phi inside the flux divergence (flux form): 71.2%
   RSLA 27.5%   ARSA 14.1%   ARSA phi: min 0.0154, max 1, cells at phi = 1: 2/64;  T_rad L1: RSLA 27.1%, ARSA 14.3%
+  total energy E_gas + E_rad at t_end (the box is open: inflow): reference 6.335890e+32 erg (gained 1.1185e+32 over the run, E_rad 0.000581 of it); error of RSLA -2.724e-02, ARSA -1.475e-02 of the reference total, -1.543e-01 and -8.356e-02 of the energy gained
 wrote data/mf_shocks.csv
 wrote data/mf_shocks_profiles.csv
 wrote data/mf_shocks_phi0.csv

@@ -61,6 +61,7 @@ function track(label, T_lo, phi0, cfl, lim)           # one run: real centroid a
     p = prof(s)
     xb = centroid(p.T, T_lo); x = xb                  # centroid in the box, and unwrapped
     pos, profs, phimin = [x], [p], 1.0
+    e0 = conserved_totals(s); dE = [0.0]              # total energy (gas, kinetic and radiation) in the box
     for k in 1:NOUT, j in 1:NSAMPLE
         run!(s; tmax=(k - 1 + j / NSAMPLE) * TOUT, verbose=false)
         p = prof(s)
@@ -68,12 +69,12 @@ function track(label, T_lo, phi0, cfl, lim)           # one run: real centroid a
         x += mod(c - xb + L / 2, L) - L / 2; xb = c
         phimin = min(phimin, minimum(view(s.rw.chat, 1, g.lo[1]:g.hi[1], g.lo[2], g.lo[3])) / s.radiation.c)
         j == NSAMPLE || continue
-        push!(pos, x); push!(profs, p)
+        push!(pos, x); push!(profs, p); push!(dE, conserved_totals(s).energy_total / e0.energy_total - 1)
         f = Base.Filesystem.open(PROGRESS, Base.JL_O_WRONLY | Base.JL_O_CREAT | Base.JL_O_APPEND, 0o644)
         write(f, string(Libc.strftime("%H:%M:%S", time()), "  ", label, ": ", k * DW, " of ", NOUT * DW, " widths\n"))
         close(f)                                      # one O_APPEND write: the lines of the runs do not mix
     end
-    (; pos, profs, phimin, steps=s.diag.steps, sub=s.diag.rad_substeps)
+    (; pos, profs, phimin, steps=s.diag.steps, sub=s.diag.rad_substeps, dE, erad0=e0.energy_rad / e0.energy_total)
 end
 end
 
@@ -128,6 +129,8 @@ for r in PHI0_P
     for k in 1:NOUT
         @printf("  %3d w traveled: centroid lag RSLA %8.3f w, ARSA %7.3f w\n", k * DW, lag(rsla)[k+1], lag(arsa)[k+1])
     end
+    @printf("  total energy E_gas + E_rad in the periodic box (exactly conserved by the RHD equations; E_rad/E_tot = %.3g at the start): relative change after %d w RSLA %+.3e, ARSA %+.3e\n",
+            rsla.erad0, NOUT * DW, rsla.dE[end], arsa.dE[end])
     tauc = KAPPA .* rhoprof.(XS, T_lo) .* (L / NX)                 # cell optical depth of the initial pulse
     thr = 2 * (sqrt(3) - PHI0 * sqrt(3)) * PHI0 ./ ((1 .+ h) .* (PHI0 .- h ./ (1 .+ h)))   # eq:tau_one, beta = 1, nu0 = 1/sqrt3
     @printf("  Table 3: h max %.3g, tau_c in [%.3g, %.3g], tau_thresh (beta = 1) in [%.3g, %.3g]; after %d w |lag| RSLA %.4g w, ARSA %.4g w, ratio %.3g\n",
@@ -135,7 +138,7 @@ for r in PHI0_P
             abs(lag(rsla)[end] / lag(arsa)[end]))
     push!(rows, (phi0_P=r, T_lo=T_lo, P_peak=Ppeak(T_lo), h_peak=maximum(h), mach=mach, arsa_phi_min=arsa.phimin,
                  widths=collect(0:DW:NOUT * DW), x_exact=xex, x_rsla=rsla.pos, x_arsa=arsa.pos,
-                 lag_rsla_w=lag(rsla), lag_arsa_w=lag(arsa),
+                 lag_rsla_w=lag(rsla), lag_arsa_w=lag(arsa), dEtot_rsla=rsla.dE, dEtot_arsa=arsa.dE,
                  T_exact=ex, T_rsla=[p.T for p in rsla.profs], T_arsa=[p.T for p in arsa.profs],
                  Tr_rsla=[p.Tr for p in rsla.profs], Tr_arsa=[p.Tr for p in arsa.profs]))
 end

@@ -59,10 +59,12 @@ function score(sim, tmax; track=false)
         end
         true
     end
+    e0 = conserved_totals(sim).energy_total
     run!(sim; tmax, verbose=false, callback=cb)
+    tot = conserved_totals(sim)                                    # total energy (gas, kinetic, radiation) in the box
     phi = (dts[2] >= dts[1] ? cur : prev) ./ sim.radiation.c
     (T=gas_temperature(sim)[:, 1, 1], Tr=radiation_temperature(sim)[:, 1, 1], rho=density(sim), phi=phi, steps=sim.diag.steps,
-     sub=sim.diag.rad_substeps, hmax=hmax[], at=at[])
+     sub=sim.diag.rad_substeps, hmax=hmax[], at=at[], e0, etot=tot.energy_total, erad=tot.energy_rad)
 end
 
 # Predictions of Sec. 3.3 from a reference state (h and tau_c of each cell) for a signal-speed sum sigsum
@@ -119,8 +121,13 @@ if !isdefined(Main, :NOMAIN)                                      # NOMAIN: incl
         @printf("  RSLA %.3g%%   ARSA %.3g%%   ARSA phi: min %.3g, max %.3g, cells at phi = 1: %d/%d;  T_rad L1: RSLA %.3g%%, ARSA %.3g%%\n",
                 100ea, 100eb, minimum(b.phi), maximum(b.phi), count(b.phi .>= 0.999), n,
                 100 * l1(a.Tr, ref.Tr), 100 * l1(b.Tr, ref.Tr))
+        gain = ref.etot - ref.e0                                     # energy the box gains in the reference
+        @printf("  total energy E_gas + E_rad at t_end (the box is open: inflow): reference %.6e erg (gained %.4e over the run, E_rad %.3g of it); error of RSLA %+.3e, ARSA %+.3e of the reference total, %+.3e and %+.3e of the energy gained\n",
+                ref.etot, gain, ref.erad / ref.etot, a.etot / ref.etot - 1, b.etot / ref.etot - 1,
+                (a.etot - ref.etot) / gain, (b.etot - ref.etot) / gain)
         push!(summary, (test, u, tmax, phi0, hm, hm / (4 * (GAMMA - 1)), minimum(tau), maximum(tau), ea, eb,
-                        l1(a.Tr, ref.Tr), l1(b.Tr, ref.Tr), ef, count(b.phi .>= 0.999)))
+                        l1(a.Tr, ref.Tr), l1(b.Tr, ref.Tr), ef, count(b.phi .>= 0.999),
+                        ref.e0, ref.etot, a.etot, b.etot))
         for i in 1:n
             push!(profiles, (test, xs[i], ref.T[i], ref.Tr[i], a.T[i], a.Tr[i], b.T[i], b.Tr[i], b.phi[i]))
         end
@@ -163,7 +170,7 @@ if !isdefined(Main, :NOMAIN)                                      # NOMAIN: incl
     end
     writecsv("data/mf_shocks.csv", ("test", "u", "t_end", "phi0", "h_max", "P_max", "tau_c_min", "tau_c_max",
                                     "L1_rsla", "L1_arsa", "L1_Trad_rsla", "L1_Trad_arsa", "L1_arsa_fluxform",
-                                    "cells_phi1"), summary)
+                                    "cells_phi1", "Etot0", "Etot_ref", "Etot_rsla", "Etot_arsa"), summary)
     writecsv("data/mf_shocks_profiles.csv", ("test", "x", "T_ref", "Tr_ref", "T_rsla", "Tr_rsla", "T_arsa", "Tr_arsa",
                                              "phi_arsa"), profiles)
     writecsv("data/mf_shocks_phi0.csv", ("phi0", "L1_rsla", "L1_arsa", "cells_phi1"), scan)

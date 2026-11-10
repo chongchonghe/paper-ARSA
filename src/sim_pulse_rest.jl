@@ -57,11 +57,12 @@ function run_case(T_lo, lim)
     phimin = Ref(1.0)
     cb = s -> (phimin[] = min(phimin[], minimum(view(s.rw.chat, 1, g.lo[1]:g.hi[1], g.lo[2], g.lo[3])) / s.radiation.c); true)
     Ts = [gas_temperature(s)[:, 1, 1]]
+    e0 = conserved_totals(s); dE = [0.0]              # total energy in the periodic box
     for t in TOUTS[2:end]
         run!(s; tmax=t, verbose=false, callback=cb)
-        push!(Ts, gas_temperature(s)[:, 1, 1])
+        push!(Ts, gas_temperature(s)[:, 1, 1]); push!(dE, conserved_totals(s).energy_total / e0.energy_total - 1)
     end
-    (; Ts, phimin=phimin[], steps=s.diag.steps, sub=s.diag.rad_substeps)
+    (; Ts, phimin=phimin[], steps=s.diag.steps, sub=s.diag.rad_substeps, dE, erad0=e0.energy_rad / e0.energy_total)
 end
 end
 
@@ -122,6 +123,8 @@ rsla, arsa = fetch.(fut)
 for (name, r) in (("RSLA", rsla), ("ARSA", arsa))
     @printf("%s: phi >= %.3g, %d steps, %d sub-steps\n", name, r.phimin, r.steps, r.sub)
 end
+@printf("total energy E_gas + E_rad in the periodic box (exactly conserved by the RHD equations; E_rad/E_tot = %.3g at the start): relative change at %d t_w RSLA %+.3e, ARSA %+.3e\n",
+        rsla.erad0, NW, rsla.dE[end], arsa.dE[end])
 pk(T) = (maximum(T) - T_lo) / (AMP * T_lo)
 l1(T, e) = sum(abs, T .- e) / sum(abs, e .- T_lo)
 for k in eachindex(TOUTS)
@@ -138,6 +141,6 @@ json(io, x::AbstractVector) = (print(io, '['); for (i, v) in enumerate(x); i > 1
 json(io, x::NamedTuple) = (print(io, '{'); for (i, (k, v)) in enumerate(pairs(x)); i > 1 && print(io, ",\n"); json(io, k); print(io, ':'); json(io, v); end; print(io, '}'))
 open(joinpath(@__DIR__, "..", "data", "pulse_rest.json"), "w") do io
     json(io, (phi0=PHI0, phi0_P=R, amp=AMP, kappa=KAP, w=W, L=L, T_lo=T_lo, t_w=TW, t=TOUTS, x=XS,
-              T_exact=ex, T_rsla=rsla.Ts, T_arsa=arsa.Ts))
+              T_exact=ex, T_rsla=rsla.Ts, T_arsa=arsa.Ts, dEtot_rsla=rsla.dE, dEtot_arsa=arsa.dE))
 end
 println("wrote data/pulse_rest.json")

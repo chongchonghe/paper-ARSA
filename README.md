@@ -83,7 +83,7 @@ All files are in `data/`. Units are cgs, temperatures in K, errors are fractions
 | Table 1 and Fig. 1: $\hat{h}$, $\mathcal{D}$, $\phi/\phi_0$ of each system | `table_media.txt`, `rsla_accuracy.txt` |
 | Sec. 2.3: RSLA phase speed 1.13 at high $\tau$ | `waves_rsla.txt` |
 | Sec. 3.1.7: the stable limit at most $0.6\%$ below the bound (moving background, up to $6\times10^{-3}$ at $\mathcal{M} = 3$); matter transport shifts it by up to $2.4\%$ | `checks/check_mach_worst.py`; `checks/check_mach.py` (`hydro=True`) |
-| App. A.2: no gap in 2D and 3D; in 1D, flux at $75^\circ$ or more, 5 of 1375 cases up to $90\%$, 2 of 2700 unstable at the limiter step | `m1/absorbing_scan.json` (rules `gap` and `actual`) |
+| App. A.2: absorbing anisotropic cells stable in all 300, 1197 and 1365 cases (1D flux along the axis, 2D in the plane, 3D any direction), also at the bound itself | `m1/absorbing_scan.json` (rules `gap` and `actual`); `m1_checks.txt` |
 | App. A.2: thin anisotropic M1 cells stable in 1–3D up to $\lvert\vec F\rvert/cE = 0.999$; Jacobian speed up to 1.7 times $T_{dd}^{1/2}$ | `m1_stability.txt` |
 | Table A.2 | `theta_scan.csv` |
 | Sec. 3.1.4: dropping $K_F$ shifts the condition by $0.40$ at $\nu\tau_F = 1.8\times10^4$ | `m1/dropped_momentum_counterexample.json` |

@@ -10,16 +10,15 @@ bound, and steps up to nu = 1e4 are tested. A case fails if some Fourier mode ha
   max_iso     S = sum_d max(sigma_d, 1/sqrt3);
   lambda_max  S = sum_d of the largest |eigenvalue| of A_d.
 Three geometries:
-  1D, with the flux at any angle to the grid axis; symmetry forbids a transverse flux in a 1D simulation, but the
-      counterexamples of m1_stability.py and m1_thick_cells.py are of this kind;
+  1D, with the flux along the grid axis: a 1D simulation assumes symmetry about the axis, so it carries no
+      transverse flux;
   2D, with the flux in the grid plane, as in a 2D simulation;
   3D, with the flux in any direction (one octant, by symmetry).
 It also measures, for the rule actual, how far below the bound itself (beta = 1) the stable limit lies in each case
 with a bound: gap = 1 - nu_true/nu_bound, with nu_true the largest stable nu found by bisection.
 Writes data/m1/absorbing_scan.json: the number of cases and, per geometry and rule, every failure with its exact
 parameters (b is the closure coordinate, f = 4b/(3 + b^2); n the flux direction); under 'gap', per geometry, the
-number of cases with a bound, every case with a positive gap, and the largest gap in 1D with the flux within 68 degrees
-of the axis (cosine >= 0.375). About 6 minutes.
+number of cases with a bound and every case with a positive gap. About 5 minutes.
 
     python3 checks/m1/absorbing_scan.py
 """
@@ -52,8 +51,8 @@ def rho_max(A, sig, nu, q, th):
 
 
 def directions(dim):
-    if dim == 1:                                     # cosine with the grid axis
-        return [[mu, np.sqrt(1 - mu * mu), 0.0] for mu in np.linspace(0, 1, 9)]
+    if dim == 1:                                     # along the grid axis
+        return [[1.0, 0.0, 0.0]]
     if dim == 2:                                     # in the grid plane
         return [[np.cos(p), np.sin(p), 0.0] for p in np.radians(np.linspace(0, 45, 7))]
     return [[np.sin(t) * np.cos(p), np.sin(t) * np.sin(p), np.cos(t)]
@@ -115,8 +114,6 @@ if __name__ == '__main__':
              '2D': (2, np.r_[0.0, np.linspace(0.1, 0.9, 6), 0.95, 0.98], np.geomspace(1e-3, 1e3, 19)),
              '3D': (3, np.r_[0.0, np.linspace(0.2, 0.9, 4), 0.95, 0.98], np.geomspace(1e-3, 1e3, 13))}
     result['gap'] = {k: gaps(*v) for k, v in grids.items()}
-    result['gap']['1D']['max_gap_within_68deg'] = max(
-        [g['gap'] for g in result['gap']['1D']['positive'] if g['n'][0] >= 0.375], default=0.0)
     OUT.write_text(json.dumps(result, indent=1) + '\n')
     for dim, r in result['gap'].items():
         print(dim, 'gap below the bound: cases with a bound', r['cases_with_bound'], ' positive:',

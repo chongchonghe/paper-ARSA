@@ -1,6 +1,6 @@
 # Scripts and data for "An Adaptive Reduced Speed of Light Approximation"
 
-This repository makes every figure, Table 1 and the key numbers of C.-C. He, M. R. Krumholz and B. D. Wibking, "An Adaptive Reduced Speed of Light Approximation" (submitted to the Journal of Computational Physics). The simulations use [Honghu.jl](https://github.com/chongchonghe/Honghu.jl) v0.1.0 ([doi:10.5281/zenodo.23569082](https://doi.org/10.5281/zenodo.23569082)), pinned in `Manifest.toml`.
+This repository makes every figure, Table 1 and the key numbers of C.-C. He, M. R. Krumholz and B. D. Wibking, "An Adaptive Reduced Speed of Light Approximation" (submitted to the Journal of Computational Physics; preprint [arXiv:2611.21353](https://arxiv.org/abs/2611.21353)). The commit tagged `arxiv-v1` is the one that matches arXiv v1. The simulations use [Honghu.jl](https://github.com/chongchonghe/Honghu.jl) v0.1.0 ([doi:10.5281/zenodo.23569082](https://doi.org/10.5281/zenodo.23569082)), pinned in `Manifest.toml`.
 
 ## Quick start
 

@@ -42,3 +42,8 @@ preferred-citation:
       family-names: Wibking
   journal: "Journal of Computational Physics"
   status: submitted
+  url: "https://arxiv.org/abs/2611.21353"
+  identifiers:
+    - type: other
+      value: "arXiv:2611.21353"
+      description: "arXiv preprint, v1 of 2026-11-16"
